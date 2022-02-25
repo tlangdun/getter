@@ -7,6 +7,7 @@ function App() {
         <img src={logo} className='App-logo' alt='logo' />
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
+          this is just a test.
         </p>
         <a
           className='text-blue-600'
