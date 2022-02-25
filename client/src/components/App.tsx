@@ -6,8 +6,7 @@ function App() {
       <header className='App-header'>
         <img src={logo} alt="cak"/>
         <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-          this is just a test.
+          If you see this man, your cheeks are not safe.
         </p>
 
       </header>
