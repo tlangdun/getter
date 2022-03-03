@@ -4,9 +4,8 @@ function App() {
   return (
     <div className='App'>
       <header className='App-header'>
-        <img src={logo} alt="cak"/>
         <p>
-          If you see this man, your cheeks are not safe.
+          Currently under construction.
         </p>
 
       </header>
