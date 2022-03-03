@@ -1,5 +1,3 @@
-import logo from '../assets/Capture.jpg';
-
 function App() {
   return (
     <div className='App'>
