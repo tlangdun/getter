@@ -12,6 +12,10 @@ jobs:
       - name: ci and test
         working-directory: ./client
         run: npm ci && npm run test
+      - name: fix code coverage paths
+        working-directory: ./client
+        run: |
+          sed -i 's//home/runner/work/getter/getter///github/workspace//g' ./sonarQ-reports/test-reporter.xml
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
