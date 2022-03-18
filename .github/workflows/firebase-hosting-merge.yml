@@ -6,8 +6,25 @@ name: Deploy to Firebase Hosting on merge
   push:
     branches:
       - main
-jobs:
+jobs:  
+  test:
+    name: sonarQ
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: ci and test
+        working-directory: ./client
+        run: |
+          npm ci && npm run test
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      #- uses: sonarsource/sonarqube-scan-action@master
+       # env:
+        #  SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+         # SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
   build_and_deploy:
+    needs: test
     runs-on: ubuntu-latest
     defaults:
       run:
