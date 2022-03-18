@@ -1,0 +1,17 @@
+name: test
+'on':
+  push:
+    branches:
+      - main
+jobs:
+  test:
+    name: sonarQ
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: ci and test
+        working-directory: ./client
+        run: npm run test
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
