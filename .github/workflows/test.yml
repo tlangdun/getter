@@ -17,12 +17,6 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-        with:
-          projectBaseDir: client
-          args: >
-            -Dsonar.python.coverage.reportPaths=./client/sonarQ-reports/test-reporter.xml
-            -Dsonar.tests=tests/
-            -Dsonar.verbose=true
       #- uses: actions/checkout@v2
       # with:
       #  fetch-depth: 0
