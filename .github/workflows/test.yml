@@ -8,12 +8,10 @@ jobs:
     name: sonarQ
     runs-on: ubuntu-latest
     steps:
-      - id: step 1
       - uses: actions/checkout@v2
       - name: ci and test
         working-directory: ./client
         run: sudo npm ci && npm run test
-      - id: step 2
       - uses: actions/checkout@v2
         working-directory: ./client
         run: sonar-scanner
