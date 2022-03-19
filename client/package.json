@@ -62,5 +62,5 @@
     "reportPath": "sonarQ-reports",
     "reportFile": "test-reporter.xml",
     "indent": 4
-    }
   }
+}
