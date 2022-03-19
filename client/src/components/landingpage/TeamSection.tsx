@@ -1,13 +1,85 @@
 const people = [
     {
-        name: 'Whitney Francis',
-        role: 'Copywriter',
+        name: 'Tenzin Samdrup Langdun',
+        role: 'Product Owner',
         imageUrl:
-            'https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80',
+            'https://media-exp1.licdn.com/dms/image/C4D03AQFVfBzbTlk1Eg/profile-displayphoto-shrink_800_800/0/1594148488814?e=1652918400&v=beta&t=g0scKZgzjdAWaRQtdKzpOy1p0kfBihC-68ooDqVHY1Q',
+        twitterUrl: '#',
+        linkedinUrl: 'https://www.linkedin.com/in/tenzin-langdun/',
+    },
+    {
+        name: 'Martin Oswald',
+        role: 'Frontend Lead',
+        imageUrl:
+            'https://media-exp1.licdn.com/dms/image/C4D03AQFnfHHTmajkQw/profile-displayphoto-shrink_400_400/0/1641507565447?e=1652918400&v=beta&t=x8-4kY85UgAXq9hi3G3kH7sEY0DBOPUPZOLp5AMi5hs',
+        twitterUrl: '#',
+        linkedinUrl: 'https://www.linkedin.com/in/martin-oswald-b2b604226/',
+    },
+    {
+        name: 'Cakir Beyeler',
+        role: 'Backend Lead',
+        imageUrl:
+            'https://media-exp1.licdn.com/dms/image/C4D03AQH4keUix5SFZg/profile-displayphoto-shrink_400_400/0/1584093559001?e=2147483647&v=beta&t=eAsLmSnCh8Vr1gk8lzSEc_JNCdTKoZd1zungsItH3UQ',
+        twitterUrl: '#',
+        linkedinUrl: 'https://www.linkedin.com/in/cakirbeyeler/',
+    },
+    {
+        name: 'Renée Villiger',
+        role: 'SCRUM Master',
+        imageUrl:
+            'https://media-exp1.licdn.com/dms/image/C4D03AQFJZBLrxwUHNw/profile-displayphoto-shrink_400_400/0/1568810162790?e=2147483647&v=beta&t=3JoQpiHNnUWt8xYH9aP_k2lW01W_T_Op_CJjh8VqDyQ',
+        twitterUrl: '#',
+        linkedinUrl: 'https://www.linkedin.com/in/renee-villiger/',
+    },
+    {
+        name: 'Thomas Good',
+        role: 'Database Specialist',
+        imageUrl:
+            'https://media-exp1.licdn.com/dms/image/C5603AQHtMfk_7drTLw/profile-displayphoto-shrink_400_400/0/1517887872775?e=1652918400&v=beta&t=rfBHIwKLflboaUJDNWN90NS6VWF7yaiPIqCj0P1HfOs',
+        twitterUrl: '#',
+        linkedinUrl: 'https://www.linkedin.com/in/thomas-good-91b87b150/',
+    },
+    {
+        name: 'Luca Neyer',
+        role: 'Frontend',
+        imageUrl:
+            'https://media-exp1.licdn.com/dms/image/C4D03AQH6llauSUjelw/profile-displayphoto-shrink_400_400/0/1608728852348?e=1652918400&v=beta&t=-LCPgVG1AbwFVrvsmVtyKhQrR6pcfDpL_AWZaet8wAM',
+        twitterUrl: '#',
+        linkedinUrl: 'https://www.linkedin.com/in/lucaneyer/',
+    },
+    {
+        name: 'Stella Damdin',
+        role: 'Backend',
+        imageUrl:
+            'https://media-exp1.licdn.com/dms/image/C4E03AQG53RUm02Ln3A/profile-displayphoto-shrink_400_400/0/1640651540416?e=1652918400&v=beta&t=6upU1XEeVBxUUUlYa8ryOzyiAstX1cSkYvCEBqCC9mE',
+        twitterUrl: '#',
+        linkedinUrl: 'https://www.linkedin.com/in/stella-damdin-58b97b228/',
+    },
+    {
+        name: 'Valentin Kleisner',
+        role: 'Frontend',
+        imageUrl:
+            'https://upload.wikimedia.org/wikipedia/en/5/53/Snoopy_Peanuts.png',
         twitterUrl: '#',
         linkedinUrl: '#',
     },
-    // More people...
+    {
+        name: 'Halil Sino',
+        role: 'Backend',
+        imageUrl:
+            'https://upload.wikimedia.org/wikipedia/en/5/53/Snoopy_Peanuts.png',
+        twitterUrl: '#',
+        linkedinUrl: '#',
+    },
+    {
+        name: 'Joo Ho Park',
+        role: 'Frontend',
+        imageUrl:
+            'https://upload.wikimedia.org/wikipedia/en/5/53/Snoopy_Peanuts.png',
+        twitterUrl: '#',
+        linkedinUrl: '#',
+    },
+
 ]
 
 const TeamSection = () => {
@@ -18,8 +90,7 @@ const TeamSection = () => {
                     <div className="space-y-5 sm:mx-auto sm:max-w-xl sm:space-y-4 lg:max-w-5xl">
                         <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl">Meet our team</h2>
                         <p className="text-xl text-gray-500">
-                            Ornare sagittis, suspendisse in hendrerit quis. Sed dui aliquet lectus sit pretium egestas vel mattis
-                            neque.
+                            Started at ZHAW (Zurich University of Applied Sciences) now we here.
                         </p>
                     </div>
                     <ul

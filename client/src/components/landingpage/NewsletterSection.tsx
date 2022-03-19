@@ -48,8 +48,7 @@ const NewsletterSection = () => {
                                     Get notified when we&rsquo;re launching.
                                 </h2>
                                 <p className="mt-6 mx-auto max-w-2xl text-lg text-indigo-200">
-                                    Sagittis scelerisque nulla cursus in enim consectetur quam. Dictum urna sed consectetur neque
-                                    tristique pellentesque.
+                                    Finalizing our last little tweaks.
                                 </p>
                             </div>
                             <form action="#" className="mt-12 sm:mx-auto sm:max-w-lg sm:flex">
