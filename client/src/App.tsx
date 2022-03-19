@@ -1,14 +1,11 @@
-import app from './services/firebaseconfig';
-import { getAuth } from 'firebase/auth'
+import { Routes, Route } from 'react-router-dom'
+import Landingpage from './components/landingpage/LandingPage';
 
 function App() {
-  const auth = getAuth(app);
   return (
-    <div className='App'>
-      <header className='App-header'>
-        <p>Currently under construction.</p>
-      </header>
-    </div>
+    <Routes>
+      <Route path='landing' element={<Landingpage />}/>
+    </Routes>
   );
 }
 
