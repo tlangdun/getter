@@ -11,10 +11,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: ci and test
         working-directory: ./client
-        run: sudo npm ci && npm run test
-      - uses: actions/checkout@v2
-        working-directory: ./client
-        run: sonar-scanner
+        run: sudo npm ci && npm run test && sonar-scanner
       #- uses: actions/checkout@v2
       # with:
       #  fetch-depth: 0
