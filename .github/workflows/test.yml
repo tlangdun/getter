@@ -2,7 +2,7 @@ name: test
 'on':
   push:
     branches:
-      - blabla
+      - main
 jobs:
   test:
     name: sonarQ
@@ -26,7 +26,7 @@ jobs:
       - name: Run sonarqube
         run: sonar-scanner
         env:
-          SONAR_FART: ${{ secrets.SONAR_FART }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
           REACT_APP_API_KEY: ${{ secrets.REACT_APP_API_KEY }}
           REACT_APP_AUTH_DOMAIN: ${{ secrets.REACT_APP_AUTH_DOMAIN }}
@@ -35,11 +35,11 @@ jobs:
           REACT_APP_MESSAGING_SENDER_ID: ${{ secrets.REACT_APP_MESSAGING_SENDER_ID }}
           REACT_APP_APP_ID=: ${{ secrets.REACT_APP_APP_ID }}
           REACT_APP_MEASURMENT_ID: ${{ secrets.REACT_APP_MEASURMENT_ID }}
-      - name: SonarQube Scan
-        uses: sonarsource/sonarqube-scan-action@master
-        env:
-          SONAR_FART: ${{ secrets.SONAR_FART }} is now SONAR_FART
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-      - uses: actions/checkout@v2
-       with:
-        fetch-depth: 0
+      #- name: SonarQube Scan
+      #  uses: sonarsource/sonarqube-scan-action@master
+      #  env:
+      #    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }} is now SONAR_FART
+      #    SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+      #- uses: actions/checkout@v2
+      # with:
+      #  fetch-depth: 0
