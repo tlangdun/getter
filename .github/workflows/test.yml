@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: testodir
-        working-directory: ./client
+        working-directory: client
         run: sudo mkdir okworks
       - uses: actions/checkout@v2
       - name: ci and test
