@@ -15,7 +15,7 @@ jobs:
           node-version: '16'
       - name: mkdir
         working-directory: ./client
-        run: mkdir farthard
+        run: mkdir farthard && pwd
       - name: install dependencies
         working-directory: ./client
         run: npm ci
