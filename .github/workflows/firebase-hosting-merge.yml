@@ -12,6 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
       - name: ci and test
         working-directory: ./client
         run: |
@@ -24,29 +26,11 @@ jobs:
           REACT_APP_MESSAGING_SENDER_ID: ${{ secrets.REACT_APP_MESSAGING_SENDER_ID }}
           REACT_APP_APP_ID=: ${{ secrets.REACT_APP_APP_ID }}
           REACT_APP_MEASURMENT_ID: ${{ secrets.REACT_APP_MEASURMENT_ID }}
-  sonarcloud:
-    name: SonarCloud
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-      - name: test
-        working-directory: ./client
-        run: |
-          npm ci && npm run test:ci
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          REACT_APP_API_KEY: ${{ secrets.REACT_APP_API_KEY }}
-          REACT_APP_AUTH_DOMAIN: ${{ secrets.REACT_APP_AUTH_DOMAIN }}
-          REACT_APP_PROJECT_ID: ${{ secrets.REACT_APP_PROJECT_ID }}
-          REACT_APP_STORAGE_BUCKET: ${{ secrets.REACT_APP_STORAGE_BUCKET }}
-          REACT_APP_MESSAGING_SENDER_ID: ${{ secrets.REACT_APP_MESSAGING_SENDER_ID }}
-          REACT_APP_APP_ID=: ${{ secrets.REACT_APP_APP_ID }}
-          REACT_APP_MEASURMENT_ID: ${{ secrets.REACT_APP_MEASURMENT_ID }}
       #- uses: sonarsource/sonarqube-scan-action@master
        # env:
         #  SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
