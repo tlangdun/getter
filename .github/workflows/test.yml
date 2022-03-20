@@ -8,11 +8,15 @@ jobs:
     name: sonarQ
     runs-on: ubuntu-latest
     steps:
+      - name: testodir
+        working-directory: ./client
+        run: sudo mkdir okworks
       - uses: actions/checkout@v2
       - name: ci and test
         working-directory: ./client
         run: sudo npm ci #&& sonar-scanner
       - name: test
+        working-directory: ./client
         run: sudo npm run test
       - uses: actions/checkout@master
       - name: Setup sonarqube
