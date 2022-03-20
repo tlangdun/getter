@@ -16,7 +16,7 @@ jobs:
       - name: install dependencies
         working-directory: ./client
         run: npm ci
-      - run: npm run build
+      - run: CI='' npm run build
         working-directory: ./client
       - run: npm run test
         working-directory: ./client
