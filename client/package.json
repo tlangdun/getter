@@ -61,7 +61,7 @@
   },
   "jest-junit": {
     "suiteName": "jest tests",
-    "outputDirectory": "./sonarQ-reports",
+    "outputDirectory": "./coverage",
     "outputName": "junit.xml",
     "classNameTemplate": "{classname}-{title}",
     "titleTemplate": "{classname}-{title}"
