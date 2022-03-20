@@ -18,7 +18,7 @@ jobs:
         run: npm ci
       - run: CI='' npm run build
         working-directory: ./client
-      - run: npm run test
+      - run: npm run test && ls -l
         working-directory: ./client
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_FART }}
