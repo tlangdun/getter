@@ -13,6 +13,9 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '16'
+      - name: mkdir
+        working-directory: ./client
+        run: mkdir farthard
       - name: install dependencies
         working-directory: ./client
         run: npm ci
@@ -26,8 +29,8 @@ jobs:
       - name: Run sonarqube
         run: sonar-scanner
         env:
-            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-            SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
       #- name: SonarQube Scan
       #  uses: sonarsource/sonarqube-scan-action@master
       #  env:
