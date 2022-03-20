@@ -1,0 +1,41 @@
+name: test
+'on':
+  push:
+    branches:
+      - main
+jobs:
+  test:
+    name: sonarQ
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: uses Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '16'
+      - name: mkdir
+        working-directory: ./client
+        run: mkdir farthard && pwd
+      - name: install dependencies
+        working-directory: ./client
+        run: npm ci
+      - run: CI='' npm run build
+        working-directory: ./client
+      - run: npm run test
+        working-directory: ./client
+      - uses: actions/checkout@master
+      - name: Setup sonarqube
+        uses: warchant/setup-sonar-scanner@v3
+      - name: Run sonarqube
+        run: sonar-scanner
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+      #- name: SonarQube Scan
+      #  uses: sonarsource/sonarqube-scan-action@master
+      #  env:
+      #    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      #    SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+      #- uses: actions/checkout@v2
+      # with:
+      #  fetch-depth: 0
