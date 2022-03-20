@@ -58,5 +58,5 @@ jobs:
           REACT_APP_APP_ID=: ${{ secrets.REACT_APP_APP_ID }}
           REACT_APP_MEASURMENT_ID: ${{ secrets.REACT_APP_MEASURMENT_ID }}
       - uses: actions/checkout@v2
-       with:
-        fetch-depth: 0
+        with:
+          fetch-depth: 0
