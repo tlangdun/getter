@@ -16,6 +16,7 @@
     "@types/react-dom": "^17.0.11",
     "@types/react-redux": "^7.1.22",
     "firebase": "^9.6.7",
+    "formik": "^2.2.9",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-firebase-hooks": "^5.0.3",
@@ -28,8 +29,9 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom --testResultsProcessor ./node_modules/jest-sonar-reporter/index.js",
-    "eject": "react-scripts eject"
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "test:ci": "npm run test -- --coverage --ci --testResultsProcessor=\"jest-junit\" --watchAll=false"
   },
   "eslintConfig": {
     "extends": [
@@ -52,15 +54,16 @@
   "devDependencies": {
     "autoprefixer": "^10.4.2",
     "jest": "^27.5.1",
-    "jest-sonar-reporter": "^2.0.0",
+    "jest-junit": "^13.0.0",
     "jest-watch-typeahead": "^0.6.5",
     "postcss": "^8.4.6",
     "tailwindcss": "^3.0.23"
   },
-  "jestSonar": {
-    "sonar56x": true,
-    "reportPath": "sonarQ-reports",
-    "reportFile": "test-reporter.xml",
-    "indent": 4
-    }
+  "jest-junit": {
+    "suiteName": "jest tests",
+    "outputDirectory": "./sonarQ-reports",
+    "outputName": "junit.xml",
+    "classNameTemplate": "{classname}-{title}",
+    "titleTemplate": "{classname}-{title}"
   }
+}
