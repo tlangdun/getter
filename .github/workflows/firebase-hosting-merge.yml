@@ -23,6 +23,10 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: test
+        working-directory: ./client
+        run: |
+          npm ci && npm run test:ci
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
