@@ -15,7 +15,7 @@ jobs:
       - name: ci and test
         working-directory: ./client
         run: |
-          npm ci && npm run test
+          npm ci && npm run test:ci
   sonarcloud:
     name: SonarCloud
     runs-on: ubuntu-latest
