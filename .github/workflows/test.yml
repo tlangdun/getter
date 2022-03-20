@@ -11,7 +11,9 @@ jobs:
       - uses: actions/checkout@v2
       - name: ci and test
         working-directory: ./client
-        run: sudo npm install && npm run test #&& sonar-scanner
+        run: sudo npm ci #&& sonar-scanner
+      - name: test
+        run: sudo npm run test
       - uses: actions/checkout@master
       - name: Setup sonarqube
         uses: warchant/setup-sonar-scanner@v3
