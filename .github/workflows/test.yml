@@ -8,16 +8,18 @@ jobs:
     name: sonarQ
     runs-on: ubuntu-latest
     steps:
-      - name: testodir
-        working-directory: client
-        run: sudo mkdir okworks
       - uses: actions/checkout@v2
-      - name: ci and test
+      - name: uses Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '16'
+      - name: install dependencies
         working-directory: ./client
-        run: sudo npm ci #&& sonar-scanner
-      - name: test
+        run: npm run ci
+      - run: npm run build
         working-directory: ./client
-        run: sudo npm run test
+      - run: npm run test
+        working-directory: ./client
       - uses: actions/checkout@master
       - name: Setup sonarqube
         uses: warchant/setup-sonar-scanner@v3
