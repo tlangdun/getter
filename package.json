@@ -65,5 +65,15 @@
     "outputName": "junit.xml",
     "classNameTemplate": "{classname}-{title}",
     "titleTemplate": "{classname}-{title}"
+  },
+  "jestSonar": {
+    "reportPath": "reports",
+    "reportFile": "test-reporter.xml",
+    "indent": 4,
+    "env": {
+      "test": {
+        "reportPath": "reports-test"
+      }
+    }
   }
 }
