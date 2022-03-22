@@ -1,6 +1,6 @@
-import React from 'react';
 import { FC } from 'react';
 import { List } from 'reselect/es/types';
+import MenuItems from './MenuItems';
 
 interface Props{
   navigation:List;
@@ -10,7 +10,7 @@ function classNames(...classes:List) {
   return classes.filter(Boolean).join(' ')
 }
 
-const MenuRecruiter:FC<Props> = (props) => {
+const MenuDesktop:FC<Props> = (props) => {
     return(
      <div className="flex-1 flex flex-col min-h-0 border-r border-gray-200 bg-gray-100">
       <div className="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
@@ -23,27 +23,7 @@ const MenuRecruiter:FC<Props> = (props) => {
         </div>
         <nav className="mt-5 flex-1" aria-label="Sidebar">
           <div className="px-2 space-y-1">
-            {props.navigation.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                className={classNames(
-                  item.current
-                    ? 'bg-gray-200 text-gray-900'
-                    : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
-                  'group flex items-center px-2 py-2 text-sm font-medium rounded-md'
-                )}
-              >
-                <item.icon
-                  className={classNames(
-                    item.current ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500',
-                    'mr-3 h-6 w-6'
-                  )}
-                  aria-hidden="true"
-                />
-                {item.name}
-              </a>
-            ))}
+            <MenuItems navigation={props.navigation} />
           </div>
         </nav>
       </div>
@@ -67,4 +47,4 @@ const MenuRecruiter:FC<Props> = (props) => {
     </div>
     );
   }
-  export default MenuRecruiter;
+  export default MenuDesktop;

@@ -1,28 +1,31 @@
 import { Fragment, useState } from 'react'
-import { Dialog, Transition } from '@headlessui/react'
-import MenuRecruiter from '../../components/dashboard/MenuRecruiter'
+import { Dialog, Menu, Transition } from '@headlessui/react'
+import MenuDesktop from '../../components/dashboard/MenuDesktop'
+import MenuItems from '../../components/dashboard/MenuItems'
+
 import { List } from 'reselect/es/types';
 
 import {
-  CalendarIcon,
   HomeIcon,
-  MapIcon,
   MenuIcon,
-  SearchCircleIcon,
-  SpeakerphoneIcon,
   UserGroupIcon,
+  ClipboardListIcon,
+  ChatIcon,
   XIcon,
 } from '@heroicons/react/outline'
 
-const navigation = [
+const navigationRecruiter = [
   { name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
-  { name: 'Calendar', href: '#', icon: CalendarIcon, current: false },
-  { name: 'Teams', href: '#', icon: UserGroupIcon, current: false },
-  { name: 'Directory', href: '#', icon: SearchCircleIcon, current: false },
-  { name: 'Announcements', href: '#', icon: SpeakerphoneIcon, current: false },
-  { name: 'Office Map', href: '#', icon: MapIcon, current: false },
-]
+  { name: 'Recruiting', href: '#', icon: ClipboardListIcon, current: false },
+  { name: 'Candidates List', href: '#', icon: UserGroupIcon, current: false },
+  { name: 'Messages', href: '#', icon: ChatIcon, current: false }
+ ]
 
+ const navigationCandidate = [
+  { name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
+  { name: 'Messages', href: '#', icon: ChatIcon, current: false }
+ ]
+ 
 function classNames(...classes:List) {
   return classes.filter(Boolean).join(' ')
 }
@@ -94,27 +97,7 @@ export default function Dashboard() {
                   </div>
                   <nav aria-label="Sidebar" className="mt-5">
                     <div className="px-2 space-y-1">
-                      {navigation.map((item) => (
-                        <a
-                          key={item.name}
-                          href={item.href}
-                          className={classNames(
-                            item.current
-                              ? 'bg-gray-100 text-gray-900'
-                              : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
-                            'group flex items-center px-2 py-2 text-base font-medium rounded-md'
-                          )}
-                        >
-                          <item.icon
-                            className={classNames(
-                              item.current ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500',
-                              'mr-4 h-6 w-6'
-                            )}
-                            aria-hidden="true"
-                          />
-                          {item.name}
-                        </a>
-                      ))}
+                      <MenuItems navigation={navigationRecruiter} />
                     </div>
                   </nav>
                 </div>
@@ -148,7 +131,7 @@ export default function Dashboard() {
           <div className="flex flex-col w-64">
 
             {/* Sidebar component, swap this element with another sidebar if you like */}
-            <MenuRecruiter navigation={navigation}/>
+            <MenuDesktop navigation={navigationRecruiter}/>
 
 
           </div>
