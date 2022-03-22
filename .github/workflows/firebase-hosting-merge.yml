@@ -17,7 +17,6 @@ jobs:
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
       - name: ci and test
-        working-directory: ./client
         run: |
           npm ci && npm run test:ci
         env:
@@ -40,9 +39,6 @@ jobs:
   build_and_deploy:
     needs: test
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./client
     steps:
       - uses: actions/checkout@v2
       - name: ci and build
