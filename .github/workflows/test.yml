@@ -1,28 +1,20 @@
-name: test
+name: test on PR
 'on':
-  push:
-    branches:
-      - main
-jobs:
+  pull_request:
+    types: [opened, synchronize, reopened]
+jobs:  
   test:
     name: sonarQ
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: uses Node.js
-        uses: actions/setup-node@v1
         with:
-          node-version: '16'
-      - name: install dependencies
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: ci and test
         working-directory: ./client
-        run: npm ci
-      - run: CI='' npm run build
-        working-directory: ./client
-      - run: npm run test
-        working-directory: ./client
+        run: |
+          npm ci && npm run test:ci
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
           REACT_APP_API_KEY: ${{ secrets.REACT_APP_API_KEY }}
           REACT_APP_AUTH_DOMAIN: ${{ secrets.REACT_APP_AUTH_DOMAIN }}
           REACT_APP_PROJECT_ID: ${{ secrets.REACT_APP_PROJECT_ID }}
@@ -30,33 +22,30 @@ jobs:
           REACT_APP_MESSAGING_SENDER_ID: ${{ secrets.REACT_APP_MESSAGING_SENDER_ID }}
           REACT_APP_APP_ID=: ${{ secrets.REACT_APP_APP_ID }}
           REACT_APP_MEASURMENT_ID: ${{ secrets.REACT_APP_MEASURMENT_ID }}
-      - uses: actions/checkout@master
-      - name: Setup sonarqube
-        uses: warchant/setup-sonar-scanner@v3
-      - name: Run sonarqube
-        run: sonar-scanner
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-          REACT_APP_API_KEY: ${{ secrets.REACT_APP_API_KEY }}
-          REACT_APP_AUTH_DOMAIN: ${{ secrets.REACT_APP_AUTH_DOMAIN }}
-          REACT_APP_PROJECT_ID: ${{ secrets.REACT_APP_PROJECT_ID }}
-          REACT_APP_STORAGE_BUCKET: ${{ secrets.REACT_APP_STORAGE_BUCKET }}
-          REACT_APP_MESSAGING_SENDER_ID: ${{ secrets.REACT_APP_MESSAGING_SENDER_ID }}
-          REACT_APP_APP_ID=: ${{ secrets.REACT_APP_APP_ID }}
-          REACT_APP_MEASURMENT_ID: ${{ secrets.REACT_APP_MEASURMENT_ID }}
-      - name: SonarQube Scan
-        uses: sonarsource/sonarqube-scan-action@master
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-          REACT_APP_API_KEY: ${{ secrets.REACT_APP_API_KEY }}
-          REACT_APP_AUTH_DOMAIN: ${{ secrets.REACT_APP_AUTH_DOMAIN }}
-          REACT_APP_PROJECT_ID: ${{ secrets.REACT_APP_PROJECT_ID }}
-          REACT_APP_STORAGE_BUCKET: ${{ secrets.REACT_APP_STORAGE_BUCKET }}
-          REACT_APP_MESSAGING_SENDER_ID: ${{ secrets.REACT_APP_MESSAGING_SENDER_ID }}
-          REACT_APP_APP_ID=: ${{ secrets.REACT_APP_APP_ID }}
-          REACT_APP_MEASURMENT_ID: ${{ secrets.REACT_APP_MEASURMENT_ID }}
+      #- uses: sonarsource/sonarqube-scan-action@master
+       # env:
+        #  SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+         # SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./client
+    steps:
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
+      - name: ci and build
+        run: npm ci && npm run build
+        env:
+          REACT_APP_API_KEY: ${{ secrets.REACT_APP_API_KEY }}
+          REACT_APP_AUTH_DOMAIN: ${{ secrets.REACT_APP_AUTH_DOMAIN }}
+          REACT_APP_PROJECT_ID: ${{ secrets.REACT_APP_PROJECT_ID }}
+          REACT_APP_STORAGE_BUCKET: ${{ secrets.REACT_APP_STORAGE_BUCKET }}
+          REACT_APP_MESSAGING_SENDER_ID: ${{ secrets.REACT_APP_MESSAGING_SENDER_ID }}
+          REACT_APP_APP_ID=: ${{ secrets.REACT_APP_APP_ID }}
+          REACT_APP_MEASURMENT_ID: ${{ secrets.REACT_APP_MEASURMENT_ID }}
