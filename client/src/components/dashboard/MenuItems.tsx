@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { List } from 'reselect/es/types';
-
+import {Link, NavLink} from "react-router-dom";
 
 interface Props{
     navigation:List;
@@ -13,10 +13,10 @@ return classes.filter(Boolean).join(' ')
 const MenuItems:FC<Props> = (props) => {
   return(
     <>
-    {props.navigation.map((item) => (
-    <a
+    {props.navigation.map((item) => (    
+    <NavLink
         key={item.name}
-        href={item.href}
+        to={item.href}
         className={classNames(
         item.current
             ? 'bg-gray-100 text-gray-900'
@@ -32,7 +32,7 @@ const MenuItems:FC<Props> = (props) => {
         aria-hidden="true"
         />
         {item.name}
-    </a>
+    </NavLink>    
     ))}
     </>
   );

@@ -2,6 +2,8 @@ import { Fragment, useState } from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import MenuDesktop from '../../components/dashboard/MenuDesktop'
 import MenuItems from '../../components/dashboard/MenuItems'
+import Recruiting from '../../components/dashboard/Recruiting'
+import { Routes,Route } from 'react-router-dom'
 
 import { List } from 'reselect/es/types';
 
@@ -14,16 +16,18 @@ import {
   XIcon,
 } from '@heroicons/react/outline'
 
+import CandidateList from '../../components/dashboard/CandidateList'
+
 const navigationRecruiter = [
-  { name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
-  { name: 'Recruiting', href: '#', icon: ClipboardListIcon, current: false },
-  { name: 'Candidates List', href: '#', icon: UserGroupIcon, current: false },
-  { name: 'Messages', href: '#', icon: ChatIcon, current: false }
+  { name: 'Dashboard', href: '/dashboard', icon: HomeIcon, current: true },
+  { name: 'Recruiting', href: '/dashboard/recruiting', icon: ClipboardListIcon, current: false, route: Recruiting },
+  { name: 'Candidates List', href: '/dashboard/candidate-list', icon: UserGroupIcon, current: false },
+  { name: 'Messages', href: '/dashboard/messages', icon: ChatIcon, current: false }
  ]
 
  const navigationCandidate = [
-  { name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
-  { name: 'Messages', href: '#', icon: ChatIcon, current: false }
+  { name: 'Dashboard', href: '/dashboard', icon: HomeIcon, current: true },
+  { name: 'Messages', href: '/dashboard/messages', icon: ChatIcon, current: false }
  ]
  
 function classNames(...classes:List) {
@@ -162,17 +166,13 @@ export default function Dashboard() {
             <main className="flex-1 relative z-0 overflow-y-auto focus:outline-none xl:order-last">
               {/* Start main area*/}
               <div className="absolute inset-0 py-6 px-4 sm:px-6 lg:px-8">
-                <div className="h-full border-2 border-gray-200 border-dashed rounded-lg" />
+                <Routes>
+                  <Route path={navigationRecruiter[1].href} element={<Recruiting />} />
+                  <Route path={navigationRecruiter[2].href} element={<CandidateList />} />
+                </Routes>  
               </div>
               {/* End main area */}
             </main>
-            <aside className="hidden relative xl:order-first xl:flex xl:flex-col flex-shrink-0 w-96 border-r border-gray-200 overflow-y-auto">
-              {/* Start secondary column (hidden on smaller screens) */}
-              <div className="absolute inset-0 py-6 px-4 sm:px-6 lg:px-8">
-                <div className="h-full border-2 border-gray-200 border-dashed rounded-lg" />
-              </div>
-              {/* End secondary column */}
-            </aside>
           </div>
         </div>
       </div>
