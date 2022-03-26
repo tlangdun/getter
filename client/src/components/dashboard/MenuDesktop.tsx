@@ -6,13 +6,9 @@ interface Props{
   navigation:List;
 }
 
-function classNames(...classes:List) {
-  return classes.filter(Boolean).join(' ')
-}
-
 const MenuDesktop:FC<Props> = (props) => {
     return(
-     <div className="flex-1 flex flex-col min-h-0 border-r border-gray-200 bg-gray-100">
+     <div className="flex-1 flex flex-col min-h-0 border-r border-gray-200">
       <div className="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
         <div className="flex items-center flex-shrink-0 px-4">
           <img
@@ -27,7 +23,7 @@ const MenuDesktop:FC<Props> = (props) => {
           </div>
         </nav>
       </div>
-      <div className="flex-shrink-0 flex border-t border-gray-200 p-4">
+      <div className="flex-shrink-0 flex border-t bg-violet-100 border-gray-200 p-4">
         <a href="#" className="flex-shrink-0 w-full group block">
           <div className="flex items-center">
             <div>
@@ -38,7 +34,7 @@ const MenuDesktop:FC<Props> = (props) => {
               />
             </div>
             <div className="ml-3">
-              <p className="text-sm font-medium text-gray-700 group-hover:text-gray-900">Whitney Francis</p>
+              <p className="text-sm font-medium text-gray-700 group-hover:text-gray-900">Martin Bosswald</p>
               <p className="text-xs font-medium text-gray-500 group-hover:text-gray-700">View profile</p>
             </div>
           </div>

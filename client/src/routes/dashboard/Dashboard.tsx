@@ -1,11 +1,9 @@
 import { Fragment, useState } from 'react'
-import { Dialog, Menu, Transition } from '@headlessui/react'
+import { Dialog, Transition } from '@headlessui/react'
 import MenuDesktop from '../../components/dashboard/MenuDesktop'
 import MenuItems from '../../components/dashboard/MenuItems'
 import Recruiting from '../../components/dashboard/Recruiting'
 import { Routes,Route } from 'react-router-dom'
-
-import { List } from 'reselect/es/types';
 
 import {
   HomeIcon,
@@ -17,7 +15,6 @@ import {
 } from '@heroicons/react/outline'
 
 import CandidateList from '../../components/dashboard/CandidateList'
-
 const navigationRecruiter = [
   { name: 'Dashboard', href: '/dashboard', icon: HomeIcon, current: true },
   { name: 'Recruiting', href: '/dashboard/recruiting', icon: ClipboardListIcon, current: false, route: Recruiting },
@@ -29,25 +26,13 @@ const navigationRecruiter = [
   { name: 'Dashboard', href: '/dashboard', icon: HomeIcon, current: true },
   { name: 'Messages', href: '/dashboard/messages', icon: ChatIcon, current: false }
  ]
- 
-function classNames(...classes:List) {
-  return classes.filter(Boolean).join(' ')
-}
 
 export default function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   return (
     <>
-      {/*
-        This example requires updating your template:
-
-        ```
-        <html class="h-full bg-white">
-        <body class="h-full overflow-hidden">
-        ```
-      */}
-      <div className="h-full flex">
+      <div className="h-screen flex">
         <Transition.Root show={sidebarOpen} as={Fragment}>
           <Dialog as="div" className="fixed inset-0 flex z-40 lg:hidden" onClose={setSidebarOpen}>
             <Transition.Child
