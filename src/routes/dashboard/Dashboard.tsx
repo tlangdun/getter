@@ -17,9 +17,9 @@ import {
 import CandidateList from '../../components/dashboard/CandidateList'
 const navigationRecruiter = [
   { name: 'Dashboard', href: '/dashboard', icon: HomeIcon, current: true },
-  { name: 'Recruiting', href: '/dashboard/recruiting', icon: ClipboardListIcon, current: false, route: Recruiting },
-  { name: 'Candidates List', href: '/dashboard/candidate-list', icon: UserGroupIcon, current: false },
-  { name: 'Messages', href: '/dashboard/messages', icon: ChatIcon, current: false }
+  { name: 'Recruiting', href: '/recruiting', icon: ClipboardListIcon, current: false, route: Recruiting },
+  { name: 'Candidates List', href: '/candidate-list', icon: UserGroupIcon, current: false },
+  { name: 'Messages', href: '/messages', icon: ChatIcon, current: false }
  ]
 
  const navigationCandidate = [
