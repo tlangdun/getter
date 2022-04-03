@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import Card from './recruiting/Card'
+import Filter from '../filter/Filter';
 
 const people = [
   {
@@ -61,11 +62,14 @@ const people = [
 
 const Recruiting:FC = () => {
     return (
-    <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-      {people.map((person) => (
-        <Card person={person}/>
-      ))}
-    </ul>
+      <>
+        <Filter />
+        <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          {people.map((person) => (
+            <Card person={person}/>
+          ))}
+        </ul>
+      </>
   )
 };
 
