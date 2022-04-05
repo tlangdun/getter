@@ -1,4 +1,4 @@
-import app from './services/firebaseconfig';
+//import app from './services/firebaseconfig';
 // import { getAuth } from 'firebase/auth'
 
 function App() {
