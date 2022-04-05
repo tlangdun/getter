@@ -57,4 +57,4 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_GETTER_38760 }}'
           channelId: live
           projectId: getter-38760
-          entryPoint: "./client" 
+          # entryPoint: "./client" 
