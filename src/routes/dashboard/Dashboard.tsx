@@ -4,6 +4,12 @@ import MenuDesktop from '../../components/dashboard/MenuDesktop'
 import MenuItems from '../../components/dashboard/MenuItems'
 import Recruiting from '../../components/dashboard/Recruiting'
 import { Routes,Route } from 'react-router-dom'
+import CandidateList from '../../components/dashboard/CandidateList'
+import DashboardContent from '../../components/dashboard/DashboardContent'
+import Message from '../../components/dashboard/Message'
+import UserSettings from '../../components/user/UserSettings'
+import Profile from '../../components/user/Profile'
+import Support from '../../components/user/Support'
 
 import {
   HomeIcon,
@@ -14,10 +20,9 @@ import {
   XIcon,
 } from '@heroicons/react/outline'
 
-import CandidateList from '../../components/dashboard/CandidateList'
 const navigationRecruiter = [
   { name: 'Dashboard', href: '/dashboard', icon: HomeIcon, current: true },
-  { name: 'Recruiting', href: '/recruiting', icon: ClipboardListIcon, current: false, route: Recruiting },
+  { name: 'Recruiting', href: '/recruiting', icon: ClipboardListIcon, current: false },
   { name: 'Candidates List', href: '/candidate-list', icon: UserGroupIcon, current: false },
   { name: 'Messages', href: '/messages', icon: ChatIcon, current: false }
  ]
@@ -122,7 +127,6 @@ export default function Dashboard() {
             {/* Sidebar component, swap this element with another sidebar if you like */}
             <MenuDesktop navigation={navigationRecruiter}/>
 
-
           </div>
         </div>
         <div className="flex flex-col min-w-0 flex-1 overflow-hidden">
@@ -152,8 +156,13 @@ export default function Dashboard() {
               {/* Start main area*/}
               <div className="absolute inset-0 py-6 px-4 sm:px-6 lg:px-8">
                 <Routes>
+                  <Route path={navigationRecruiter[0].href} element={<DashboardContent />} /> 
                   <Route path={navigationRecruiter[1].href} element={<Recruiting />} />
                   <Route path={navigationRecruiter[2].href} element={<CandidateList />} />
+                  <Route path={navigationRecruiter[3].href} element={<Message />} />
+                  <Route path='/profile' element={<Profile />} />
+                  <Route path='/settings' element={<UserSettings />} />
+                  <Route path='/support' element={<Support />} />
                 </Routes>  
               </div>
               {/* End main area */}

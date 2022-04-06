@@ -1,8 +1,8 @@
 import { FC, Fragment } from 'react';
 import { List } from 'reselect/es/types';
 import MenuItems from './MenuItems';
-import { Dialog, Menu, Transition } from '@headlessui/react';
-import { ChevronRightIcon, DotsVerticalIcon, SearchIcon, SelectorIcon } from '@heroicons/react/solid'
+import { Menu, Transition } from '@headlessui/react';
+
 
 interface Props{
   navigation:List;
@@ -55,7 +55,7 @@ const MenuDesktop:FC<Props> = (props) => {
                     <Menu.Item>
                       {({ active }) => (
                         <a
-                          href="#"
+                          href="/profile"
                           className={classNames(
                             active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                             'block px-4 py-2 text-sm'
@@ -68,7 +68,7 @@ const MenuDesktop:FC<Props> = (props) => {
                     <Menu.Item>
                       {({ active }) => (
                         <a
-                          href="#"
+                          href="/settings"
                           className={classNames(
                             active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                             'block px-4 py-2 text-sm'
@@ -78,38 +78,12 @@ const MenuDesktop:FC<Props> = (props) => {
                         </a>
                       )}
                     </Menu.Item>
-                    <Menu.Item>
-                      {({ active }) => (
-                        <a
-                          href="#"
-                          className={classNames(
-                            active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                            'block px-4 py-2 text-sm'
-                          )}
-                        >
-                          Notifications
-                        </a>
-                      )}
-                    </Menu.Item>
                   </div>
                   <div className="py-1">
                     <Menu.Item>
                       {({ active }) => (
                         <a
-                          href="#"
-                          className={classNames(
-                            active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                            'block px-4 py-2 text-sm'
-                          )}
-                        >
-                          Get desktop app
-                        </a>
-                      )}
-                    </Menu.Item>
-                    <Menu.Item>
-                      {({ active }) => (
-                        <a
-                          href="#"
+                          href="/support"
                           className={classNames(
                             active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                             'block px-4 py-2 text-sm'
