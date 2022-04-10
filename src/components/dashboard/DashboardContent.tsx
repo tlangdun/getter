@@ -1,7 +1,7 @@
 import { FC } from 'react';
 const DashboardContent:FC = () => {
   return(
-    <><div>Default Dashboard</div></>
+    <><div data-testid="dashboard">Default Dashboard</div></>
   );
 };
 

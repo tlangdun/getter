@@ -1,7 +1,7 @@
 import { FC } from 'react';
 const Message:FC = () => {
   return(
-    <><div>Message Page</div></>
+    <><div data-testid="messages">Message Page</div></>
   );
 };
 

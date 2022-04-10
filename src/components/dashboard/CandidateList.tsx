@@ -23,7 +23,7 @@ const people = [
 
 const CandidateList:FC = () => {
   return(
-    <div className="px-4 sm:px-6 lg:px-8">
+    <div data-testid="candidates-list" className="px-4 sm:px-6 lg:px-8">
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
           <h1 className="text-xl font-semibold text-gray-900">Users</h1>
