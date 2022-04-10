@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { MailIcon, PhoneIcon,PlusSmIcon } from '@heroicons/react/solid'
 type Person = {
+    id:string;
     email:string;
     name:string;
     title:string;
@@ -17,7 +18,6 @@ function addToCandidatesList(id:string) {
 const Card:FC<Props> = ({ person }) => {
   return(
     <li
-        key={person.email}
         className="col-span-1 relative selection:flex flex-col text-center bg-white rounded-lg shadow divide-y divide-gray-200"
     >
         <button
