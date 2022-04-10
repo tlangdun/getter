@@ -25,7 +25,9 @@ describe('Dashboard recruiter', () => {
   test('Should render without crash', async () => {
      render(
       <BrowserRouter>
-        <Dashboard />
+        <Routes>
+          <Route path="*" element={<Dashboard />} />
+        </Routes>
       </BrowserRouter>
      )
   })
