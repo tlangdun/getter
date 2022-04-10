@@ -3,6 +3,11 @@ import { Dialog, Transition } from '@headlessui/react'
 import Recruiting from './Recruiting'
 import MenuDesktop from './MenuDesktop'
 import { Routes,Route } from 'react-router-dom'
+import DashboardContent from './DashboardContent'
+import Profile from '../user/Profile'
+import Message from './Message'
+import UserSettings from '../user/UserSettings'
+import Support from '../user/Support'
 import {
   MenuIcon,
   XIcon,
@@ -78,7 +83,6 @@ export default function Dashboard() {
             {/* Sidebar component, swap this element with another sidebar if you like */}
             <MenuDesktop navigation={RouteDashboardRecruiter}/>
 
-
           </div>
         </div>
         <div className="flex flex-col min-w-0 flex-1 overflow-hidden">
@@ -108,8 +112,13 @@ export default function Dashboard() {
               {/* Start main area*/}
               <div className="absolute inset-0 py-6 px-4 sm:px-6 lg:px-8">
                 <Routes>
+                  <Route path={RouteDashboardRecruiter[0].href} element={<DashboardContent />} /> 
                   <Route path={RouteDashboardRecruiter[1].href} element={<Recruiting />} />
                   <Route path={RouteDashboardRecruiter[2].href} element={<CandidateList />} />
+                  <Route path={RouteDashboardRecruiter[3].href} element={<Message />} />
+                  <Route path='/profile' element={<Profile />} />
+                  <Route path='/settings' element={<UserSettings />} />
+                  <Route path='/support' element={<Support />} />
                 </Routes>  
               </div>
               {/* End main area */}
