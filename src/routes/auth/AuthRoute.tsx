@@ -1,3 +1,4 @@
+import { onAuthStateChanged } from 'firebase/auth';
 import { FC, useEffect } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { userMapper } from '../../helpers/auth/userMapper';
