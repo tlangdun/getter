@@ -1,7 +1,7 @@
 import { User } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../../services/firebaseconfig';
-import { GetterUser } from '../../store/Models';
+import { access_level, GetterUser } from '../../store/Models';
 
 const userMapper = async (user: User | null): Promise<GetterUser> => {
   if (!user) {
@@ -11,10 +11,20 @@ const userMapper = async (user: User | null): Promise<GetterUser> => {
   const docRef = doc(db, "Users", user.uid);
   const docSnap = await getDoc(docRef);
 
+  const tokenres = await user.getIdTokenResult();
+  let claim = access_level.TALENT;
+
+  if (!!tokenres.claims.admin){
+    claim = access_level.ADMIN;
+  } else if(!!tokenres.claims.recruiter){
+    claim = access_level.RECRUITER;
+  } 
+
   if (docSnap.exists()) {
    const u = docSnap.data()
    return {
     uid: user.uid,
+    access_level: claim,
     address_postcode: u.address_postcode,
     availability: u.availability,
     birth_date: u.birth_date,

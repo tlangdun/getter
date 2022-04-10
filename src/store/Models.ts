@@ -6,8 +6,15 @@ type WorkExperience = {
   start_date: string;
 }
 
+export enum access_level {
+  TALENT,
+  RECRUITER,
+  ADMIN
+}
+
 export type GetterUser = null | {
     uid: string;
+    access_level: access_level;
     address_postcode: string;
     availability: string;
     birth_date: string;
