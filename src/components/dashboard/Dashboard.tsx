@@ -1,31 +1,15 @@
 import { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import MenuDesktop from '../../components/dashboard/MenuDesktop'
-import MenuItems from '../../components/dashboard/MenuItems'
-import Recruiting from '../../components/dashboard/Recruiting'
+import Recruiting from './Recruiting'
+import MenuDesktop from './MenuDesktop'
 import { Routes,Route } from 'react-router-dom'
-
 import {
-  HomeIcon,
   MenuIcon,
-  UserGroupIcon,
-  ClipboardListIcon,
-  ChatIcon,
   XIcon,
 } from '@heroicons/react/outline'
 
-import CandidateList from '../../components/dashboard/CandidateList'
-const navigationRecruiter = [
-  { name: 'Dashboard', href: '/dashboard', icon: HomeIcon, current: true },
-  { name: 'Recruiting', href: '/recruiting', icon: ClipboardListIcon, current: false, route: Recruiting },
-  { name: 'Candidates List', href: '/candidate-list', icon: UserGroupIcon, current: false },
-  { name: 'Messages', href: '/messages', icon: ChatIcon, current: false }
- ]
-
- const navigationCandidate = [
-  { name: 'Dashboard', href: '/dashboard', icon: HomeIcon, current: true },
-  { name: 'Messages', href: '/dashboard/messages', icon: ChatIcon, current: false }
- ]
+import CandidateList from './CandidateList';
+import RouteDashboardRecruiter from '../../routes/dashboard/RouteDashboardRecruiter';
 
 export default function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -77,35 +61,7 @@ export default function Dashboard() {
                   </div>
                 </Transition.Child>
                 <div className="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
-                  <div className="flex-shrink-0 flex items-center px-4">
-                    <img
-                      className="h-8 w-auto"
-                      src="https://tailwindui.com/img/logos/workflow-logo-indigo-600-mark-gray-900-text.svg"
-                      alt="Workflow"
-                    />
-                  </div>
-                  <nav aria-label="Sidebar" className="mt-5">
-                    <div className="px-2 space-y-1">
-                      <MenuItems navigation={navigationRecruiter} />
-                    </div>
-                  </nav>
-                </div>
-                <div className="flex-shrink-0 flex border-t border-gray-200 p-4">
-                  <a href="#" className="flex-shrink-0 group block">
-                    <div className="flex items-center">
-                      <div>
-                        <img
-                          className="inline-block h-10 w-10 rounded-full"
-                          src="https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80"
-                          alt=""
-                        />
-                      </div>
-                      <div className="ml-3">
-                        <p className="text-base font-medium text-gray-700 group-hover:text-gray-900">Whitney Francis</p>
-                        <p className="text-sm font-medium text-gray-500 group-hover:text-gray-700">View profile</p>
-                      </div>
-                    </div>
-                  </a>
+                  <MenuDesktop navigation={RouteDashboardRecruiter}/>
                 </div>
               </div>
             </Transition.Child>
@@ -120,7 +76,7 @@ export default function Dashboard() {
           <div className="flex flex-col w-64">
 
             {/* Sidebar component, swap this element with another sidebar if you like */}
-            <MenuDesktop navigation={navigationRecruiter}/>
+            <MenuDesktop navigation={RouteDashboardRecruiter}/>
 
 
           </div>
@@ -152,8 +108,8 @@ export default function Dashboard() {
               {/* Start main area*/}
               <div className="absolute inset-0 py-6 px-4 sm:px-6 lg:px-8">
                 <Routes>
-                  <Route path={navigationRecruiter[1].href} element={<Recruiting />} />
-                  <Route path={navigationRecruiter[2].href} element={<CandidateList />} />
+                  <Route path={RouteDashboardRecruiter[1].href} element={<Recruiting />} />
+                  <Route path={RouteDashboardRecruiter[2].href} element={<CandidateList />} />
                 </Routes>  
               </div>
               {/* End main area */}
