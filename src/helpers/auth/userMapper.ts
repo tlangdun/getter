@@ -1,7 +1,7 @@
 import { User } from 'firebase/auth';
 import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
 import { db } from '../../services/firebaseconfig';
-import { access_level, GetterUser } from '../../store/Models';
+import { access_level, GetterUser } from '../../store/models/userModel';
 
 const userMapper = async (user: User | null): Promise<GetterUser> => {
   if (!user) {
