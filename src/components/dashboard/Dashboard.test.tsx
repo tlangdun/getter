@@ -1,33 +1,16 @@
-import {render, screen} from '@testing-library/react'
+import {render, screen, act} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import React from 'react'
-import {Route,Routes,BrowserRouter} from 'react-router-dom'
+import {Route,Routes, BrowserRouter} from 'react-router-dom'
 import Dashboard from './Dashboard'
-
-
-import {
-    HomeIcon,
-    UserGroupIcon,
-    ClipboardListIcon,
-    ChatIcon,
-  } from '@heroicons/react/outline'
-
-const navRec = [
-    { name: 'Dashboard', href: '/dashboard', icon: HomeIcon, current: true },
-    { name: 'Recruiting', href: '/recruiting', icon: ClipboardListIcon, current: false},
-    { name: 'Candidates List', href: '/candidate-list', icon: UserGroupIcon, current: false },
-    { name: 'Messages', href: '/messages', icon: ChatIcon, current: false }
-]
-
+import MenuDesktop from './MenuDesktop'
+import {createMemoryHistory} from 'history'
 import RouteDashboardRecruiter from '../../routes/dashboard/RouteDashboardRecruiter';
 
 describe('Dashboard recruiter', () => {
-  test('Should render without crash', async () => {
+  test('Should render dashboard without crash', async () => {
      render(
       <BrowserRouter>
-        <Routes>
-          <Route path="*" element={<Dashboard />} />
-        </Routes>
+        <Dashboard />
       </BrowserRouter>
      )
   })
@@ -64,5 +47,90 @@ describe('Dashboard recruiter', () => {
   
     userEvent.click(screen.getByText("Messages"))
     expect(screen.getByTestId("messages")).toBeInTheDocument()
+  })
+})
+
+describe('User menu', () => {
+  test('Should render user menu', async () => {
+    render(
+     <BrowserRouter>
+       <MenuDesktop navigation={RouteDashboardRecruiter}/>
+     </BrowserRouter>
+    )
+  })
+
+  test('can click on the user button', async () => {
+    const { getByTestId, getAllByTestId } = render(
+      <BrowserRouter>
+        <MenuDesktop navigation={RouteDashboardRecruiter} />
+      </BrowserRouter>
+    );
+
+    const [menuButton] = getAllByTestId("user-button");
+    userEvent.click(menuButton);
+  })
+
+  test('can click on menu items', async () => {
+      const { getByTestId, getAllByTestId } = render(
+        <BrowserRouter>
+          <MenuDesktop navigation={RouteDashboardRecruiter} />
+        </BrowserRouter>
+      );
+      const [menuButton] = getAllByTestId("user-button");
+      userEvent.click(menuButton);
+
+      const [profileItem] = getAllByTestId("profile");
+      userEvent.click(profileItem);
+
+      const [settingsItem] = getAllByTestId("settings");
+      userEvent.click(settingsItem);
+
+      const [logoutItem] = getAllByTestId("logout");
+      userEvent.click(logoutItem);
+  })
+
+  test('check the number of items', async () => {
+    const { getByTestId, getAllByTestId } = render(
+      <BrowserRouter>
+        <MenuDesktop navigation={RouteDashboardRecruiter} />
+      </BrowserRouter>
+    );
+    const menuButton = getByTestId("user-button");
+    userEvent.click(menuButton);
+
+    const items = screen.queryAllByLabelText("user-item")
+    expect(items.length).toBe(4)
+  })
+
+  test('navigates user contents when items are clicked', async () => {
+    const { getByTestId, getAllByTestId } = render(
+      <BrowserRouter>
+        <MenuDesktop navigation={RouteDashboardRecruiter} />
+      </BrowserRouter>
+    );
+
+    const items = ["profile", "settings", "support"];
+    const history = createMemoryHistory();
+
+    items.forEach(item => {
+      const path = "/" + item;
+      // Create a simulated click event function 
+      const clickHandler = jest.fn(() => { 
+        history.push(path)
+        
+      })
+
+      const menuButton = getByTestId("user-button");
+      userEvent.click(menuButton);
+
+      act(() =>{
+        screen.getByTestId(item).onclick = () => clickHandler()
+        const [profileItem] = getAllByTestId(item);
+        userEvent.click(profileItem);
+      })
+      
+      expect(clickHandler).toHaveBeenCalled()
+      expect(history.location.pathname).toBe(path)
+    })
   })
 })

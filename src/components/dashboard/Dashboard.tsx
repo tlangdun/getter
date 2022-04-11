@@ -112,6 +112,7 @@ export default function Dashboard() {
               {/* Start main area*/}
               <div className="absolute inset-0 py-6 px-4 sm:px-6 lg:px-8">
                 <Routes>
+                  <Route path={"/"} element={<DashboardContent />} /> 
                   <Route path={RouteDashboardRecruiter[0].href} element={<DashboardContent />} /> 
                   <Route path={RouteDashboardRecruiter[1].href} element={<Recruiting />} />
                   <Route path={RouteDashboardRecruiter[2].href} element={<CandidateList />} />

@@ -24,8 +24,8 @@ const MenuDesktop:FC<Props> = (props) => {
           />
         </div>
         <Menu as="div" className="px-3 relative inline-block text-left">
-              <div>
-                <Menu.Button className="group w-full bg-gray-100 rounded-md px-3.5 py-2 text-sm text-left font-medium text-gray-700 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-purple-500">
+              <div className="userBox">
+                <Menu.Button className="group w-full bg-gray-100 rounded-md px-3.5 py-2 text-sm text-left font-medium text-gray-700 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-purple-500" data-testid="user-button" role="userButton">
                   <span className="flex w-full justify-between items-center">
                     <span className="flex min-w-0 items-center justify-between space-x-3">
                       <img
@@ -51,8 +51,8 @@ const MenuDesktop:FC<Props> = (props) => {
                 leaveTo="transform opacity-0 scale-95"
               >
                 <Menu.Items className="z-10 mx-3 origin-top absolute right-0 left-0 mt-1 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-200 focus:outline-none">
-                  <div className="py-1">
-                    <Menu.Item>
+                  <div className="py-1" aria-label="user-item">
+                    <Menu.Item data-testid="profile">
                       {({ active }) => (
                         <a
                           href="/profile"
@@ -65,7 +65,9 @@ const MenuDesktop:FC<Props> = (props) => {
                         </a>
                       )}
                     </Menu.Item>
-                    <Menu.Item>
+                  </div>
+                  <div className="py-1" aria-label="user-item">
+                    <Menu.Item data-testid="settings">
                       {({ active }) => (
                         <a
                           href="/settings"
@@ -79,8 +81,8 @@ const MenuDesktop:FC<Props> = (props) => {
                       )}
                     </Menu.Item>
                   </div>
-                  <div className="py-1">
-                    <Menu.Item>
+                  <div className="py-1" aria-label="user-item">
+                    <Menu.Item data-testid="support">
                       {({ active }) => (
                         <a
                           href="/support"
@@ -94,8 +96,8 @@ const MenuDesktop:FC<Props> = (props) => {
                       )}
                     </Menu.Item>
                   </div>
-                  <div className="py-1">
-                    <Menu.Item>
+                  <div className="py-1" aria-label="user-item">
+                    <Menu.Item data-testid="logout">
                       {({ active }) => (
                         <a
                           href="#"
