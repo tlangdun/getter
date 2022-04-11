@@ -15,6 +15,7 @@ const AuthRoute: FC = () => {
 
   onAuthStateChanged(auth, (currentUser) => {
       userMapper(currentUser).then((us) => {
+        console.log(us)
         dispatch(UserActions.setFirebaseUser(us));
     });
   });

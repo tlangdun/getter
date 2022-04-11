@@ -12,20 +12,25 @@ export enum access_level {
   ADMIN
 }
 
-export type GetterUser = null | {
+type BasicUser = {
     uid: string;
     access_level: access_level;
+    email: string;
+    first_name: string;
+    last_name: string;
+    pic_url: string;
+    short_bio: string;
+}
+
+export type GetterUser = null | BasicUser | BasicUser & {
     address_postcode: string;
     availability: string;
     birth_date: string;
     canton: string;
     city_of_residence: string;
-    email: string;
     job_role: string;
-    first_name: string;
-    last_name: string;
-    pic_url: string;
-    short_bio: string;
+    skills: string[];
+    programming_languages: string[];
     salary_range: {
       start: number;
       end: number;
