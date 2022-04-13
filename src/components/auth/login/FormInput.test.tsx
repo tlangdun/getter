@@ -22,7 +22,7 @@ describe('FormInput component', () => {
     />
   );
 
-  test('renders label', () => {
+  test('should render its label', () => {
     render(formInput);
     const inputLabel = screen.getByText(testLabel, { exact: true });
     expect(inputLabel).toBeInTheDocument();
