@@ -1,16 +1,12 @@
-//import app from './services/firebaseconfig';
-// import { getAuth } from 'firebase/auth'
-import app from './services/firebaseconfig';
-import { getAuth } from 'firebase/auth'
-import Dashboard from './components/dashboard/Dashboard';
+import { Route, Routes } from 'react-router-dom';
+import AuthRoute from './routes/auth/AuthRoute';
 
 function App() {
-  //const auth = getAuth(app);
   return (
-    <div className='App'>
-      <header className='App-header'>
-        <Dashboard />
-      </header>
+    <div className='App px-4 w-full h-full'>
+      <Routes>
+        <Route path='auth/*' element={<AuthRoute />} />
+      </Routes>
     </div>
   );
 }
