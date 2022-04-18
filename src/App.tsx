@@ -1,13 +1,13 @@
 import { Route, Routes } from 'react-router-dom';
 import AuthRoute from './routes/auth/AuthRoute';
+import LandingRoute from './routes/landing/LandingRoute';
 
 function App() {
   return (
-    <div className='App px-4 w-full h-full'>
       <Routes>
         <Route path='auth/*' element={<AuthRoute />} />
+        <Route path='/*' element={<LandingRoute />} />
       </Routes>
-    </div>
   );
 }
 

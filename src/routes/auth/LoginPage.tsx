@@ -16,7 +16,7 @@ const LoginPage: FC = () => {
           </Link>
         </p>
       </LogoAndTitle>
-
+      <div data-testid='LoginPage'></div>
       <LoginForm />
     </>
   );
