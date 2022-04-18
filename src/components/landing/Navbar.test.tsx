@@ -1,6 +1,8 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
+import App from '../../App';
+import LandingRoute from '../../routes/landing/LandingRoute';
 import NavBar from './NavBar';
 
 describe('NavBar', () => {
@@ -37,7 +39,6 @@ describe('NavBar', () => {
     const featuresLink = screen.getAllByText('features');
     expect(featuresLink[0]).toBeInTheDocument();
   })
-
 });
 
 let renderWithRouter = (element: any) =>

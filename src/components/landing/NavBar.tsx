@@ -6,12 +6,13 @@ import { Link } from 'react-router-dom';
 type NavItem = {
   displayName: string;
   link: string;
+  testid: string;
 };
 
 const navItems: NavItem[] = [
-  { displayName: 'Getter', link: '/' },
-  { displayName: 'About us', link: '/aboutus' },
-  { displayName: 'features', link: '/features' },
+  { displayName: 'Getter', link: '/', testid:'default-link' },
+  { displayName: 'About us', link: '/aboutus', testid:'about-us-link' },
+  { displayName: 'features', link: '/features', testid:'features-link' },
 ];
 
 const NavBar: FC = () => {
@@ -36,7 +37,7 @@ const NavBar: FC = () => {
         </div>
         <Popover.Group as='nav' className='hidden md:flex space-x-10'>
           {navItems.map((i) => (
-            <Link to={i.link} key={i.displayName}>
+            <Link data-testid={i.testid} to={i.link} key={i.displayName}>
               {i.displayName}
             </Link>
           ))}
@@ -49,6 +50,7 @@ const NavBar: FC = () => {
             Sign in
           </Link>
           <Link
+            data-testid="signup"
             to='auth/signup'
             className='ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700'>
             Sign up
@@ -91,14 +93,14 @@ const NavBar: FC = () => {
             <div className='py-6 px-5'>
               <div className='grid grid-cols-2 gap-4'>
                 {navItems.map((i) => (
-                  <Link to={i.link} key={i.displayName}>
+                  <Link data-testid={i.testid} to={i.link} key={i.displayName}>
                     {i.displayName}
                   </Link>
                 ))}
               </div>
               <div className='mt-6'>
                 <Link
-                  to='auth/sugnup'
+                  to='auth/signup'
                   className='w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700'>
                   Sign up
                 </Link>
