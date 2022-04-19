@@ -60,7 +60,7 @@ describe('User menu', () => {
   })
 
   test('can click on the user button', async () => {
-    const { getByTestId, getAllByTestId } = render(
+    const { getAllByTestId } = render(
       <BrowserRouter>
         <MenuDesktop navigation={RouteDashboardRecruiter} />
       </BrowserRouter>
@@ -71,7 +71,7 @@ describe('User menu', () => {
   })
 
   test('can click on menu items', async () => {
-      const { getByTestId, getAllByTestId } = render(
+      const { getAllByTestId } = render(
         <BrowserRouter>
           <MenuDesktop navigation={RouteDashboardRecruiter} />
         </BrowserRouter>
@@ -90,7 +90,7 @@ describe('User menu', () => {
   })
 
   test('check the number of items', async () => {
-    const { getByTestId, getAllByTestId } = render(
+    const { getByTestId } = render(
       <BrowserRouter>
         <MenuDesktop navigation={RouteDashboardRecruiter} />
       </BrowserRouter>

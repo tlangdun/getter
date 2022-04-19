@@ -14,7 +14,7 @@ const LoginForm = () => {
   return (
     <>
       <Card>
-        <div className='sm:w-96'>
+        <div data-testid="login-form" className='sm:w-96'>
           <EmailPasswordForm />
 
           <div className='mt-6'>
