@@ -1,4 +1,5 @@
-
+# Code Analysis:
+https://sonarcloud.io/project/overview?id=tlangdun_getter
 
 # Definition of Done
 •	Der Code ist fertiggestellt und im Versionierungssystem eingespielt.
