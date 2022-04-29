@@ -79,9 +79,10 @@ export default function Example() {
                     <div className="space-y-5 sm:space-y-4">
                         <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl">Meet our leadership</h2>
                         <p className="text-xl text-gray-500">
-                            Libero fames augue nisl porttitor nisi, quis. Id ac elit odio vitae elementum enim vitae
-                            ullamcorper
-                            suspendisse. Vivamus fringilla.
+                            We are a team of 9 developers who want to offer you
+                            a new and better way of advertising.
+                            Our goal is to simplify your application process
+                            and bring you a better experience in the professional world.
                         </p>
                     </div>
                     <div className="lg:col-span-2">
