@@ -1,22 +1,19 @@
-import { Fragment, useState } from 'react'
+import { FC, Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import Recruiting from './Recruiting'
 import MenuDesktop from './MenuDesktop'
-import { Routes,Route } from 'react-router-dom'
-import DashboardContent from './DashboardContent'
-import Profile from '../user/Profile'
-import Message from './Message'
-import UserSettings from '../user/UserSettings'
-import Support from '../user/Support'
+import RouteDashboardRecruiter from '../../routes/dashboard/RouteDashboardRecruiter';
+
 import {
   MenuIcon,
   XIcon,
 } from '@heroicons/react/outline'
 
-import CandidateList from './CandidateList';
-import RouteDashboardRecruiter from '../../routes/dashboard/RouteDashboardRecruiter';
+interface Props{
+  content:JSX.Element;
+}
 
-export default function Dashboard() {
+
+const Dashboard:FC<Props> = (props) => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   return (
@@ -111,16 +108,7 @@ export default function Dashboard() {
             <main className="flex-1 relative z-0 overflow-y-auto focus:outline-none xl:order-last">
               {/* Start main area*/}
               <div className="absolute inset-0 py-6 px-4 sm:px-6 lg:px-8">
-                <Routes>
-                  <Route path={"/"} element={<DashboardContent />} /> 
-                  <Route path={RouteDashboardRecruiter[0].href} element={<DashboardContent />} /> 
-                  <Route path={RouteDashboardRecruiter[1].href} element={<Recruiting />} />
-                  <Route path={RouteDashboardRecruiter[2].href} element={<CandidateList />} />
-                  <Route path={RouteDashboardRecruiter[3].href} element={<Message />} />
-                  <Route path='/profile' element={<Profile />} />
-                  <Route path='/settings' element={<UserSettings />} />
-                  <Route path='/support' element={<Support />} />
-                </Routes>  
+                {props.content}
               </div>
               {/* End main area */}
             </main>
@@ -130,3 +118,4 @@ export default function Dashboard() {
     </>
   )
 }
+export default Dashboard
