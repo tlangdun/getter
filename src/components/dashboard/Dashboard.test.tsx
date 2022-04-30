@@ -5,12 +5,17 @@ import Dashboard from './Dashboard'
 import MenuDesktop from './MenuDesktop'
 import {createMemoryHistory} from 'history'
 import RouteDashboardRecruiter from '../../routes/dashboard/RouteDashboardRecruiter';
+import Recruiting from './Recruiting'
+import DashboardRoute from '../../routes/dashboard/DashboardRoute'
+import DashboardContent from './DashboardContent'
+import CandidateList from './CandidateList'
+import Message from './Message'
 
 describe('Dashboard recruiter', () => {
   test('Should render dashboard without crash', async () => {
      render(
       <BrowserRouter>
-        <Dashboard />
+        <Dashboard content={<Recruiting/>}/>
       </BrowserRouter>
      )
   })
@@ -19,7 +24,7 @@ describe('Dashboard recruiter', () => {
     render(
       <BrowserRouter>
         <Routes>
-          <Route path="*" element={<Dashboard />} />
+          <Route path="*" element={<Dashboard content={<Recruiting/>}/>} />
         </Routes>
       </BrowserRouter>
     )
@@ -32,20 +37,43 @@ describe('Dashboard recruiter', () => {
     render(
       <BrowserRouter>
         <Routes>
-          <Route path='*' element={<Dashboard />} />
+          <Route path='*' element={<Dashboard content={<DashboardContent/>}/>} />
         </Routes>
       </BrowserRouter>
     )
-    userEvent.click(screen.getByText("Dashboard"))
     expect(screen.getByTestId("dashboard")).toBeInTheDocument()
-  
-    userEvent.click(screen.getByText("Recruiting"))
+  })
+
+  test('show recruiting page', async () => {
+    render(
+      <BrowserRouter>
+        <Routes>
+          <Route path='*' element={<Dashboard content={<Recruiting/>}/>} />
+        </Routes>
+      </BrowserRouter>
+    )
     expect(screen.getByTestId("recruiting")).toBeInTheDocument()
-  
-    userEvent.click(screen.getByText("Candidates List"))
+  })
+
+  test('show candidates list page', async () => {
+    render(
+      <BrowserRouter>
+        <Routes>
+          <Route path='*' element={<Dashboard content={<CandidateList/>}/>} />
+        </Routes>
+      </BrowserRouter>
+    )
     expect(screen.getByTestId("candidates-list")).toBeInTheDocument()
-  
-    userEvent.click(screen.getByText("Messages"))
+  })
+
+  test('show message page', async () => {
+    render(
+      <BrowserRouter>
+        <Routes>
+          <Route path='*' element={<Dashboard content={<Message/>}/>} />
+        </Routes>
+      </BrowserRouter>
+    )
     expect(screen.getByTestId("messages")).toBeInTheDocument()
   })
 })
