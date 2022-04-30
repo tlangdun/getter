@@ -15,7 +15,8 @@ const routesDashboard = [
   },
   {
     name: 'Queries',
-    href: '/queries',
+    href: '/dashboard/queries',
+    routing: '/queries',
     icon: HomeIcon,
     current: true,
   },
