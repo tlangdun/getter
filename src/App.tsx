@@ -3,7 +3,7 @@ import { getAuth } from 'firebase/auth'
 import Dashboard from './components/dashboard/Dashboard';
 
 function App() {
-  const auth = getAuth(app);
+  //const auth = getAuth(app);
   return (
     <div className='App'>
       <header className='App-header'>

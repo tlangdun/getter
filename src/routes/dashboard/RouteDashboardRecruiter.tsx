@@ -13,6 +13,12 @@ const routesDashboard = [
     current: true,
   },
   {
+    name: 'Queries',
+    href: '/queries',
+    icon: HomeIcon,
+    current: true,
+  },
+  {
     name: 'Recruiting',
     href: '/recruiting',
     icon: ClipboardListIcon,
