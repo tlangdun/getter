@@ -5,6 +5,7 @@ export default function Modal() {
   return (
     <>
       <button
+      data-testid="new-query-button"
       type="button"
       onClick={() => setShowModal(true)}
       className="relative block w-full border-2 border-gray-300 border-dashed rounded-lg p-12 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
@@ -63,7 +64,7 @@ export default function Modal() {
                     type="button"
                     onClick={() => setShowModal(false)}
                   >
-                    Save Changes
+                    Save
                   </button>
                 </div>
               </div>
