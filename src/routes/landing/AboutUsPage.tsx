@@ -96,7 +96,6 @@ const AboutUsPage: FC = () => {
             </div>
             <div className='lg:col-span-2'>
               <ul
-                role='list'
                 className='space-y-12 sm:grid sm:grid-cols-2 sm:gap-12 sm:space-y-0 lg:gap-x-8'>
                 {people.map((person) => (
                   <li key={person.name}>
