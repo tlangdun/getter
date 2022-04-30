@@ -1,8 +1,3 @@
-interface Props {
-    className: String,
-    "area-hidden": String
-}
-
 const navigation = {
     main: [
         { name: 'About', href: '#' },
