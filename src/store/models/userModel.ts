@@ -22,7 +22,9 @@ type BasicUser = {
     short_bio: string;
 }
 
-export type GetterUser = null | BasicUser | BasicUser & {
+export type GetterRecruiter = null | BasicUser;
+
+export type GetterTalent = null | BasicUser | BasicUser & {
     address_postcode: string;
     availability: string;
     birth_date: string;
