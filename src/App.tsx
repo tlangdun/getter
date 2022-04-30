@@ -1,15 +1,15 @@
-import app from './services/firebaseconfig';
-import { getAuth } from 'firebase/auth'
-import Dashboard from './components/dashboard/Dashboard';
+import { Route, Routes } from 'react-router-dom';
+import AuthRoute from './routes/auth/AuthRoute';
+import DashboardRoute from './routes/dashboard/DashboardRoute';
+import LandingRoute from './routes/landing/LandingRoute';
 
 function App() {
-  //const auth = getAuth(app);
-  return (
-    <div className='App'>
-      <header className='App-header'>
-        <Dashboard />
-      </header>
-    </div>
+  return (    
+      <Routes>
+        <Route path='auth/*' element={<AuthRoute />} />
+        <Route path='dashboard/*' element={<DashboardRoute/>} />
+        <Route path='/*' element={<LandingRoute />} />
+      </Routes>
   );
 }
 

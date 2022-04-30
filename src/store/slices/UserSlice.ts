@@ -1,20 +1,20 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { UserCredential } from 'firebase/auth';
+import { GetterUser } from '../models/userModel';
 
 interface UserState {
-  userCredentials: UserCredential | null;
+  user: GetterUser;
 }
 
 const initialState: UserState = {
-  userCredentials: null,
+  user: null,
 };
 
 const UserSlice = createSlice({
   name: 'user',
   initialState: initialState,
   reducers: {
-    setFirebaseUserCredentials(state, action: PayloadAction<UserCredential>) {
-      state.userCredentials = action.payload;
+    setFirebaseUser(state, action: PayloadAction<GetterUser>) {
+      state.user = action.payload;
     },
   },
 });
