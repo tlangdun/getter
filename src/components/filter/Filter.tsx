@@ -1,50 +1,22 @@
-import { FC } from 'react';
-import { Fragment } from 'react'
+import { FC, Fragment } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon, FilterIcon } from '@heroicons/react/solid'
 import { List } from 'reselect/es/types';
-const filters = {
-    price: [
-      { value: '0', label: '$0 - $25', checked: false },
-      { value: '25', label: '$25 - $50', checked: false },
-      { value: '50', label: '$50 - $75', checked: false },
-      { value: '75', label: '$75+', checked: false },
-    ],
-    color: [
-      { value: 'white', label: 'White', checked: false },
-      { value: 'beige', label: 'Beige', checked: false },
-      { value: 'blue', label: 'Blue', checked: true },
-      { value: 'brown', label: 'Brown', checked: false },
-      { value: 'green', label: 'Green', checked: false },
-      { value: 'purple', label: 'Purple', checked: false },
-    ],
-    size: [
-      { value: 'xs', label: 'XS', checked: false },
-      { value: 's', label: 'S', checked: true },
-      { value: 'm', label: 'M', checked: false },
-      { value: 'l', label: 'L', checked: false },
-      { value: 'xl', label: 'XL', checked: false },
-      { value: '2xl', label: '2XL', checked: false },
-    ],
-    category: [
-      { value: 'all-new-arrivals', label: 'All New Arrivals', checked: false },
-      { value: 'tees', label: 'Tees', checked: false },
-      { value: 'objects', label: 'Objects', checked: false },
-      { value: 'sweatshirts', label: 'Sweatshirts', checked: false },
-      { value: 'pants-and-shorts', label: 'Pants & Shorts', checked: false },
-    ],
+
+interface Props {
+  skills:List;
+  programmingLanguages:List;
+  size:List;
+  category:List;
+  sortOptions:List;
 }
-const sortOptions = [
-    { name: 'Most Popular', href: '#', current: true },
-    { name: 'Best Rating', href: '#', current: false },
-    { name: 'Newest', href: '#', current: false },
-]
-  
+
 function classNames(...classes:List) {
-    return classes.filter(Boolean).join(' ')
+  return classes.filter(Boolean).join(' ')
 }
   
-const Filter:FC = () => {
+const Filter:FC<Props> = (props) => {
+
   return(
     <div className="bg-white py-2">
 
@@ -81,7 +53,7 @@ const Filter:FC = () => {
               <fieldset>
                 <legend className="block font-medium">Price</legend>
                 <div className="pt-6 space-y-6 sm:pt-4 sm:space-y-4">
-                  {filters.price.map((option, optionIdx) => (
+                  {props.skills.map((option, optionIdx) => (
                     <div key={option.value} className="flex items-center text-base sm:text-sm">
                       <input
                         id={`price-${optionIdx}`}
@@ -101,7 +73,7 @@ const Filter:FC = () => {
               <fieldset>
                 <legend className="block font-medium">Color</legend>
                 <div className="pt-6 space-y-6 sm:pt-4 sm:space-y-4">
-                  {filters.color.map((option, optionIdx) => (
+                  {props.programmingLanguages.map((option, optionIdx) => (
                     <div key={option.value} className="flex items-center text-base sm:text-sm">
                       <input
                         id={`color-${optionIdx}`}
@@ -123,7 +95,7 @@ const Filter:FC = () => {
               <fieldset>
                 <legend className="block font-medium">Size</legend>
                 <div className="pt-6 space-y-6 sm:pt-4 sm:space-y-4">
-                  {filters.size.map((option, optionIdx) => (
+                  {props.size.map((option, optionIdx) => (
                     <div key={option.value} className="flex items-center text-base sm:text-sm">
                       <input
                         id={`size-${optionIdx}`}
@@ -143,7 +115,7 @@ const Filter:FC = () => {
               <fieldset>
                 <legend className="block font-medium">Category</legend>
                 <div className="pt-6 space-y-6 sm:pt-4 sm:space-y-4">
-                  {filters.category.map((option, optionIdx) => (
+                  {props.category.map((option, optionIdx) => (
                     <div key={option.value} className="flex items-center text-base sm:text-sm">
                       <input
                         id={`category-${optionIdx}`}
@@ -187,7 +159,7 @@ const Filter:FC = () => {
               >
                 <Menu.Items className="origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-2xl bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                   <div className="py-1">
-                    {sortOptions.map((option) => (
+                    {props.sortOptions.map((option) => (
                       <Menu.Item key={option.name}>
                         {({ active }) => (
                           <a
