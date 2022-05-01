@@ -16,7 +16,7 @@ const DashboardRoute:FC = () => {
     <>
       <Routes>
         <Route path={RouteDashboardRecruiter[0].routing + "/*" } element={<Dashboard content={<DashboardContent/>}/>} />
-        <Route path={RouteDashboardRecruiter[1].routing + "/*" } element={<Dashboard content={<Queries/>}/>} />
+        <Route path={RouteDashboardRecruiter[1].routing + "/*" } element={<Dashboard content={<Queries.Queries/>}/>} />
         <Route path={RouteDashboardRecruiter[2].routing + "/*" } element={<Dashboard content={<Recruiting/>}/>} />
         <Route path={RouteDashboardRecruiter[3].routing + "/*" } element={<Dashboard content={<CandidateList/>}/>} />
         <Route path={RouteDashboardRecruiter[4].routing + "/*" } element={<Dashboard content={<Message/>}/>} />
