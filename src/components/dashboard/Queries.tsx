@@ -36,7 +36,7 @@ const Queries:FC = () => {
   const [queryNames, setQueryNames] = useState<FilterQueries[]>([]);
 
   const newObj = async () => {
-    const userQueries = await getRecruiterQueryList()
+    const userQueries: any = await getRecruiterQueryList()
     setQueryNames(userQueries)
   }
 
