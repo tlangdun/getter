@@ -24,7 +24,7 @@ const AuthRoute: FC = () => {
     if (user) {
       navigate('/dashboard');
     }
-  }, [user]);
+  }, [user, navigate]);
 
   return (
     <>
