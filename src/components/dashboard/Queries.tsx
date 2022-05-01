@@ -1,38 +1,28 @@
 import { FC } from 'react';
-
+import React, { useEffect, useState } from "react";
 import PopUp from './QueriesFormUp'
+import {getRecruiterQueryList} from '../../queries/getRecruiterQueryList'
 
-const queryItems = [
-  {
-    name: 'Senior Software Architect',
-    id: '0'
-  },
-  {
-    name: 'Junior Data Scientist',
-    id: '1'
-  },
-  {
-    name: 'Senior Software Architect1',
-    id: '2'
-  },
-  {
-    name: 'Junior Data Scientist1',
-    id: '3'
-  },
-  {
-    name: 'Senior Software Architect2',
-    id: '4'
-  },
-  {
-    name: 'Junior Data Scientist2',
-    id: '5'
-  },
-]
+interface FilterQueries {
+  name: string;
+  id: string;
+}
 
 const QueryItem = () => {
+  const [val, setVal] = useState<FilterQueries[]>([]);
+
+  const newObj = async () => {
+    const userQueries = await getRecruiterQueryList()
+    setVal(userQueries)
+  }
+
+  useEffect(() => {
+    newObj();
+  }, []);
+
   return (
     <ul role="list" className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-3 lg:grid-cols-4 h-20">
-      {queryItems.map((query) => (
+      {val.map((query) => (
         <li key={query.id} className="flex items-center justify-center col-span-1 bg-white rounded-lg shadow divide-y divide-gray-200">
           <button
             type="button"
@@ -42,11 +32,12 @@ const QueryItem = () => {
           </button>
        </li>
       ))}
+      {}
     </ul>
   )
 }
 
-const Quieres:FC = () => {
+const Queries:FC = () => {
   return(
     <div>
       <div className="mb-24">
@@ -60,4 +51,4 @@ const Quieres:FC = () => {
   );
 };
 
-export default Quieres
+export default Queries
