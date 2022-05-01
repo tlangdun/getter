@@ -55,7 +55,7 @@ const MenuDesktop:FC<Props> = (props) => {
                     <Menu.Item data-testid="profile">
                       {({ active }) => (
                         <a
-                          href="/profile"
+                          href="/dashboard/profile"
                           className={classNames(
                             active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                             'block px-4 py-2 text-sm'
@@ -70,7 +70,7 @@ const MenuDesktop:FC<Props> = (props) => {
                     <Menu.Item data-testid="settings">
                       {({ active }) => (
                         <a
-                          href="/settings"
+                          href="/dashboard/settings"
                           className={classNames(
                             active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                             'block px-4 py-2 text-sm'
@@ -85,7 +85,7 @@ const MenuDesktop:FC<Props> = (props) => {
                     <Menu.Item data-testid="support">
                       {({ active }) => (
                         <a
-                          href="/support"
+                          href="/dashboard/support"
                           className={classNames(
                             active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                             'block px-4 py-2 text-sm'
