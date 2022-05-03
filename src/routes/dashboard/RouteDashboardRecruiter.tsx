@@ -9,24 +9,35 @@ const routesDashboard = [
   {
     name: 'Dashboard',
     href: '/dashboard',
+    routing: '/',
+    icon: HomeIcon,
+    current: true,
+  },
+  {
+    name: 'Queries',
+    href: '/dashboard/queries',
+    routing: '/queries',
     icon: HomeIcon,
     current: true,
   },
   {
     name: 'Recruiting',
-    href: '/recruiting',
+    href: '/dashboard/recruiting',
+    routing: '/recruiting',
     icon: ClipboardListIcon,
     current: false,
   },
   {
     name: 'Candidates List', 
-    href: '/candidate-list', 
+    href: '/dashboard/candidate-list', 
+    routing: '/candidate-list',
     icon: UserGroupIcon, 
     current: false,
   },
   {
     name: 'Messages', 
-    href: '/messages', 
+    href: '/dashboard/messages', 
+    routing: '/messages',
     icon: ChatIcon, 
     current: false,
   }
