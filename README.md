@@ -1,5 +1,3 @@
-
-
 # Definition of Done
 •	Der Code ist fertiggestellt und im Versionierungssystem eingespielt.
 •	Es gab einen Code Review bzw. der Code wurde im Pair Programming erarbeitet
