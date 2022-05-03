@@ -2,7 +2,12 @@ import { FC, Fragment } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon, FilterIcon } from '@heroicons/react/solid'
 import { List } from 'reselect/es/types';
+import { isEqual } from 'lodash';
+import { ActiveFiltersActions } from '../../store/slices/ActiveFiltersSlice';
+import { useAppDispatch } from '../../store/hooks';
 
+
+let activeFilters:any = []
 interface Props {
   skills:List;
   programmingLanguages:List;
@@ -16,7 +21,23 @@ function classNames(...classes:List) {
 }
   
 const Filter:FC<Props> = (props) => {
+  const dispatch = useAppDispatch();
 
+  function handleActiveFilter(event:any) {
+    let filter = {id: event.target.id, name: event.target.value};
+    let doAdd = true
+    for (var i = 0; i < activeFilters.length; i++) {
+      if (isEqual(activeFilters[i], filter)) {
+        activeFilters.splice(i, 1);
+        doAdd = false
+      }
+    }
+    if(doAdd) {
+      activeFilters.push(filter)
+    }
+    let temp = Object.assign({}, activeFilters);
+    dispatch(ActiveFiltersActions.setActiveFilter(temp))
+  }
   return(
     <div className="bg-white py-2">
 
@@ -37,7 +58,8 @@ const Filter:FC<Props> = (props) => {
                   className="flex-none w-5 h-5 mr-2 text-gray-400 group-hover:text-gray-500"
                   aria-hidden="true"
                 />
-                2 Filters
+                
+                {activeFilters.length} Filters
               </Disclosure.Button>
             </div>
             <div className="pl-6">
@@ -51,19 +73,20 @@ const Filter:FC<Props> = (props) => {
           <div className="max-w-7xl mx-auto grid grid-cols-2 gap-x-4 px-4 text-sm sm:px-6 md:gap-x-6 lg:px-8">
             <div className="grid grid-cols-1 gap-y-10 auto-rows-min md:grid-cols-2 md:gap-x-6">
               <fieldset>
-                <legend className="block font-medium">Price</legend>
+                <legend className="block font-medium">Skills</legend>
                 <div className="pt-6 space-y-6 sm:pt-4 sm:space-y-4">
                   {props.skills.map((option, optionIdx) => (
                     <div key={option.value} className="flex items-center text-base sm:text-sm">
                       <input
-                        id={`price-${optionIdx}`}
-                        name="price[]"
+                        onClick={handleActiveFilter}
+                        id={`skills-${optionIdx}`}
+                        name="skills[]"
                         defaultValue={option.value}
                         type="checkbox"
                         className="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500"
                         defaultChecked={option.checked}
                       />
-                      <label htmlFor={`price-${optionIdx}`} className="ml-3 min-w-0 flex-1 text-gray-600">
+                      <label htmlFor={`skills-${optionIdx}`} className="ml-3 min-w-0 flex-1 text-gray-600">
                         {option.label}
                       </label>
                     </div>
@@ -71,19 +94,20 @@ const Filter:FC<Props> = (props) => {
                 </div>
               </fieldset>
               <fieldset>
-                <legend className="block font-medium">Color</legend>
+                <legend className="block font-medium">Programming Languages</legend>
                 <div className="pt-6 space-y-6 sm:pt-4 sm:space-y-4">
                   {props.programmingLanguages.map((option, optionIdx) => (
                     <div key={option.value} className="flex items-center text-base sm:text-sm">
                       <input
-                        id={`color-${optionIdx}`}
-                        name="color[]"
+                        onClick={handleActiveFilter}
+                        id={`programmingLanguages-${optionIdx}`}
+                        name="programmingLanguages[]"
                         defaultValue={option.value}
                         type="checkbox"
                         className="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500"
                         defaultChecked={option.checked}
                       />
-                      <label htmlFor={`color-${optionIdx}`} className="ml-3 min-w-0 flex-1 text-gray-600">
+                      <label htmlFor={`programmingLanguages-${optionIdx}`} className="ml-3 min-w-0 flex-1 text-gray-600">
                         {option.label}
                       </label>
                     </div>

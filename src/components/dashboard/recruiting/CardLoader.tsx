@@ -1,5 +1,7 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import Card from './Card';
+import { useAppSelector } from '../../../store/hooks';
+
 const people = [
     {
       id: "1",
@@ -63,6 +65,11 @@ const people = [
     },
 ]
 const CardLoader:FC = () => {
+  const activeFilters = useAppSelector((state) => state.activeFilters);
+
+  useEffect(()=>{
+    console.log(activeFilters)
+  })
   return(
     <>
       <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">

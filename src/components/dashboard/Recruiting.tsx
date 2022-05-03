@@ -1,6 +1,6 @@
 import { FC } from 'react';
-import Card from './recruiting/Card'
 import FilterLoader from '../filter/FilterLoader';
+import CardLoader from './recruiting/CardLoader';
 
 
 const Recruiting:FC = () => {
@@ -8,7 +8,7 @@ const Recruiting:FC = () => {
     <>
       <div data-testid="recruiting">
         <FilterLoader />
-        
+        <CardLoader />
       </div>  
     </>
   )

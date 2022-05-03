@@ -1,10 +1,7 @@
-import { FC, useState } from 'react';
-import { Fragment } from 'react'
-import { Disclosure, Listbox, Menu, Transition } from '@headlessui/react'
-import { ChevronDownIcon, FilterIcon } from '@heroicons/react/solid'
+import { FC, useEffect, useState } from 'react';
 import { List } from 'reselect/es/types';
 import { useAppSelector } from '../../store/hooks';
-import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
+import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../services/firebaseconfig';
 import { GetterUser } from '../../store/models/userModel'
 import Filter from './Filter';
@@ -37,7 +34,7 @@ const sortOptions = [
 function fillFilterMap(array:List) {
     let filter = new Array();
     array.forEach(function (elem){
-        let map = {value:elem.toLowerCase, label:elem, checked:false}
+        let map = {value:elem.toLowerCase(), label:elem, checked:false}
         filter.push(map)
     })
     return filter;
@@ -48,8 +45,6 @@ async function loadFilters(user:GetterUser) {
     
     const skillsRef = collection(db, `Skills`);
     const programmingLanguagesRef = collection(db, `Programming_languages`);
-
-    const progsRef = collection(db, `Users/${user.uid}/programming_languages`);
 
     let skills = new Array();
     let programmmingLanguages;
@@ -69,22 +64,26 @@ async function loadFilters(user:GetterUser) {
   }
 }
 const FilterLoader:FC = () => {
+
   const user = useAppSelector((state) => state.user.user);
   const [skillsState,updateSkills] = useState(new Array())
   const [programmingLanguagesState,updateProgrammingLanguages] = useState(new Array())
 
-  loadFilters(user)
-    .then(() => {
-      updateSkills(filters.skills);
-      updateProgrammingLanguages(filters.programmingLanguages)
-    })
-    .catch(()=>{
-      alert("filter couldnt be loaded")
-    })
+  useEffect(() => {
+    loadFilters(user)
+      .then(() => {
+        console.log("did mount")
+        updateSkills(filters.skills);
+        updateProgrammingLanguages(filters.programmingLanguages)
+      })
+      .catch(()=>{
+        alert("filter couldnt be loaded")
+      })
+  },[])
   
   return(
     <>
-        <Filter skills={skillsState} programmingLanguages={programmingLanguagesState} size={filters.size} category={filters.category} sortOptions={sortOptions}/>
+      <Filter skills={skillsState} programmingLanguages={programmingLanguagesState} size={filters.size} category={filters.category} sortOptions={sortOptions}/>
     </>
   );
 };
