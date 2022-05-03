@@ -101,13 +101,13 @@ export const getDocumentsByFilter = async (recruiterForm: QueryFilter): Promise<
     if (recruiterForm.job_role != null)
         queryFilters.push(where('job_role', '==', recruiterForm.job_role),)
 
-    if (recruiterForm.skills != null)
+    if (recruiterForm.skills?.length !== 0 || recruiterForm.skills!= null)
         queryFilters.push(where('skills', 'array-contains-any', recruiterForm.skills),)
 
-    if (recruiterForm.programming_languages?.length === 0)
+    if (recruiterForm.programming_languages?.length !== 0 || recruiterForm.programming_languages!= null)
         queryFilters.push(where('programming_languages', 'array-contains-any', recruiterForm.programming_languages),)
 
-    if (recruiterForm.spoken_languages?.length === 0)
+    if (recruiterForm.spoken_languages?.length !== 0 || recruiterForm.spoken_languages!= null)
         queryFilters.push(where('spoken_languages', 'array-contains-any', recruiterForm.spoken_languages),)
 
     if (recruiterForm.work_experience != null)
