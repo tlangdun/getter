@@ -11,7 +11,7 @@ const testQueries = [
 ]
 
 describe('Queries page', () => {
-  test('Should render queries page', async () => {
+  test('Should render queries page', () => {
     render(
      <BrowserRouter>
        <Dashboard content={<QueriesModul.Queries/>}/>
@@ -19,7 +19,7 @@ describe('Queries page', () => {
     )
   })
 
-  test('Can click on the new query button', async () => {
+  test('Can click on the new query button', () => {
     const { getAllByTestId } = render(
       <BrowserRouter>
         <Dashboard content={<QueriesModul.Queries/>} />
@@ -30,7 +30,7 @@ describe('Queries page', () => {
     userEvent.click(newQueryButton);
   })
 
-  test('Shows the correct number of queries buttons', async () => {
+  test('Shows the correct number of queries buttons', () => {
     render(
       <QueriesModul.QueryItem names={testQueries}/>
     );
@@ -39,7 +39,7 @@ describe('Queries page', () => {
     
   })
 
-  test('Should display the correct query name', async () => {
+  test('Should display the correct query name', () => {
     render(
       <QueriesModul.QueryItem names={testQueries}/>
     );
