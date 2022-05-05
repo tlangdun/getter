@@ -27,5 +27,7 @@ export async function getRecruiterQueryList(){
     newList.push({"name": names[i], "id": i.toString()})
     
   } 
+  db.off();
+
   return newList
 }

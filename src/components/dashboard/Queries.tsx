@@ -46,7 +46,7 @@ const Queries:FC = () => {
 
   return(
     <div>
-      <div className="mb-24">
+      <div id="pop-up" className="mb-24">
         < PopUp />
       </div>
       <div>
