@@ -19,7 +19,7 @@ describe('Queries page', () => {
     )
   })
 
-  test('Pop-up component is rendered to the screen', async () => {
+  test('Pop-up component is rendered to the screen', () => {
     render(
       <BrowserRouter>
         <Dashboard content={<QueriesModul.Queries/>} />
