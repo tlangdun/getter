@@ -1,8 +1,6 @@
 import { FC, Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 
-import Queries from './Queries'
-import Recruiting from './Recruiting'
 import MenuDesktop from './MenuDesktop'
 import RouteDashboardRecruiter from '../../routes/dashboard/RouteDashboardRecruiter';
 

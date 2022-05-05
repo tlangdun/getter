@@ -48,4 +48,5 @@ describe('Queries page', () => {
     })
     expect(queryName).toHaveTextContent('Senior Data Scientist')
   })
+
 })
