@@ -11,25 +11,15 @@ import userEvent from "@testing-library/user-event";
 import {loginEmailPassword} from "../auth/authFunctions";
 import {getRecruiterByUserId} from "./databaseHelper";
 import {access_level} from "../../store/models/userModel";
-import {
-    assertFails,
-    assertSucceeds,
-    initializeTestEnvironment,
-    RulesTestEnvironment,
-} from "@firebase/rules-unit-testing"
+
 
 const login = () => {loginEmailPassword('test@gmail.com', '123456'); }
 const userid = 'KtDtaldROMaQ93TBPCTjqTNs1rK2';
 
-const firebase = require(`@firebase/testing`)
-const app = firebase.initializeTestApp({
-    projectId: 'my-project',
-    auth: { uid: 'KtDtaldROMaQ93TBPCTjqTNs1rK2', email: 'test@gmail.com' }
-})
-
 // ToDo: Problem mit login um an Daten vom Benutzer zu kommen.
 describe('Fetching User data from a Recruiter user from Firebase', () => {
     test('Should read all Data From Martin Boss', async () => {
+        // const mock = jest.spyOn(data, "getCharacter").mockResolvedValue("Bob");
 
         // await login();
         console.log('dsdasdas')
