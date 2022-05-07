@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import React, { useEffect, useState } from "react";
 import PopUp from './QueriesFormUp'
-//import {getRecruiterQueryList} from '../../queries/getRecruiterQueryList'
+import {getRecruiterQueryList} from '../../queries/getRecruiterQueryList'
 import { Props } from '@headlessui/react/dist/types';
 
 interface FilterQueries {
@@ -36,12 +36,13 @@ const Queries:FC = () => {
   const [queryNames, setQueryNames] = useState<FilterQueries[]>([]);
 
   const newObj = async () => {
-    //const userQueries: any = await getRecruiterQueryList()
+    const userQueries: any = await getRecruiterQueryList()
+    /*
     const userQueries = [
       {name: 'Junior Data Scientist', id: '0'},
       {name: 'Senior Data Scientist', id: '1'},
       {name: 'Java Backend Engineer', id: '2'}
-    ]
+    ]*/
     setQueryNames(userQueries)
   }
 

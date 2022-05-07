@@ -33,9 +33,9 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --runInBand",
     "eject": "react-scripts eject",
-    "test:ci": "npm run test -- --coverage --ci --testResultsProcessor=\"jest-junit\" --watchAll=false"
+    "test:ci": "npm run test -- --runInBand --coverage --ci --testResultsProcessor=\"jest-junit\" --watchAll=false"
   },
   "eslintConfig": {
     "extends": [
