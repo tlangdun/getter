@@ -1,9 +1,14 @@
 # Definition of Done
 •	Der Code ist fertiggestellt und im Versionierungssystem eingespielt.
+
 •	Es gab einen Code Review bzw. der Code wurde im Pair Programming erarbeitet
+
 •	Vereinbarte Coding Guidelines und Standards sind eingehalten.
+
 •	Es gibt entsprechende Unit Tests und diese stehen auf grün.
+
 •	Alle Akzeptanzkriterien sind erfüllt.
+
 •	Es sind keine kritischen Bugs offen.
 
 
