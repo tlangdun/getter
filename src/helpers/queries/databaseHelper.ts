@@ -3,8 +3,8 @@ import {db, storage} from '../../services/firebaseconfig';
 import {access_level, GetterUser} from '../../store/models/userModel';
 import {QueryFilter} from "../../store/models/queryModel";
 
-export const getRecruiterByUserId = async (userId: string): Promise<GetterUser> => {
-    const docRef = doc(db, `Users/${userId}`)
+export const getRecruiterByUserId = async (database:any, userId: string): Promise<GetterUser> => {
+    const docRef = doc(database, 'Recruiters', userId)
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {

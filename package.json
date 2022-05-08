@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@firebase/rules-unit-testing": "^2.0.2",
     "@headlessui/react": "^1.6.0",
     "@heroicons/react": "^1.0.6",
     "@reduxjs/toolkit": "^1.8.1",
@@ -32,9 +33,9 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --runInBand --env=node",
     "eject": "react-scripts eject",
-    "test:ci": "npm run test -- --coverage --ci --testResultsProcessor=\"jest-junit\" --watchAll=false"
+    "test:ci": "npm run test -- --env=node --runInBand --coverage --ci --testResultsProcessor=\"jest-junit\" --watchAll=false"
   },
   "eslintConfig": {
     "extends": [
