@@ -1,4 +1,3 @@
-import { User, getAuth, onAuthStateChanged } from 'firebase/auth';
 import { collection, CollectionReference, doc, getDoc, getDocs, setDoc } from 'firebase/firestore';
 import { db } from '../../services/firebaseconfig';
 import {getRecruiterByUserId} from "./databaseHelper";
@@ -48,7 +47,6 @@ test("Recruiter file retrieved", async()=> {
       });
     let alice = testEnv.authenticatedContext("KtDtaldROMaQ93TBPCTjqTNs1rK2");
     const actual = await assertSucceeds(getRecruiterByUserId(alice.firestore(),userId))
-    console.log(actual)
     const expected = {
         uid: 'KtDtaldROMaQ93TBPCTjqTNs1rK2',
         access_level: access_level.RECRUITER,
@@ -58,4 +56,5 @@ test("Recruiter file retrieved", async()=> {
         pic_url: 'https://firebasestorage.googleapis.com/v0/b/getter-38760.appspot.com/o/profile-pictures%2F20201231_200219.jpg?alt=media&token=b78aea1a-2d0b-4ad0-a75c-626f3f59fa3f',
         short_bio: 'hello, my name is martin'
     }
+    expect(actual).toStrictEqual(expected)
 })
