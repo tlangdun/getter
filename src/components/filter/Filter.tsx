@@ -39,7 +39,7 @@ const Filter:FC<Props> = (props) => {
     dispatch(ActiveFiltersActions.setActiveFilter(temp))
   }
   return(
-    <div className="bg-white py-2">
+    <div className="bg-white mb-2">
 
       {/* Filters */}
       <Disclosure
