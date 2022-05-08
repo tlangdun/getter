@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import AuthRoute from './routes/auth/AuthRoute';
 import {getRecruiterByUserId, getTalentByUserId} from "./helpers/queries/databaseHelper";
-import {db, storage} from './services/firebaseconfig';
+import {db} from './services/firebaseconfig';
 
 function App() {
   return (
