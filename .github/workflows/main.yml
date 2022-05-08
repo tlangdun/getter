@@ -18,9 +18,11 @@ jobs:
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
       - uses: actions/setup-node@v1
-      - name: ci and test
+      - name: install firebase tools
       - run: npm install -g firebase-tools 
-      - run: npm ci 
+      - name: install dependencies
+      - run: npm ci
+      - name: start emulator tests
       - run: firebase emulators:exec --project getter-38760 'npm run test:ci'
         env:
           REACT_APP_API_KEY: ${{ secrets.REACT_APP_API_KEY }}
