@@ -1,0 +1,30 @@
+{
+  "filters": [
+    {
+      "id": 0,
+      "name": "Junior Data Scientist",
+      "skills": [
+        "python"
+      ],
+      "availability": 80
+    },
+    {
+      "id": 1,
+      "name": "Senior Data Scientist",
+      "skills": [
+        "python",
+        "java"
+      ],
+      "availability": 60
+    },
+    {
+      "id": 2,
+      "name": "Java Backend Engineer",
+      "skills": [
+        "java",
+        "c++"
+      ],
+      "availability": 100
+    }
+  ]
+}
