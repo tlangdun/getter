@@ -1,10 +1,11 @@
-import { FC, Fragment } from 'react';
+import { FC, Fragment, useState } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon, FilterIcon } from '@heroicons/react/solid'
 import { List } from 'reselect/es/types';
 import { isEqual } from 'lodash';
 import { ActiveFiltersActions } from '../../store/slices/ActiveFiltersSlice';
 import { useAppDispatch } from '../../store/hooks';
+import CheckboxFilter from './CheckboxFilter';
 
 
 let activeFilters:any = []
@@ -22,6 +23,17 @@ function classNames(...classes:List) {
   
 const Filter:FC<Props> = (props) => {
   const dispatch = useAppDispatch();
+  const [count,updateCount] = useState(0)
+  function removeActiveFilters() {
+    var checkboxes = document.getElementsByTagName("input");
+    for(var i = 0; i < checkboxes.length; i++) {
+      if(checkboxes[i].type == "checkbox") {
+        checkboxes[i].checked = false; 
+      }
+    }
+    updateCount(0)
+    dispatch(ActiveFiltersActions.setActiveFilter(new Array()))
+  }
 
   function handleActiveFilter(event:any) {
     let filter = {id: event.target.id, name: event.target.value};
@@ -37,6 +49,7 @@ const Filter:FC<Props> = (props) => {
     }
     let temp = Object.assign({}, activeFilters);
     dispatch(ActiveFiltersActions.setActiveFilter(temp))
+    updateCount(activeFilters.length)
   }
   return(
     <div className="bg-white mb-2">
@@ -59,11 +72,11 @@ const Filter:FC<Props> = (props) => {
                   aria-hidden="true"
                 />
                 
-                {activeFilters.length} Filters
+                {count} Filters
               </Disclosure.Button>
             </div>
             <div className="pl-6">
-              <button type="button" className="text-gray-500">
+              <button type="button" onClick={removeActiveFilters} className="text-gray-500">
                 Clear all
               </button>
             </div>
@@ -72,90 +85,12 @@ const Filter:FC<Props> = (props) => {
         <Disclosure.Panel className="border-t border-gray-200 py-10">
           <div className="max-w-7xl mx-auto grid grid-cols-2 gap-x-4 px-4 text-sm sm:px-6 md:gap-x-6 lg:px-8">
             <div className="grid grid-cols-1 gap-y-10 auto-rows-min md:grid-cols-2 md:gap-x-6">
-              <fieldset>
-                <legend className="block font-medium">Skills</legend>
-                <div className="pt-6 space-y-6 sm:pt-4 sm:space-y-4">
-                  {props.skills.map((option, optionIdx) => (
-                    <div key={option.value} className="flex items-center text-base sm:text-sm">
-                      <input
-                        onClick={handleActiveFilter}
-                        id={`skills-${optionIdx}`}
-                        name="skills[]"
-                        defaultValue={option.value}
-                        type="checkbox"
-                        className="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500"
-                        defaultChecked={option.checked}
-                      />
-                      <label htmlFor={`skills-${optionIdx}`} className="ml-3 min-w-0 flex-1 text-gray-600">
-                        {option.label}
-                      </label>
-                    </div>
-                  ))}
-                </div>
-              </fieldset>
-              <fieldset>
-                <legend className="block font-medium">Programming Languages</legend>
-                <div className="pt-6 space-y-6 sm:pt-4 sm:space-y-4">
-                  {props.programmingLanguages.map((option, optionIdx) => (
-                    <div key={option.value} className="flex items-center text-base sm:text-sm">
-                      <input
-                        onClick={handleActiveFilter}
-                        id={`programmingLanguages-${optionIdx}`}
-                        name="programmingLanguages[]"
-                        defaultValue={option.value}
-                        type="checkbox"
-                        className="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500"
-                        defaultChecked={option.checked}
-                      />
-                      <label htmlFor={`programmingLanguages-${optionIdx}`} className="ml-3 min-w-0 flex-1 text-gray-600">
-                        {option.label}
-                      </label>
-                    </div>
-                  ))}
-                </div>
-              </fieldset>
+              <CheckboxFilter name="Skills" event={handleActiveFilter} list={props.skills}/>
+              <CheckboxFilter name="Programming Languages" event={handleActiveFilter} list={props.programmingLanguages}/>
             </div>
             <div className="grid grid-cols-1 gap-y-10 auto-rows-min md:grid-cols-2 md:gap-x-6">
-              <fieldset>
-                <legend className="block font-medium">Size</legend>
-                <div className="pt-6 space-y-6 sm:pt-4 sm:space-y-4">
-                  {props.size.map((option, optionIdx) => (
-                    <div key={option.value} className="flex items-center text-base sm:text-sm">
-                      <input
-                        id={`size-${optionIdx}`}
-                        name="size[]"
-                        defaultValue={option.value}
-                        type="checkbox"
-                        className="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500"
-                        defaultChecked={option.checked}
-                      />
-                      <label htmlFor={`size-${optionIdx}`} className="ml-3 min-w-0 flex-1 text-gray-600">
-                        {option.label}
-                      </label>
-                    </div>
-                  ))}
-                </div>
-              </fieldset>
-              <fieldset>
-                <legend className="block font-medium">Category</legend>
-                <div className="pt-6 space-y-6 sm:pt-4 sm:space-y-4">
-                  {props.category.map((option, optionIdx) => (
-                    <div key={option.value} className="flex items-center text-base sm:text-sm">
-                      <input
-                        id={`category-${optionIdx}`}
-                        name="category[]"
-                        defaultValue={option.value}
-                        type="checkbox"
-                        className="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500"
-                        defaultChecked={option.checked}
-                      />
-                      <label htmlFor={`category-${optionIdx}`} className="ml-3 min-w-0 flex-1 text-gray-600">
-                        {option.label}
-                      </label>
-                    </div>
-                  ))}
-                </div>
-              </fieldset>
+              <CheckboxFilter name="Size" event={handleActiveFilter} list={props.size}/>
+              <CheckboxFilter name="Category" event={handleActiveFilter} list={props.category}/>
             </div>
           </div>
         </Disclosure.Panel>

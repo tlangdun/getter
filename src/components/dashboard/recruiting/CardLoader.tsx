@@ -124,7 +124,7 @@ const CardLoader:FC = () => {
     <>
       <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {users.map((user) => (
-          <Card key={user.email} user={user}/>
+          <Card key={user.uid} user={user}/>
           ))}
       </ul>
     </>
