@@ -2,13 +2,22 @@ import { FC, Fragment, useState } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon, FilterIcon } from '@heroicons/react/solid'
 import { List } from 'reselect/es/types';
-import { isEqual } from 'lodash';
 import { ActiveFiltersActions } from '../../store/slices/ActiveFiltersSlice';
 import { useAppDispatch } from '../../store/hooks';
 import CheckboxFilter from './CheckboxFilter';
+import RangeSlider from './RangeSlider';
+import { QueryFilter } from '../../store/models/queryModel';
 
-
-let activeFilters:any = []
+let emptyQueryFilter = {
+  availability: null,
+  canton: null,
+  job_role: null,
+  skills: [],
+  programming_languages: [],
+  spoken_languages: [],
+  work_experience: null//0, 1-3, 4-6, 7-10+
+}
+let activeFilters:QueryFilter = {...emptyQueryFilter};
 interface Props {
   skills:List;
   programmingLanguages:List;
@@ -20,37 +29,77 @@ interface Props {
 function classNames(...classes:List) {
   return classes.filter(Boolean).join(' ')
 }
+
+function setRangeSliderToZero(){
+  let range = document.getElementById("availability-range") as HTMLInputElement;
+  range.value = "0";
+}
   
 const Filter:FC<Props> = (props) => {
   const dispatch = useAppDispatch();
   const [count,updateCount] = useState(0)
+  const [rangeValue,updateRangeValue] = useState("0")
+
+  function updateActiveFilters() {
+    let temp = Object.assign({}, activeFilters);
+    dispatch(ActiveFiltersActions.setActiveFilter(temp))
+  }
+
   function removeActiveFilters() {
     var checkboxes = document.getElementsByTagName("input");
     for(var i = 0; i < checkboxes.length; i++) {
-      if(checkboxes[i].type == "checkbox") {
+      if(checkboxes[i].type === "checkbox") {
         checkboxes[i].checked = false; 
       }
     }
     updateCount(0)
-    dispatch(ActiveFiltersActions.setActiveFilter(new Array()))
+    updateRangeValue("0")
+    setRangeSliderToZero()
+    activeFilters = {...emptyQueryFilter}
+    dispatch(ActiveFiltersActions.setActiveFilter(emptyQueryFilter))
   }
-
-  function handleActiveFilter(event:any) {
-    let filter = {id: event.target.id, name: event.target.value};
+  function handleRangeSlider(){
+    let range = document.getElementById("availability-range") as HTMLInputElement;
+    updateRangeValue(range.value)
+    activeFilters.availability = range.value
+    updateActiveFilters()
+  }
+  
+  function updateCheckboxFilter(newValue:string, filter:Array<string> | null) {
+    if(filter === null) {
+      filter = []
+    }
+    let tempList:Array<string> = Object.assign([],filter)
     let doAdd = true
-    for (var i = 0; i < activeFilters.length; i++) {
-      if (isEqual(activeFilters[i], filter)) {
-        activeFilters.splice(i, 1);
-        doAdd = false
+    if(tempList !== null) {
+      for (var i = 0; i < tempList.length; i++) {
+        if(tempList[i] === newValue) {
+          tempList.splice(i,1)
+          updateCount(count-1)
+          doAdd = false
+        }
       }
-    }
-    if(doAdd) {
-      activeFilters.push(filter)
-    }
-    let temp = Object.assign({}, activeFilters);
-    dispatch(ActiveFiltersActions.setActiveFilter(temp))
-    updateCount(activeFilters.length)
+      if(doAdd){
+        tempList.push(newValue)
+        updateCount(count+1)
+      }    
+      return tempList
+    }  
   }
+  function handleSkillsFilter(event:any) {
+    let newList = updateCheckboxFilter(event.target.value, activeFilters.skills)
+    if(typeof newList !== 'undefined') {
+      activeFilters.skills = newList
+      updateActiveFilters()
+    }  
+  }  
+  function handleProgrammingLanguagesFilter(event:any) {
+    let newList = updateCheckboxFilter(event.target.value, activeFilters.programming_languages)
+    if(typeof newList !== 'undefined') {
+      activeFilters.programming_languages = newList
+      updateActiveFilters()
+    }  
+  }  
   return(
     <div className="bg-white mb-2">
 
@@ -85,12 +134,13 @@ const Filter:FC<Props> = (props) => {
         <Disclosure.Panel className="border-t border-gray-200 py-10">
           <div className="max-w-7xl mx-auto grid grid-cols-2 gap-x-4 px-4 text-sm sm:px-6 md:gap-x-6 lg:px-8">
             <div className="grid grid-cols-1 gap-y-10 auto-rows-min md:grid-cols-2 md:gap-x-6">
-              <CheckboxFilter name="Skills" event={handleActiveFilter} list={props.skills}/>
-              <CheckboxFilter name="Programming Languages" event={handleActiveFilter} list={props.programmingLanguages}/>
+              <CheckboxFilter name="Skills" event={handleSkillsFilter} list={props.skills}/>
+              <CheckboxFilter name="Programming Languages" event={handleProgrammingLanguagesFilter} list={props.programmingLanguages}/>
+              <RangeSlider name='Availability' value={rangeValue} event={handleRangeSlider}/>         
             </div>
             <div className="grid grid-cols-1 gap-y-10 auto-rows-min md:grid-cols-2 md:gap-x-6">
-              <CheckboxFilter name="Size" event={handleActiveFilter} list={props.size}/>
-              <CheckboxFilter name="Category" event={handleActiveFilter} list={props.category}/>
+              <CheckboxFilter name="Size" event={()=>{console.log("do nothing")}} list={props.size}/>
+              <CheckboxFilter name="Category" event={()=>{console.log("do nothing")}} list={props.category}/>
             </div>
           </div>
         </Disclosure.Panel>

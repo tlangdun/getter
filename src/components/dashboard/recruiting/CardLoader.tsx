@@ -18,7 +18,7 @@ const dummyAPIResponse = [
     "birth_date": "6.9.1969",
     "canton": "Zürich",
     "city_of_residence": "Zürich",
-    "job_role": "GTFO",
+    "job_role": "Boss",
     "skills": [
       "brrr",
       "git"
@@ -53,7 +53,7 @@ const dummyAPIResponse = [
     "birth_date": "10.9.1994",
     "canton": "Zürich",
     "city_of_residence": "Zürich",
-    "job_role": "GTFO",
+    "job_role": "CEO",
     "skills": [
       "Project Management",
       "git"
@@ -82,30 +82,9 @@ const CardLoader:FC = () => {
   const activeFilters = useAppSelector((state) => state.activeFilters);
   const [users, updateUsers] = useState(new Array())
   useEffect(()=>{
-    let query = {
-      availability: null,// 60 für 60%
-      canton: null,
-      job_role: null,
-      skills: new Array(),
-      programming_languages: new Array(),
-      spoken_languages: null,
-      work_experience: null//0, 1-3, 4-6, 7-10+
-    };
     let temp = Object.assign({}, activeFilters);
     let filters = temp.activeFilter//Object.assign({},activeFilters.activeFilter)
     console.log(filters)
-
-    for (let key of Object.keys(filters)) {
-      let element = filters[key]
-      let id = element.id
-      let name = element.name
-      id = id.split("-")[0]
-      if(id === "skills") {
-        query.skills.push(name)
-      } else if (id === "programmingLanguages"){
-        query.programming_languages.push(name)
-      }
-    }
 
     /**
     try {
@@ -119,7 +98,7 @@ const CardLoader:FC = () => {
     }**/
     let apiResponse = dummyAPIResponse;
     updateUsers(apiResponse)
-  })
+  },[activeFilters])
   return(
     <>
       <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
