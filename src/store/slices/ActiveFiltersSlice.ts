@@ -1,21 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { QueryFilter } from '../models/queryModel';
+import { EmptyQueryFilter, QueryFilter } from '../models/queryModel';
 
-let emptyQueryFilter = {
-  availability: "",
-  canton: "",
-  job_role: "",
-  skills: [],
-  programming_languages: [],
-  spoken_languages: [],
-  work_experience: ""//0, 1-3, 4-6, 7-10+
-}
 interface ActiveFilters {
   activeFilter:QueryFilter;
 }
 
 const initialState: ActiveFilters = {
-  activeFilter: emptyQueryFilter,
+  activeFilter: EmptyQueryFilter,
 };
 
 const ActiveFiltersSlice = createSlice({

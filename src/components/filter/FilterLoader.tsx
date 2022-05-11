@@ -5,25 +5,13 @@ import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../services/firebaseconfig';
 import { GetterUser } from '../../store/models/userModel'
 import Filter from './Filter';
+import { count } from 'console';
 
 const filters = {
     skills: new Array(),
     programmingLanguages: new Array(),
-    size: [
-      { value: 'xs', label: 'XS', checked: false },
-      { value: 's', label: 'S', checked: true },
-      { value: 'm', label: 'M', checked: false },
-      { value: 'l', label: 'L', checked: false },
-      { value: 'xl', label: 'XL', checked: false },
-      { value: '2xl', label: '2XL', checked: false },
-    ],
-    category: [
-      { value: 'all-new-arrivals', label: 'All New Arrivals', checked: false },
-      { value: 'tees', label: 'Tees', checked: false },
-      { value: 'objects', label: 'Objects', checked: false },
-      { value: 'sweatshirts', label: 'Sweatshirts', checked: false },
-      { value: 'pants-and-shorts', label: 'Pants & Shorts', checked: false },
-    ],
+    jobRoles: new Array(),
+    countries: new Array(),
 }
 const sortOptions = [
     { name: 'Most Popular', href: '#', current: true },
@@ -45,21 +33,29 @@ async function loadFilters(user:GetterUser) {
     
     const skillsRef = collection(db, `Skills`);
     const programmingLanguagesRef = collection(db, `Programming_languages`);
+    const jobRolesRef = collection(db, `Job_roles`);
+    const countriesRef = collection(db, `Countries`);
 
-    let skills = new Array();
+
+    let skills;
     let programmmingLanguages;
+    let jobRoles;
+    let countries;
 
     try {
       skills = (await getDocs(skillsRef)).docs.map((d) => d.id);
       filters.skills = fillFilterMap(skills)
       
       programmmingLanguages = (await getDocs(programmingLanguagesRef)).docs.map((d) => d.id);
-      programmmingLanguages.forEach(function (elem, i){
-        let map = {value:elem.toLowerCase(), label:elem, checked:false}
-        filters.programmingLanguages[i] = map
-      })
-    } catch {
-      alert("filter didnt load")
+      filters.programmingLanguages = fillFilterMap(programmmingLanguages)
+      
+      jobRoles = (await getDocs(jobRolesRef)).docs.map((d) => d.id);
+      filters.jobRoles = fillFilterMap(jobRoles)
+
+      countries = (await getDocs(countriesRef)).docs.map((d) => d.id);
+      filters.countries = fillFilterMap(countries)
+    } catch(err) {
+      alert("filter didnt load" + err)
     }
   }
 }
@@ -68,6 +64,10 @@ const FilterLoader:FC = () => {
   const user = useAppSelector((state) => state.user.user);
   const [skillsState,updateSkills] = useState(new Array())
   const [programmingLanguagesState,updateProgrammingLanguages] = useState(new Array())
+  const [jobRoles,updateJobRoles] = useState(new Array())
+  const [countries,updateCountries] = useState(new Array())
+
+
 
   useEffect(() => {
     loadFilters(user)
@@ -75,6 +75,8 @@ const FilterLoader:FC = () => {
         console.log("did mount")
         updateSkills(filters.skills);
         updateProgrammingLanguages(filters.programmingLanguages)
+        updateJobRoles(filters.jobRoles)
+        updateCountries(filters.countries)
       })
       .catch(()=>{
         alert("filter couldnt be loaded")
@@ -83,7 +85,7 @@ const FilterLoader:FC = () => {
   
   return(
     <>
-      <Filter skills={skillsState} programmingLanguages={programmingLanguagesState} size={filters.size} category={filters.category} sortOptions={sortOptions}/>
+      <Filter skills={skillsState} programmingLanguages={programmingLanguagesState} jobRoles={jobRoles} countries={countries} sortOptions={sortOptions}/>
     </>
   );
 };

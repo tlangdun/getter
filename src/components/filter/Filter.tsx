@@ -6,23 +6,15 @@ import { ActiveFiltersActions } from '../../store/slices/ActiveFiltersSlice';
 import { useAppDispatch } from '../../store/hooks';
 import CheckboxFilter from './CheckboxFilter';
 import RangeSlider from './RangeSlider';
-import { QueryFilter } from '../../store/models/queryModel';
+import { EmptyQueryFilter,QueryFilter } from '../../store/models/queryModel';
 
-let emptyQueryFilter = {
-  availability: null,
-  canton: null,
-  job_role: null,
-  skills: [],
-  programming_languages: [],
-  spoken_languages: [],
-  work_experience: null//0, 1-3, 4-6, 7-10+
-}
-let activeFilters:QueryFilter = {...emptyQueryFilter};
+
+let activeFilters:QueryFilter = {...EmptyQueryFilter};
 interface Props {
   skills:List;
   programmingLanguages:List;
-  size:List;
-  category:List;
+  jobRoles:List;
+  countries:List;
   sortOptions:List;
 }
 
@@ -55,8 +47,8 @@ const Filter:FC<Props> = (props) => {
     updateCount(0)
     updateRangeValue("0")
     setRangeSliderToZero()
-    activeFilters = {...emptyQueryFilter}
-    dispatch(ActiveFiltersActions.setActiveFilter(emptyQueryFilter))
+    activeFilters = {...EmptyQueryFilter}
+    dispatch(ActiveFiltersActions.setActiveFilter(EmptyQueryFilter))
   }
   function handleRangeSlider(){
     let range = document.getElementById("availability-range") as HTMLInputElement;
@@ -99,7 +91,21 @@ const Filter:FC<Props> = (props) => {
       activeFilters.programming_languages = newList
       updateActiveFilters()
     }  
-  }  
+  }
+  function handleJobRolesFilter(event:any) {
+    let newList = updateCheckboxFilter(event.target.value, activeFilters.job_role)
+    if(typeof newList !== 'undefined') {
+      activeFilters.job_role = newList
+      updateActiveFilters()
+    } 
+  }
+  function handleCountriesFilter(event:any) {
+    let newList = updateCheckboxFilter(event.target.value, activeFilters.country)
+    if(typeof newList !== 'undefined') {
+      activeFilters.country = newList
+      updateActiveFilters()
+    }
+  }
   return(
     <div className="bg-white mb-2">
 
@@ -139,8 +145,8 @@ const Filter:FC<Props> = (props) => {
               <RangeSlider name='Availability' value={rangeValue} event={handleRangeSlider}/>         
             </div>
             <div className="grid grid-cols-1 gap-y-10 auto-rows-min md:grid-cols-2 md:gap-x-6">
-              <CheckboxFilter name="Size" event={()=>{console.log("do nothing")}} list={props.size}/>
-              <CheckboxFilter name="Category" event={()=>{console.log("do nothing")}} list={props.category}/>
+              <CheckboxFilter name="Country" event={handleCountriesFilter} list={props.countries}/>
+              <CheckboxFilter name="Job Role" event={handleJobRolesFilter} list={props.jobRoles}/>
             </div>
           </div>
         </Disclosure.Panel>
