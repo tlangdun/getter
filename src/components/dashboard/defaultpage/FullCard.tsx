@@ -14,7 +14,7 @@ const FullCard:FC<Props> = (props) => {
             <div className="absolute inset-0">
                 <img
                 className="h-full w-full object-cover"
-                src="https://firebasestorage.googleapis.com/v0/b/getter-38760.appspot.com/o/getter%2Fdashboard-fullcard-pexels-lukas-590016.jpg?alt=media&token=d2d9b16f-f078-424c-b3f1-750be5fb0e9b"
+                src="https://firebasestorage.googleapis.com/v0/b/getter-38760.appspot.com/o/getter%2Fdashboard-content-pexels-lukas-590016.jpg?alt=media&token=fc6a1da8-b4db-4353-86aa-6a24e27c4b94"
                 alt="Job Application"
                 />
                 <div className="absolute inset-0 bg-violet-600 mix-blend-multiply" />
