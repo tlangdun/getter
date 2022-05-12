@@ -7,6 +7,7 @@ import { useAppDispatch } from '../../store/hooks';
 import CheckboxFilter from './CheckboxFilter';
 import RangeSlider from './RangeSlider';
 import { EmptyQueryFilter,QueryFilter } from '../../store/models/queryModel';
+import DropDownFilter from './DropDownFilter';
 
 
 let activeFilters:QueryFilter = {...EmptyQueryFilter};
@@ -15,24 +16,75 @@ interface Props {
   programmingLanguages:List;
   jobRoles:List;
   countries:List;
+  spokenLanguages:List;
+  workExperience:List;
   sortOptions:List;
+  loadRegion:Function;
 }
 
 function classNames(...classes:List) {
   return classes.filter(Boolean).join(' ')
 }
 
-function setRangeSliderToZero(){
-  let range = document.getElementById("availability-range") as HTMLInputElement;
-  range.value = "0";
+function countFilter() {
+  let count = 0;
+  if(activeFilters.availability != null && activeFilters.availability!=='') {
+    count++
+  }
+  if(activeFilters.work_experience != null && activeFilters.work_experience!=='') {
+    count++
+  }
+  if(activeFilters.canton != null) {
+    count += activeFilters.canton.length
+  }
+  if(activeFilters.country != null) {
+    count += activeFilters.country.length
+  }
+  if(activeFilters.job_role != null) {
+    count += activeFilters.job_role.length
+  }
+  if(activeFilters.programming_languages != null) {
+    count += activeFilters.programming_languages.length
+  }
+  if(activeFilters.skills != null) {
+    count += activeFilters.skills.length
+  }
+  if(activeFilters.spoken_languages != null) {
+    count += activeFilters.spoken_languages.length
+  }
+  if(activeFilters.salary_min !=null) {
+    count +=1
+  }
+  if(activeFilters.salary_max != null) {
+    count +=1
+  }
+  return count;
 }
-  
+
+function setSlidersToZero(){
+  let range = document.getElementById("availability-range") as HTMLInputElement
+  range.value = "0"
+  let salaryMin = document.getElementById("salary-min-range") as HTMLInputElement
+  salaryMin.value = "0"
+  let salaryMax = document.getElementById("salary-max-range") as HTMLInputElement
+  salaryMax.value = "0"
+}
+
+function setDropdownsToDefault() {
+  let work_experience = document.getElementById("work_experience") as HTMLInputElement
+  work_experience.value = work_experience.defaultValue
+}
 const Filter:FC<Props> = (props) => {
   const dispatch = useAppDispatch();
   const [count,updateCount] = useState(0)
   const [rangeValue,updateRangeValue] = useState("0")
+  const [salaryMin,updateSalaryMin] = useState("0")
+  const [salaryMax,updateSalaryMax] = useState("0")
+
+  const [region,updateRegion] = useState([])
 
   function updateActiveFilters() {
+    updateCount(countFilter())
     let temp = Object.assign({}, activeFilters);
     dispatch(ActiveFiltersActions.setActiveFilter(temp))
   }
@@ -46,7 +98,10 @@ const Filter:FC<Props> = (props) => {
     }
     updateCount(0)
     updateRangeValue("0")
-    setRangeSliderToZero()
+    updateSalaryMax("0")
+    updateSalaryMin("0")
+    setSlidersToZero()
+    setDropdownsToDefault()
     activeFilters = {...EmptyQueryFilter}
     dispatch(ActiveFiltersActions.setActiveFilter(EmptyQueryFilter))
   }
@@ -57,6 +112,18 @@ const Filter:FC<Props> = (props) => {
     updateActiveFilters()
   }
   
+  function handleSalaryMinSlider(){
+    let range = document.getElementById("salary-min-range") as HTMLInputElement;
+    updateSalaryMin(range.value)
+    activeFilters.salary_min = range.value
+    updateActiveFilters()
+  }
+  function handleSalaryMaxSlider(){
+    let range = document.getElementById("salary-max-range") as HTMLInputElement;
+    updateSalaryMax(range.value)
+    activeFilters.salary_max = range.value
+    updateActiveFilters()
+  }
   function updateCheckboxFilter(newValue:string, filter:Array<string> | null) {
     if(filter === null) {
       filter = []
@@ -67,13 +134,11 @@ const Filter:FC<Props> = (props) => {
       for (var i = 0; i < tempList.length; i++) {
         if(tempList[i] === newValue) {
           tempList.splice(i,1)
-          updateCount(count-1)
           doAdd = false
         }
       }
       if(doAdd){
         tempList.push(newValue)
-        updateCount(count+1)
       }    
       return tempList
     }  
@@ -84,6 +149,14 @@ const Filter:FC<Props> = (props) => {
       activeFilters.skills = newList
       updateActiveFilters()
     }  
+  }
+  function handleWorkExperienceFilter(event:any) {
+    if(event.target.value === "All") {
+      activeFilters.work_experience = null
+    } else {
+      activeFilters.work_experience = event.target.value
+    }
+    updateActiveFilters()
   }  
   function handleProgrammingLanguagesFilter(event:any) {
     let newList = updateCheckboxFilter(event.target.value, activeFilters.programming_languages)
@@ -99,11 +172,34 @@ const Filter:FC<Props> = (props) => {
       updateActiveFilters()
     } 
   }
+  function handleRegionFilter(event:any) {
+    let newList = updateCheckboxFilter(event.target.value, activeFilters.canton)
+    if(typeof newList !== 'undefined') {
+      activeFilters.canton = newList
+      updateActiveFilters()
+    } 
+  }
+  function handleSpokenLanguagesFilter(event:any) {
+    let newList = updateCheckboxFilter(event.target.value, activeFilters.spoken_languages)
+    if(typeof newList !== 'undefined') {
+      activeFilters.spoken_languages = newList
+      updateActiveFilters()
+    } 
+  }
   function handleCountriesFilter(event:any) {
     let newList = updateCheckboxFilter(event.target.value, activeFilters.country)
     if(typeof newList !== 'undefined') {
       activeFilters.country = newList
       updateActiveFilters()
+      let country = event.target.labels[0].textContent
+      let prevChecked = event.target.checked
+      if(prevChecked) {
+        props.loadRegion(country).then((element:[])=>{
+          updateRegion(element)
+          activeFilters.canton = []
+          updateActiveFilters()
+        })
+      }
     }
   }
   return(
@@ -142,11 +238,17 @@ const Filter:FC<Props> = (props) => {
             <div className="grid grid-cols-1 gap-y-10 auto-rows-min md:grid-cols-2 md:gap-x-6">
               <CheckboxFilter name="Skills" event={handleSkillsFilter} list={props.skills}/>
               <CheckboxFilter name="Programming Languages" event={handleProgrammingLanguagesFilter} list={props.programmingLanguages}/>
-              <RangeSlider name='Availability' value={rangeValue} event={handleRangeSlider}/>         
+              <RangeSlider name='Min Salary' id="salary-min-range" value={salaryMin} event={handleSalaryMinSlider} min="0" step="5000" max="300000"/>
+              <RangeSlider name='Availability' id="availability-range" value={rangeValue + "%"} event={handleRangeSlider} min="0" step="5" max="100"/>
+              <RangeSlider name='Max Salary' id="salary-max-range" value={salaryMax} event={handleSalaryMaxSlider} min="0" step="5000" max="300000"/>
+              <DropDownFilter title="Work Experience" onChangeEvent={handleWorkExperienceFilter} id="work_experience"  options={props.workExperience} defaultValue={props.workExperience[0]}/>
+
             </div>
             <div className="grid grid-cols-1 gap-y-10 auto-rows-min md:grid-cols-2 md:gap-x-6">
               <CheckboxFilter name="Country" event={handleCountriesFilter} list={props.countries}/>
+              <CheckboxFilter name="Region" event={handleRegionFilter} list={region}/>
               <CheckboxFilter name="Job Role" event={handleJobRolesFilter} list={props.jobRoles}/>
+              <CheckboxFilter name="Spoken Languages" event={handleSpokenLanguagesFilter} list={props.spokenLanguages}/>
             </div>
           </div>
         </Disclosure.Panel>
