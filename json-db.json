@@ -1,30 +1,62 @@
 {
   "filters": [
     {
-      "id": 0,
+      "id": "0",
       "name": "Junior Data Scientist",
-      "skills": [
+      "language": [
         "python"
       ],
-      "availability": 80
+      "skill": [
+        "AWS"
+      ],
+      "availability": [
+        10,
+        30
+      ]
     },
     {
-      "id": 1,
+      "id": "1",
       "name": "Senior Data Scientist",
-      "skills": [
+      "language": [
         "python",
         "java"
       ],
-      "availability": 60
+      "skill": [
+        "AWS"
+      ],
+      "availability": [
+        40,
+        50
+      ]
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Java Backend Engineer",
-      "skills": [
+      "language": [
         "java",
         "c++"
       ],
-      "availability": 100
+      "skill": [
+        "AWS"
+      ],
+      "availability": [
+        10,
+        80
+      ]
+    },
+    {
+      "name": "eqeqwe",
+      "language": [
+        "javascript",
+        "c",
+        "csharp"
+      ],
+      "skill": [],
+      "availability": [
+        0,
+        100
+      ],
+      "id": "fOiA0Gz"
     }
   ]
 }
