@@ -47,7 +47,7 @@ const userMapper = async (user: User | null): Promise<GetterUser> => {
       pic_url: u.pic_url,
       short_bio: u.short_bio,
     };
-    if (claim == access_level.TALENT) {
+    if (claim === access_level.TALENT) {
       return {
         ...usr,
         address_postcode: u.address_postcode,

@@ -12,7 +12,7 @@ import CandidateList from './CandidateList'
 import Message from './Message'
 
 describe('Dashboard recruiter', () => {
-  test('Should render dashboard without crash', async () => {
+  test('Should render dashboard without crash', () => {
      render(
       <BrowserRouter>
         <Dashboard content={<Recruiting/>}/>
@@ -20,7 +20,7 @@ describe('Dashboard recruiter', () => {
      )
   })
 
-  test('recruiter menu gets shown in dashboard', async () => {
+  test('recruiter menu gets shown in dashboard', () => {
     render(
       <BrowserRouter>
         <Routes>
@@ -33,7 +33,7 @@ describe('Dashboard recruiter', () => {
     })
   })
 
-  test('routing dashboard menu content', async () => {
+  test('routing dashboard menu content', () => {
     render(
       <BrowserRouter>
         <Routes>
@@ -79,7 +79,7 @@ describe('Dashboard recruiter', () => {
 })
 
 describe('User menu', () => {
-  test('Should render user menu', async () => {
+  test('Should render user menu', () => {
     render(
      <BrowserRouter>
        <MenuDesktop navigation={RouteDashboardRecruiter}/>
@@ -87,7 +87,7 @@ describe('User menu', () => {
     )
   })
 
-  test('can click on the user button', async () => {
+  test('can click on the user button', () => {
     const { getAllByTestId } = render(
       <BrowserRouter>
         <MenuDesktop navigation={RouteDashboardRecruiter} />
@@ -98,7 +98,7 @@ describe('User menu', () => {
     userEvent.click(menuButton);
   })
 
-  test('can click on menu items', async () => {
+  test('can click on menu items', () => {
       const { getAllByTestId } = render(
         <BrowserRouter>
           <MenuDesktop navigation={RouteDashboardRecruiter} />
@@ -117,7 +117,7 @@ describe('User menu', () => {
       userEvent.click(logoutItem);
   })
 
-  test('check the number of items', async () => {
+  test('check the number of items', () => {
     const { getByTestId } = render(
       <BrowserRouter>
         <MenuDesktop navigation={RouteDashboardRecruiter} />
@@ -130,7 +130,7 @@ describe('User menu', () => {
     expect(items.length).toBe(4)
   })
 
-  test('navigates user contents when items are clicked', async () => {
+  test('navigates user contents when items are clicked', () => {
     const { getByTestId, getAllByTestId } = render(
       <BrowserRouter>
         <MenuDesktop navigation={RouteDashboardRecruiter} />

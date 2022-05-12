@@ -11,8 +11,8 @@ type NavItem = {
 
 const navItems: NavItem[] = [
   { displayName: 'Getter', link: '/', testid:'default-link' },
-  { displayName: 'About us', link: '/aboutus', testid:'about-us-link' },
-  { displayName: 'features', link: '/features', testid:'features-link' },
+  { displayName: 'About Us', link: '/aboutus', testid:'about-us-link' },
+  { displayName: 'Features', link: '/features', testid:'features-link' },
 ];
 
 const NavBar: FC = () => {
@@ -24,7 +24,7 @@ const NavBar: FC = () => {
             <span className='sr-only'>Getter</span>
             <img
               className='h-8 w-auto sm:h-10'
-              src='https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg'
+              src='https://firebasestorage.googleapis.com/v0/b/getter-38760.appspot.com/o/getter%2FLogo%20Transparency2.png?alt=media&token=76aea186-61e4-4e07-bb17-56ca3a705516'
               alt=''
             />
           </Link>

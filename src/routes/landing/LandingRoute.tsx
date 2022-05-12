@@ -5,6 +5,7 @@ import NavBar from '../../components/landing/NavBar';
 import AboutUsPage from './AboutUsPage';
 import FeaturesPage from './FeaturesPage';
 import FourOFourPage from './FourOFourPage';
+import FooterSection from "../../components/landingpage/FooterSection";
 
 const LandingRoute: FC = () => {
   return (
@@ -16,6 +17,7 @@ const LandingRoute: FC = () => {
         <Route path='/features' element={<FeaturesPage />} />
         <Route path='/*' element={<FourOFourPage />} />
       </Routes>
+      <FooterSection />
     </>
   );
 };
