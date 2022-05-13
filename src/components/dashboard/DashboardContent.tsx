@@ -28,8 +28,8 @@ const DashboardContent:FC = () => {
     <>
     <div data-testid="dashboard">
       <FullCard title={fullCardContent.title} text={fullCardContent.text}/>
-      <div className="grid grid-flow-col mb-4">
-          <div className="col-span-1 rounded m-2">
+      <div className="grid grid-flow-col gap-6 max-w-7xl mx-auto sm:px-2 lg:px-2 mt-2">
+          <div className="col-span-1 rounded">
             <ContentCard 
             title={contentCard1.title}
             text={contentCard1.text}
@@ -37,7 +37,7 @@ const DashboardContent:FC = () => {
             image={contentCard1.image}
             />
           </div>
-          <div className="col-span-1 rounded m-2">
+          <div className="col-span-1 rounded">
             <ContentCard 
             title={contentCard2.title}
             text={contentCard2.text}
@@ -45,7 +45,7 @@ const DashboardContent:FC = () => {
             image={contentCard2.image}
             />
           </div>
-          <div className="col-span-1 rounded m-2">
+          <div className="col-span-1 rounded">
             <ContentCard 
             title={contentCard3.title}
             text={contentCard3.text}
