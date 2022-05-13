@@ -10,24 +10,26 @@ import DashboardRoute from '../../routes/dashboard/DashboardRoute'
 import DashboardContent from './DashboardContent'
 import CandidateList from './CandidateList'
 import Message from './Message'
+import store from '../../store/store'
+import { Provider } from 'react-redux'
 
 describe('Dashboard recruiter', () => {
   test('Should render dashboard without crash', () => {
-     render(
-      <BrowserRouter>
-        <Dashboard content={<Recruiting/>}/>
-      </BrowserRouter>
-     )
+    render(
+      wrapper(<Dashboard content={<Recruiting/>}/>)
+    )
   })
 
   test('recruiter menu gets shown in dashboard', () => {
+    
     render(
-      <BrowserRouter>
-        <Routes>
-          <Route path="*" element={<Dashboard content={<Recruiting/>}/>} />
-        </Routes>
-      </BrowserRouter>
+      wrapper(
+      <Routes>
+        <Route path="*" element={<Dashboard content={<Recruiting/>}/>} />
+      </Routes>
+      )
     )
+
     RouteDashboardRecruiter.forEach(nav => {
         expect(screen.getByText(nav.name)).toBeInTheDocument()
     })
@@ -35,44 +37,44 @@ describe('Dashboard recruiter', () => {
 
   test('routing dashboard menu content', () => {
     render(
-      <BrowserRouter>
+      wrapper(
         <Routes>
           <Route path='*' element={<Dashboard content={<DashboardContent/>}/>} />
         </Routes>
-      </BrowserRouter>
+      )  
     )
     expect(screen.getByTestId("dashboard")).toBeInTheDocument()
   })
 
   test('show recruiting page', async () => {
     render(
-      <BrowserRouter>
+      wrapper(
         <Routes>
           <Route path='*' element={<Dashboard content={<Recruiting/>}/>} />
         </Routes>
-      </BrowserRouter>
+      )
     )
     expect(screen.getByTestId("recruiting")).toBeInTheDocument()
   })
 
   test('show candidates list page', async () => {
     render(
-      <BrowserRouter>
+      wrapper(
         <Routes>
           <Route path='*' element={<Dashboard content={<CandidateList/>}/>} />
         </Routes>
-      </BrowserRouter>
+      )
     )
     expect(screen.getByTestId("candidates-list")).toBeInTheDocument()
   })
 
   test('show message page', async () => {
     render(
-      <BrowserRouter>
+      wrapper(
         <Routes>
           <Route path='*' element={<Dashboard content={<Message/>}/>} />
         </Routes>
-      </BrowserRouter>
+      )
     )
     expect(screen.getByTestId("messages")).toBeInTheDocument()
   })
@@ -80,18 +82,16 @@ describe('Dashboard recruiter', () => {
 
 describe('User menu', () => {
   test('Should render user menu', () => {
-    render(
-     <BrowserRouter>
+    wrapper(
        <MenuDesktop navigation={RouteDashboardRecruiter}/>
-     </BrowserRouter>
     )
   })
 
   test('can click on the user button', () => {
     const { getAllByTestId } = render(
-      <BrowserRouter>
+      wrapper(
         <MenuDesktop navigation={RouteDashboardRecruiter} />
-      </BrowserRouter>
+      )
     );
 
     const [menuButton] = getAllByTestId("user-button");
@@ -100,9 +100,9 @@ describe('User menu', () => {
 
   test('can click on menu items', () => {
       const { getAllByTestId } = render(
-        <BrowserRouter>
+        wrapper(
           <MenuDesktop navigation={RouteDashboardRecruiter} />
-        </BrowserRouter>
+        )
       );
       const [menuButton] = getAllByTestId("user-button");
       userEvent.click(menuButton);
@@ -119,9 +119,7 @@ describe('User menu', () => {
 
   test('check the number of items', () => {
     const { getByTestId } = render(
-      <BrowserRouter>
-        <MenuDesktop navigation={RouteDashboardRecruiter} />
-      </BrowserRouter>
+      wrapper(<MenuDesktop navigation={RouteDashboardRecruiter} />)
     );
     const menuButton = getByTestId("user-button");
     userEvent.click(menuButton);
@@ -162,3 +160,14 @@ describe('User menu', () => {
     })
   })
 })
+const wrapper =  (element:any) =>{
+  return(
+    <BrowserRouter>
+      <Provider store={store}>
+        {element}
+      </Provider>
+    </BrowserRouter>
+  )
+}
+
+

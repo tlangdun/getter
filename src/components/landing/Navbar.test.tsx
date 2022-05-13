@@ -27,14 +27,14 @@ describe('NavBar', () => {
 
   test('AboutUs link should be on page', () => {
     renderWithRouter(<NavBar />);
-    const aboutUsLink = screen.getAllByText('About us');
-    expect(aboutUsLink[0]).toBeInTheDocument();
+    const aboutUsLink = screen.getByTestId('about-us-link');
+    expect(aboutUsLink).toBeInTheDocument();
   })
 
   test('Features link should be on page', () => {
     renderWithRouter(<NavBar />);
-    const featuresLink = screen.getAllByText('features');
-    expect(featuresLink[0]).toBeInTheDocument();
+    const featuresLink = screen.getByTestId('features-link');
+    expect(featuresLink).toBeInTheDocument();
   })
 });
 

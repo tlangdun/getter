@@ -1,4 +1,4 @@
-import { FC, Fragment, useState } from 'react'
+import { FC, Fragment, useEffect, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 
 import MenuDesktop from './MenuDesktop'
@@ -8,6 +8,8 @@ import {
   MenuIcon,
   XIcon,
 } from '@heroicons/react/outline'
+import { useAppSelector } from '../../store/hooks';
+import { useNavigate } from 'react-router-dom';
 
 interface Props{
   content:JSX.Element;
@@ -17,6 +19,15 @@ interface Props{
 const Dashboard:FC<Props> = (props) => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
+  const user = useAppSelector((state) => state.user.user);
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/auth/login');
+    }
+  }, [user, navigate]);
+  
   return (
     <>
       <div className="h-screen flex">

@@ -3,6 +3,8 @@ import QueriesModul from './Queries'
 import {Route,Routes, BrowserRouter} from 'react-router-dom'
 import Dashboard from './Dashboard'
 import userEvent from '@testing-library/user-event'
+import { Provider } from 'react-redux'
+import store from '../../store/store'
 
 const testQueries = [
   {name: 'Junior Data Scientist', id: '0'},
@@ -13,17 +15,13 @@ const testQueries = [
 describe('Queries page', () => {
   test('Should render queries page', () => {
     render(
-     <BrowserRouter>
-       <Dashboard content={<QueriesModul.Queries/>}/>
-     </BrowserRouter>
+      wrapper(<Dashboard content={<QueriesModul.Queries/>}/>)
     )
   })
 
   test('Pop-up component is rendered to the screen', () => {
     render(
-      <BrowserRouter>
-        <Dashboard content={<QueriesModul.Queries/>} />
-      </BrowserRouter>
+      wrapper(<Dashboard content={<QueriesModul.Queries/>}/>)
     );
 
     expect(document.getElementById("pop-up")).toBeInTheDocument();
@@ -48,3 +46,12 @@ describe('Queries page', () => {
     expect(queryName).toHaveTextContent('Senior Data Scientist')
   })
 })
+const wrapper =  (element:any) =>{
+  return(
+    <BrowserRouter>
+      <Provider store={store}>
+        {element}
+      </Provider>
+    </BrowserRouter>
+  )
+}
