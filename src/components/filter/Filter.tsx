@@ -217,7 +217,7 @@ const Filter:FC<Props> = (props) => {
         <div className="relative col-start-1 row-start-1 py-4">
           <div className="max-w-7xl mx-auto flex space-x-6 divide-x divide-gray-200 text-sm px-4 sm:px-6 lg:px-8">
             <div>
-              <Disclosure.Button className="group text-gray-700 font-medium flex items-center">
+              <Disclosure.Button data-testid="filter-counter" className="group text-gray-700 font-medium flex items-center">
                 <FilterIcon
                   className="flex-none w-5 h-5 mr-2 text-gray-400 group-hover:text-gray-500"
                   aria-hidden="true"
