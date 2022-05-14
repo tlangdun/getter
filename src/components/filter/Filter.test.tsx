@@ -1,4 +1,4 @@
-import {render, screen, act, waitFor} from '@testing-library/react'
+import {render, screen, act, waitFor, fireEvent} from '@testing-library/react'
 import { Provider } from "react-redux"
 import { BrowserRouter } from "react-router-dom"
 import store from "../../store/store"
@@ -9,6 +9,7 @@ import Filter from './Filter'
 describe('Filter tests', () => {
     test('Check correct render of the passed objects', async () => {
         act(async()=>{
+            let loadRegionTest = jest.fn()
             render(
                 wrapper(
                 <Filter 
@@ -19,11 +20,13 @@ describe('Filter tests', () => {
                     spokenLanguages={[{value:"german", label:"German", checked:false}]}
                     workExperience={[ "All" ,"0", "1-3", "4-6", "7-10+"]}
                     sortOptions={[]}
-                    loadRegion={()=>{}}
+                    loadRegion={()=>{loadRegionTest}}
                     />
                 )
             )
-            await waitFor(() => {  
+            
+            await waitFor(() => { 
+                fireEvent.click(screen.getByTestId("countries-0"))
                 expect( screen.getByTestId("skills-0")).toBeInTheDocument()
                 expect( screen.getByTestId("programmingLanguage-0")).toBeInTheDocument()
                 expect( screen.getByTestId("jobRoles-0")).toBeInTheDocument()
@@ -33,6 +36,7 @@ describe('Filter tests', () => {
                 expect( screen.getByTestId("salary-max-range")).toBeInTheDocument()
                 expect( screen.getByTestId("availability-range")).toBeInTheDocument()
                 expect( screen.getByTestId("work_experience")).toBeInTheDocument()
+                expect(loadRegionTest).toBeCalled()
              })
         })
     })
