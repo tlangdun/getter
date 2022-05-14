@@ -1,8 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import Card from './Card';
-import { useAppSelector } from '../../../store/hooks';
-import {QueryFilter} from "../../../store/models/queryModel";
-import { getDocumentsByFilter } from '../../../helpers/queries/databaseHelper';
+import { useAppSelector } from '../../../store/hooks'
 
 const dummyAPIResponse = [
   {

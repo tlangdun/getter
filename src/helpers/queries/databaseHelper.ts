@@ -1,5 +1,5 @@
 import {collection, doc, getDoc, getDocs, setDoc, where, query} from 'firebase/firestore';
-import {db, storage} from '../../services/firebaseconfig';
+import {db} from '../../services/firebaseconfig';
 import {access_level, GetterUser} from '../../store/models/userModel';
 import {QueryFilter} from "../../store/models/queryModel";
 
@@ -78,12 +78,11 @@ export const getTalentByUserId = async (userId: string): Promise<GetterUser> => 
     }
 }
 
-// ToDo: ToDo :^)
 export const updateRecruiterByUserId = async (recruiterForm: GetterUser): Promise<boolean> => {
     if (!recruiterForm) return false;
 
     const docRef = doc(db, `Users/${recruiterForm?.uid}`);
-    const docSnap = await setDoc(docRef, recruiterForm);
+    await setDoc(docRef, recruiterForm);
     return true;
 }
 
