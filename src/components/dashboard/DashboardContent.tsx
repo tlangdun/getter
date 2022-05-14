@@ -28,7 +28,7 @@ const DashboardContent:FC = () => {
     <>
     <div data-testid="dashboard">
       <FullCard title={fullCardContent.title} text={fullCardContent.text}/>
-      <div className="grid grid-flow-col gap-6 max-w-7xl mx-auto sm:px-2 lg:px-2 mt-2">
+      <div data-testid="content-card" className="grid grid-flow-col gap-6 max-w-7xl mx-auto sm:px-2 lg:px-2 mt-2">
           <div className="col-span-1 rounded">
             <ContentCard 
             title={contentCard1.title}

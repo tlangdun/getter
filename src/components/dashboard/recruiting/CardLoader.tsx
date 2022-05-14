@@ -311,7 +311,7 @@ const CardLoader:FC = () => {
   },[activeFilters])
   return(
     <>
-      <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <ul role="list" data-testid="card-loader" className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {users.map((user) => (
           <Card key={user.uid} user={user}/>
           ))}

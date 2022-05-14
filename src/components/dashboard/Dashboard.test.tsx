@@ -1,4 +1,4 @@
-import {render, screen, act} from '@testing-library/react'
+import {render, screen, act, waitFor} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import {Route,Routes, BrowserRouter} from 'react-router-dom'
 import Dashboard from './Dashboard'
@@ -6,7 +6,6 @@ import MenuDesktop from './MenuDesktop'
 import {createMemoryHistory} from 'history'
 import RouteDashboardRecruiter from '../../routes/dashboard/RouteDashboardRecruiter';
 import Recruiting from './Recruiting'
-import DashboardRoute from '../../routes/dashboard/DashboardRoute'
 import DashboardContent from './DashboardContent'
 import CandidateList from './CandidateList'
 import Message from './Message'
@@ -19,7 +18,7 @@ describe('Dashboard recruiter', () => {
       wrapper(<Dashboard content={<Recruiting/>}/>)
     )
   })
-
+  
   test('recruiter menu gets shown in dashboard', () => {
     
     render(
@@ -30,9 +29,11 @@ describe('Dashboard recruiter', () => {
       )
     )
 
+    
     RouteDashboardRecruiter.forEach(nav => {
         expect(screen.getByText(nav.name)).toBeInTheDocument()
     })
+    
   })
 
   test('routing dashboard menu content', () => {

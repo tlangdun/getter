@@ -94,7 +94,6 @@ const FilterLoader:FC = () => {
   useEffect(() => {
     loadFilters(user)
       .then(() => {
-        console.log("did mount")
         updateSkills(filters.skills);
         updateProgrammingLanguages(filters.programmingLanguages)
         updateJobRoles(filters.jobRoles)

@@ -12,7 +12,7 @@ interface Props {
 
 const DropDownFilter:FC<Props> = (props) => {
   return(
-    <fieldset>
+    <fieldset data-testid={props.id}>
       <legend className="block font-medium">{props.title}</legend>
       <div>
         <label htmlFor={props.id} className="sr-only">

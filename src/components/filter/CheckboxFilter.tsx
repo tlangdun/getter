@@ -13,7 +13,7 @@ const CheckboxFilter:FC<Props> = (props) => {
         <legend className="block font-medium">{props.name}</legend>
         <div className="pt-6 space-y-6 sm:pt-4 sm:space-y-4">
             {props.list.map((option, optionIdx) => (
-            <div key={option.value} className="flex items-center text-base sm:text-sm">
+            <div key={option.value} data-testid={option.value} className="flex items-center text-base sm:text-sm">
                 <input
                 onClick={props.event}
                 id={`${id}-${optionIdx}`}

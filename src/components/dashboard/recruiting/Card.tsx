@@ -21,7 +21,7 @@ interface User {
       start: number;
       end: number;
     }
-    work_experience: string[];
+    work_experience: object[];
 }    
 interface Props {
     user:User;
@@ -32,7 +32,7 @@ function addToCandidatesList(id:string) {
 const Card:FC<Props> = ({ user }) => {
   return(
     <li
-        className="col-span-1 relative selection:flex flex-col text-center bg-white rounded-lg shadow divide-y divide-gray-200"
+        data-testid={user.uid} className="col-span-1 relative selection:flex flex-col text-center bg-white rounded-lg shadow divide-y divide-gray-200"
     >
         <button
         type="button"
