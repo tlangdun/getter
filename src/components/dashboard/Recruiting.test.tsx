@@ -1,12 +1,9 @@
 import {render, screen, act} from '@testing-library/react'
 import { Provider } from "react-redux"
 import { BrowserRouter } from "react-router-dom"
-import { UserActions } from '../../store/slices/UserSlice'
 import store from "../../store/store"
 import Dashboard from "./Dashboard"
 import Recruiting from "./Recruiting"
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-
 
 let mockUser = {
     "uid": "KtDtaldROMaQ93TBPCTjqTNs1rK2",

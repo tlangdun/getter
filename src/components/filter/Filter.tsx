@@ -91,9 +91,9 @@ const Filter:FC<Props> = (props) => {
 
   function removeActiveFilters() {
     var checkboxes = document.getElementsByTagName("input");
-    for(var i = 0; i < checkboxes.length; i++) {
-      if(checkboxes[i].type === "checkbox") {
-        checkboxes[i].checked = false; 
+    for(let checkbox of checkboxes) {
+      if(checkbox.type === "checkbox") {
+        checkbox.checked = false; 
       }
     }
     updateCount(0)

@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { MailIcon, PhoneIcon,PlusSmIcon } from '@heroicons/react/solid'
+import { MailIcon,PlusSmIcon } from '@heroicons/react/solid'
 
 interface User { 
     uid: string;

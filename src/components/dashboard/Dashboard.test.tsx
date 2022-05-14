@@ -1,4 +1,4 @@
-import {render, screen, act, waitFor} from '@testing-library/react'
+import {render, screen, act} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import {Route,Routes, BrowserRouter} from 'react-router-dom'
 import Dashboard from './Dashboard'
