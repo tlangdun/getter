@@ -20,7 +20,7 @@ describe('Filter tests', () => {
                     spokenLanguages={[{value:"german", label:"German", checked:false}]}
                     workExperience={[ "All" ,"0", "1-3", "4-6", "7-10+"]}
                     sortOptions={[]}
-                    loadRegion={()=>{loadRegionTest}}
+                    loadRegion={loadRegionTest}
                     />
                 )
             )
