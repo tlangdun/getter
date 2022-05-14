@@ -2,10 +2,12 @@ import { FC, Fragment } from 'react';
 import { List } from 'reselect/es/types';
 import MenuItems from './MenuItems';
 import { Menu, Transition } from '@headlessui/react';
+import { GetterUser } from '../../store/models/userModel';
 
 
 interface Props{
   navigation:List;
+  user:GetterUser;
 }
 
 function classNames(...classes : any) {
@@ -30,12 +32,12 @@ const MenuDesktop:FC<Props> = (props) => {
                     <span className="flex min-w-0 items-center justify-between space-x-3">
                       <img
                         className="w-10 h-10 bg-gray-300 rounded-full flex-shrink-0"
-                        src="https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80"
+                        src={props.user?.pic_url}
                         alt=""
                       />
                       <span className="flex-1 flex flex-col min-w-0">
-                        <span className="text-gray-900 text-sm font-medium truncate">Martina Bosswald</span>
-                        <span className="text-gray-500 text-sm truncate">@martinabosswald</span>
+                        <span className="text-gray-900 text-sm font-medium truncate">{props.user?.first_name + " " + props.user?.last_name}</span>
+                        <span className="text-gray-500 text-sm truncate">{props.user?.email}</span>
                       </span>
                     </span>
                   </span>

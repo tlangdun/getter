@@ -75,7 +75,7 @@ const Dashboard:FC<Props> = (props) => {
                   </div>
                 </Transition.Child>
                 <div className="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
-                  <MenuDesktop navigation={RouteDashboardRecruiter}/>
+                  <MenuDesktop user={user} navigation={RouteDashboardRecruiter}/>
                 </div>
               </div>
             </Transition.Child>
@@ -90,7 +90,7 @@ const Dashboard:FC<Props> = (props) => {
           <div className="flex flex-col w-64">
 
             {/* Sidebar component, swap this element with another sidebar if you like */}
-            <MenuDesktop navigation={RouteDashboardRecruiter}/>
+            <MenuDesktop user={user} navigation={RouteDashboardRecruiter}/>
 
           </div>
         </div>

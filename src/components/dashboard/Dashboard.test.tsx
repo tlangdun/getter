@@ -12,6 +12,41 @@ import Message from './Message'
 import store from '../../store/store'
 import { Provider } from 'react-redux'
 
+let testUser = {
+  "uid": "KtDtaldROMaQ93TBPCTjqTNs1rK2",
+  "access_level": 0,
+  "email": "test@gmail.com",
+  "first_name": "Martin",
+  "last_name": "Boss",
+  "pic_url": "https://firebasestorage.googleapis.com/v0/b/getter-38760.appspot.com/o/profile-pictures%2F20201231_200219.jpg?alt=media&token=b78aea1a-2d0b-4ad0-a75c-626f3f59fa3f",
+  "short_bio": "hello, my name is martin",
+  "address_postcode": "8090",
+  "availability": "20",
+  "birth_date": "6.9.1969",
+  "canton": "Zürich",
+  "city_of_residence": "Zürich",
+  "job_role": "GTFO",
+  "skills": [
+    "brrr",
+    "git"
+  ],
+  "programming_languages": [
+    "java"
+  ],
+  "salary_range": {
+    "start": 100000,
+    "end": 300000
+  },
+  "work_experience": [
+    {
+      "start_date": "12.12.2012",
+      "employer": "Siemens",
+      "end_date": "10.10.2010",
+      "description": "this is a job description",
+      "job_role": "Software Engineer"
+    }
+  ]
+}
 describe('Dashboard recruiter', () => {
   test('Should render dashboard without crash', () => {
     render(
@@ -84,14 +119,14 @@ describe('Dashboard recruiter', () => {
 describe('User menu', () => {
   test('Should render user menu', () => {
     wrapper(
-       <MenuDesktop navigation={RouteDashboardRecruiter}/>
+       <MenuDesktop user={testUser} navigation={RouteDashboardRecruiter}/>
     )
   })
 
   test('can click on the user button', () => {
     const { getAllByTestId } = render(
       wrapper(
-        <MenuDesktop navigation={RouteDashboardRecruiter} />
+        <MenuDesktop user={testUser} navigation={RouteDashboardRecruiter} />
       )
     );
 
@@ -102,7 +137,7 @@ describe('User menu', () => {
   test('can click on menu items', () => {
       const { getAllByTestId } = render(
         wrapper(
-          <MenuDesktop navigation={RouteDashboardRecruiter} />
+          <MenuDesktop user={testUser} navigation={RouteDashboardRecruiter} />
         )
       );
       const [menuButton] = getAllByTestId("user-button");
@@ -120,7 +155,7 @@ describe('User menu', () => {
 
   test('check the number of items', () => {
     const { getByTestId } = render(
-      wrapper(<MenuDesktop navigation={RouteDashboardRecruiter} />)
+      wrapper(<MenuDesktop user={testUser} navigation={RouteDashboardRecruiter} />)
     );
     const menuButton = getByTestId("user-button");
     userEvent.click(menuButton);
@@ -132,7 +167,7 @@ describe('User menu', () => {
   test('navigates user contents when items are clicked', () => {
     const { getByTestId, getAllByTestId } = render(
       <BrowserRouter>
-        <MenuDesktop navigation={RouteDashboardRecruiter} />
+        <MenuDesktop user={testUser} navigation={RouteDashboardRecruiter} />
       </BrowserRouter>
     );
 
