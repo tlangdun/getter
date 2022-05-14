@@ -42,8 +42,8 @@ let testUser =
 }
 
 
-describe('Filter tests', () => {
-    test('Check correct render of the passed objects', async () => {
+describe('Dashboard Card', () => {
+    test('Check if card gets rendered correctly', async () => {
         render(
             wrapper(<Card user={testUser}/>)
         )

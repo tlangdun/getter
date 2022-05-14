@@ -19,8 +19,8 @@ const MenuDesktop:FC<Props> = (props) => {
         <div className="flex items-center flex-shrink-0 px-4 pb-4">
           <img
             className="h-8 w-auto"
-            src="https://tailwindui.com/img/logos/workflow-logo-indigo-600-mark-gray-900-text.svg"
-            alt="Workflow"
+            src="https://firebasestorage.googleapis.com/v0/b/getter-38760.appspot.com/o/getter%2FLogo_Full.png?alt=media&token=1e2bcc9d-c2da-4170-9e7b-4b6f186a8e61"
+            alt="Getter"
           />
         </div>
         <Menu as="div" className="px-3 relative inline-block text-left">

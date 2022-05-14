@@ -100,8 +100,8 @@ const Dashboard:FC<Props> = (props) => {
               <div>
                 <img
                   className="h-8 w-auto"
-                  src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-                  alt="Workflow"
+                  src="https://firebasestorage.googleapis.com/v0/b/getter-38760.appspot.com/o/getter%2FLogo_Full.png?alt=media&token=1e2bcc9d-c2da-4170-9e7b-4b6f186a8e61"
+                  alt="Getter"
                 />
               </div>
               <div>
