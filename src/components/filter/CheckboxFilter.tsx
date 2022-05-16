@@ -17,6 +17,7 @@ const CheckboxFilter:FC<Props> = (props) => {
                 <input
                 onClick={props.event}
                 id={`${id}-${optionIdx}`}
+                data-testid={`${id}-${optionIdx}`}
                 name={id +"[]"}
                 defaultValue={option.value}
                 type="checkbox"

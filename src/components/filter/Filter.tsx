@@ -227,7 +227,7 @@ const Filter:FC<Props> = (props) => {
               </Disclosure.Button>
             </div>
             <div className="pl-6">
-              <button type="button" onClick={removeActiveFilters} className="text-gray-500">
+              <button type="button" data-testid="clear-all" onClick={removeActiveFilters} className="text-gray-500">
                 Clear all
               </button>
             </div>
@@ -242,7 +242,6 @@ const Filter:FC<Props> = (props) => {
               <RangeSlider name='Availability' id="availability-range" value={rangeValue + "%"} event={handleRangeSlider} min="0" step="5" max="100"/>
               <RangeSlider name='Max Salary' id="salary-max-range" value={salaryMax} event={handleSalaryMaxSlider} min="0" step="5000" max="300000"/>
               <DropDownFilter title="Work Experience" onChangeEvent={handleWorkExperienceFilter} id="work_experience"  options={props.workExperience} defaultValue={props.workExperience[0]}/>
-
             </div>
             <div className="grid grid-cols-1 gap-y-10 auto-rows-min md:grid-cols-2 md:gap-x-6">
               <CheckboxFilter name="Country" event={handleCountriesFilter} list={props.countries}/>

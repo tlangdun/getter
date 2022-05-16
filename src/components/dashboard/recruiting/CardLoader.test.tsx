@@ -4,8 +4,6 @@ import { BrowserRouter } from "react-router-dom"
 import store from '../../../store/store'
 import CardLoader from './CardLoader'
 
-
-
 describe('cardloader tests', () => {
     test('check if cardloader gets rendered correctly', async () => {
         render(
