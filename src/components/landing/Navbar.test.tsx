@@ -27,13 +27,13 @@ describe('NavBar', () => {
 
   test('AboutUs link should be on page', () => {
     renderWithRouter(<NavBar />);
-    const aboutUsLink = screen.getAllByText('About us');
+    const aboutUsLink = screen.getAllByText('About Us');
     expect(aboutUsLink[0]).toBeInTheDocument();
   })
 
   test('Features link should be on page', () => {
     renderWithRouter(<NavBar />);
-    const featuresLink = screen.getAllByText('features');
+    const featuresLink = screen.getAllByText('Features');
     expect(featuresLink[0]).toBeInTheDocument();
   })
 });

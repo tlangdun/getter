@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import UserSliceReducer from './slices/UserSlice';
+import ActiveFiltersSliceReducer from './slices/ActiveFiltersSlice';
 
 const store = configureStore({
     reducer: {
-            user: UserSliceReducer
+            user: UserSliceReducer,
+            activeFilters: ActiveFiltersSliceReducer
     }
 })
 

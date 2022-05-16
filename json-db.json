@@ -1,0 +1,104 @@
+{
+  "filters": [
+    {
+      "id": "0",
+      "name": "Junior Data Scientist",
+      "language": [
+        "python"
+      ],
+      "skill": [
+        "AWS"
+      ],
+      "availability": [
+        10,
+        30
+      ]
+    },
+    {
+      "id": "1",
+      "name": "Senior Data Scientist",
+      "language": [
+        "python",
+        "java"
+      ],
+      "skill": [
+        "AWS"
+      ],
+      "availability": [
+        40,
+        50
+      ]
+    },
+    {
+      "id": "2",
+      "name": "Java Backend Engineer",
+      "language": [
+        "java",
+        "c++"
+      ],
+      "skill": [
+        "AWS"
+      ],
+      "availability": [
+        10,
+        80
+      ]
+    },
+    {
+      "name": "eqeqwe",
+      "language": [
+        "javascript",
+        "c",
+        "csharp"
+      ],
+      "skill": [],
+      "availability": [
+        0,
+        100
+      ],
+      "id": "fOiA0Gz"
+    },
+    {
+      "name": "dsda",
+      "language": [
+        "java",
+        "javascript"
+      ],
+      "skill": [],
+      "availability": [
+        0,
+        100
+      ],
+      "id": "rPjOzFD"
+    },
+    {
+      "name": "tttttt",
+      "language": [
+        "java",
+        "python"
+      ],
+      "skill": [
+        "aws"
+      ],
+      "availability": [
+        0,
+        100
+      ],
+      "id": "ScmmYC9"
+    },
+    {
+      "name": "tsdsdsd",
+      "language": [
+        "javascript",
+        "java",
+        "cplusplus"
+      ],
+      "skill": [],
+      "availability": [
+        50,
+        100
+      ],
+      "id": "xU1tbf-"
+    }
+  ]
+}
