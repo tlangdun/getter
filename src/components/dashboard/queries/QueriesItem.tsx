@@ -7,7 +7,8 @@ interface QueryProps {
 
 const QueriesItem:FC<QueryProps> = ({names, deleteQuery}) => {
   return (
-    <ul role="list-query" className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-3 lg:grid-cols-4 h-16 max-h-32">
+    // eslint-disable-next-line jsx-a11y/no-redundant-roles
+    <ul role="list" className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-3 lg:grid-cols-4 h-16 max-h-32">
       {names.map((query:any) => (
         <li key={query.id} id={query.id} className="flex items-center justify-center col-span-1 bg-white rounded-lg shadow divide-y divide-gray-200">
           <button id={query.id} data-testid='delete-button' type="button" onClick={deleteQuery} className="bg-red-300 hover:bg-red-400 h-full rounded-l-lg mr-0 p-0">
