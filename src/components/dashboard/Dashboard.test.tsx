@@ -1,4 +1,4 @@
-import {render, screen, act} from '@testing-library/react'
+import {render, screen, act, waitFor} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import {Route,Routes, BrowserRouter} from 'react-router-dom'
 import Dashboard from './Dashboard'
@@ -47,14 +47,9 @@ let testUser = {
     }
   ]
 }
-describe('Dashboard recruiter', () => {
-  test('Should render dashboard without crash', () => {
-    render(
-      wrapper(<Dashboard content={<Recruiting/>}/>)
-    )
-  })
+describe('Dashboard recruiter',() => {
   
-  test('recruiter menu gets shown in dashboard', () => {
+  test('recruiter menu gets shown in dashboard', async () => {
     
     render(
       wrapper(
@@ -63,11 +58,12 @@ describe('Dashboard recruiter', () => {
       </Routes>
       )
     )
-
-    
-    RouteDashboardRecruiter.forEach(nav => {
-        expect(screen.getByText(nav.name)).toBeInTheDocument()
+    await waitFor(()=>{
+      RouteDashboardRecruiter.forEach(nav => {
+          expect(screen.getByText(nav.name)).toBeInTheDocument()
+      })
     })
+
     
   })
 
@@ -90,7 +86,9 @@ describe('Dashboard recruiter', () => {
         </Routes>
       )
     )
-    expect(screen.getByTestId("recruiting")).toBeInTheDocument()
+    await waitFor(()=>{
+      expect(screen.getByTestId("recruiting")).toBeInTheDocument()
+    })
   })
 
   test('show candidates list page', async () => {
@@ -131,7 +129,9 @@ describe('User menu', () => {
     );
 
     const [menuButton] = getAllByTestId("user-button");
-    userEvent.click(menuButton);
+    act(()=>{
+      userEvent.click(menuButton);
+    })
   })
 
   test('can click on menu items', () => {
@@ -142,7 +142,7 @@ describe('User menu', () => {
       );
       const [menuButton] = getAllByTestId("user-button");
       userEvent.click(menuButton);
-
+      
       const [profileItem] = getAllByTestId("profile");
       userEvent.click(profileItem);
 
@@ -159,7 +159,7 @@ describe('User menu', () => {
     );
     const menuButton = getByTestId("user-button");
     userEvent.click(menuButton);
-
+    
     const items = screen.queryAllByLabelText("user-item")
     expect(items.length).toBe(4)
   })
