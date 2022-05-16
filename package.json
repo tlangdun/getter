@@ -40,7 +40,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --detectOpenHandles",
     "eject": "react-scripts eject",
     "test:ci": "npm run test -- --runInBand --detectOpenHandles --coverage --ci --testResultsProcessor=\"jest-junit\" --watchAll=false --forceExit",
     "json-server": "json-server -p3001 --watch json-db.json"
