@@ -9,7 +9,7 @@ import Profile from '../../components/user/Profile';
 import Support from '../../components/user/Support';
 import UserSettings from '../../components/user/UserSettings';
 import RouteDashboardRecruiter from '../../routes/dashboard/RouteDashboardRecruiter';
-import Queries from '../../components/dashboard/Queries'
+import Queries from '../../components/dashboard/queries/Queries'
 
 const DashboardRoute:FC = () => {
   return(

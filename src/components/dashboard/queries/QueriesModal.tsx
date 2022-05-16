@@ -1,8 +1,9 @@
 import { FC, useState } from 'react';
-import { Modal, Button, Group, Title, Box, TextInput, Checkbox, MultiSelect, RangeSlider, Text } from '@mantine/core';
+import { Modal, Button, Group, Title, Box, TextInput, MultiSelect, RangeSlider, Text } from '@mantine/core';
 import { useForm } from '@mantine/form'
-import Form from './QueriesForm'
-import filtersService from '../../services/filters'
+import filtersService from '../../../services/filters'
+import { Check } from 'tabler-icons-react';
+import { showNotification } from '@mantine/notifications';
 
 const languages = [
   { value: 'java', label: 'Java' },
@@ -49,7 +50,6 @@ const QueriesModal:FC<Queries> = ({queryNames, setQueryNames}) => {
         if (!(/^\S+$/.test(value))) {
           return 'Invalid name'
         }
-
         return null
       },
       language: lang => lang.length > 0 ? null : 'Choose at least one language',
@@ -61,6 +61,12 @@ const QueriesModal:FC<Queries> = ({queryNames, setQueryNames}) => {
       .createNewFilterQuery(values)
       .then(returnedQuery => {
         setQueryNames(queryNames.concat(returnedQuery))
+        showNotification({
+          title: `${returnedQuery.name} added`,
+          message: `You added ${returnedQuery.name}`,
+          icon: <Check size={18} />,
+          color: 'green',
+        })
       })
     setOpened(false)
     form.reset()
@@ -78,7 +84,7 @@ const QueriesModal:FC<Queries> = ({queryNames, setQueryNames}) => {
         centered 
         overlayBlur={3}
         onClose={() => handleCloseModal()}
-        title={<Title order={2}>Create a new query</Title>}
+        title={<Title order={2} data-testid="modal-title">Create a new query</Title>}
       >
         <Box className="ml-0" sx={{ maxWidth: 385 }} mx="auto">
           <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
@@ -136,6 +142,7 @@ const QueriesModal:FC<Queries> = ({queryNames, setQueryNames}) => {
 
             <Group position="right" mt="md">
               <Button
+                data-testid="modal-close"
                 color="red"
                 onClick={() => handleCloseModal()}
                 className="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded outline-none focus:outline-none ease-linear transition-all duration-150"
@@ -143,6 +150,7 @@ const QueriesModal:FC<Queries> = ({queryNames, setQueryNames}) => {
                 CLOSE
               </Button>
               <Button
+                data-testid="modal-save"
                 type="submit"
                 color="green"
                 className="bg-green-500 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-3 rounded outline-none focus:outline-none ease-linear transition-all duration-150"
@@ -153,14 +161,14 @@ const QueriesModal:FC<Queries> = ({queryNames, setQueryNames}) => {
           </form>
         </Box>
       </Modal>
-
       <Group position="center">
         <Button 
           onClick={() => setOpened(true)}
           variant="light"
           type="button" 
           color="violet"
-          className="w-full h-48 border-2 border-gray-300 border-dashed rounded-lg p-12 text-center hover:border-gray-400" 
+          className="w-full h-48 border-2 border-gray-300 border-dashed rounded-lg p-12 text-center hover:border-gray-400"
+          data-testid="new-query" 
         >
           <div className="flex flex-col">
             <svg
