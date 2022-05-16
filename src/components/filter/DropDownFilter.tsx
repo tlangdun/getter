@@ -26,7 +26,7 @@ const DropDownFilter:FC<Props> = (props) => {
         defaultValue={props.defaultValue}
         >
         {props.options.map((option) => {
-          return <option key={option}>{option}</option>
+          return <option data-testid={"option-"+option} key={option}>{option}</option>
 
         })}  
         </select>

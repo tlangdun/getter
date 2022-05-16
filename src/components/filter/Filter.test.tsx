@@ -1,4 +1,4 @@
-import {render, screen, act, waitFor, fireEvent, prettyDOM} from '@testing-library/react'
+import {render, screen, act, fireEvent} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { Provider } from "react-redux"
 import { BrowserRouter } from "react-router-dom"
@@ -6,9 +6,7 @@ import store from "../../store/store"
 
 import Filter from './Filter'
 import { EmptyFilters } from '../../store/models/filterModels'
-import { renderIntoDocument } from 'react-dom/test-utils'
-import CheckboxFilter from './CheckboxFilter'
-import { wait } from '@testing-library/user-event/dist/utils'
+
 
 
 let filter = {...EmptyFilters}
@@ -49,7 +47,6 @@ describe('Filter tests',() => {
     test('test click on filter items', async () => {
       let loadRegionTest = jest.fn().mockImplementation(() => Promise.resolve( [{value:"zuerich", label:"Zuerich", checked:false}]));
       renderFilter(loadRegionTest) 
-      screen.debug()
       userEvent.click(await screen.findByText("0 Filters"))
       act(()=>{
         userEvent.click(screen.getByTestId("country-0"))
@@ -57,7 +54,27 @@ describe('Filter tests',() => {
       screen.debug()
       expect(loadRegionTest).toBeCalled()
       expect(await screen.findByText("1 Filters")).toBeInTheDocument()
-    })  
+    })
+
+    test('test clear filter', async () => {
+      let loadRegionTest = jest.fn().mockImplementation(() => Promise.resolve( [{value:"zuerich", label:"Zuerich", checked:false}]));
+      renderFilter(loadRegionTest) 
+      userEvent.click(await screen.findByText("0 Filters"))
+      act(()=>{
+        userEvent.click(screen.getByTestId("jobrole-0"))
+        fireEvent.click(screen.getByTestId("availability-range"), { target: { value: 25 } });
+        fireEvent.click(screen.getByTestId("salary-min-range"), { target: { value: 5000 } });
+        fireEvent.click(screen.getByTestId("salary-max-range"), { target: { value: 10000 } });
+        fireEvent.click(screen.getByTestId("option-1-3"), { target: { value: 2 } });
+      })
+      screen.debug()
+      expect(await screen.findByText("5 Filters")).toBeInTheDocument()
+      act(()=>{
+        userEvent.click(screen.getByTestId("clear-all"))
+      })
+      expect(await screen.findByText("0 Filters")).toBeInTheDocument()
+
+    })
 })
 
 const renderFilter= (loadRegionTest:Function) => {
