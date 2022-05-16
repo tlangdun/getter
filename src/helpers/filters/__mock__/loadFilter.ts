@@ -1,8 +1,7 @@
 import { EmptyFilters } from "../../../store/models/filterModels";
-import { GetterUser } from "../../../store/models/userModel";
 
 let filter = {...EmptyFilters}
-export async function loadFilters(user:GetterUser) { 
+export async function loadFilters() { 
     filter.skills = [{value:"git", label:"Git", checked:false}]
     filter.programmingLanguages =  [{value:"java", label:"Java", checked:false}]
     filter.jobRoles = [{value:"student", label:"Student", checked:false}]
