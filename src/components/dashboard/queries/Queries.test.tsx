@@ -4,11 +4,11 @@ import QueriesItem from './QueriesItem'
 import {BrowserRouter} from 'react-router-dom'
 import Dashboard from '../Dashboard'
 import QueriesModal from './QueriesModal'
-import { useEffect, useState } from "react";
 import userEvent from '@testing-library/user-event'
-import React, { useState as useStateMock } from 'react';
 import Enzyme, { shallow } from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+import { Provider } from 'react-redux'
+import store from '../../../store/store'
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -33,7 +33,9 @@ describe('Queries page', () => {
   test('Should render queries page', () => {
     render(
      <BrowserRouter>
-       <Dashboard content={<QueriesModul.Queries/>}/>
+      <Provider store={store}>
+        <Dashboard content={<QueriesModul.Queries/>}/>
+      </Provider>
      </BrowserRouter>
     )
   })
