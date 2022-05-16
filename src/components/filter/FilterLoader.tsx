@@ -15,9 +15,9 @@ const sortOptions = [
 ]  
 
 function fillFilterMap(array:List) {
-    let filter = new Array();
+    let filter = [[]];
     array.forEach(function (elem){
-        let map = {value:elem.toLowerCase(), label:elem, checked:false}
+        let map:any = {value:elem.toLowerCase(), label:elem, checked:false}
         filter.push(map)
     })
     return filter;
@@ -27,11 +27,11 @@ const FilterLoader:FC = () => {
 
   const user = useAppSelector((state) => state.user.user);
  
-  const [skillsState,updateSkills] = useState(new Array())
-  const [programmingLanguagesState,updateProgrammingLanguages] = useState(new Array())
-  const [jobRoles,updateJobRoles] = useState(new Array())
-  const [countries,updateCountries] = useState(new Array())
-  const [spokenLanguages,updateSpokenLanguages] = useState(new Array())
+  const [skillsState,updateSkills] = useState([])
+  const [programmingLanguagesState,updateProgrammingLanguages] = useState([])
+  const [jobRoles,updateJobRoles] = useState([])
+  const [countries,updateCountries] = useState([])
+  const [spokenLanguages,updateSpokenLanguages] = useState([])
 
 
   async function loadRegion(country:string){
@@ -60,7 +60,7 @@ const FilterLoader:FC = () => {
       .catch(()=>{
         alert("filter couldnt be loaded")
       })
-  },[])
+  },[user])
 
   return(
     <>
