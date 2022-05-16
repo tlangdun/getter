@@ -4,7 +4,7 @@ import { useAppSelector } from '../../../store/hooks'
 
 const dummyAPIResponse = [
   {
-    "uid": "01DtaldROMaQ93TBPCTjqTNs1rK2",
+    "uid": "11DtaldROMaQ93TBPCTjqTNs1rK2",
     "access_level": 0,
     "email": "martin.oswald@gmail.com",
     "first_name": "Martin",
@@ -39,7 +39,7 @@ const dummyAPIResponse = [
     ]
   },
   {
-    "uid": "tlUBAunfkmdrwi5cd7ljKw3qlB33",
+    "uid": "2lUBAunfkmdrwi5cd7ljKw3qlB33",
     "access_level": 0,
     "email": "tenzin.longdong@gmail.com",
     "first_name": "Tenzin",
@@ -75,7 +75,7 @@ const dummyAPIResponse = [
     ]
   },
   {
-    "uid": "tlUBAunfkmdrwi6cd7ljKw3qlB33",
+    "uid": "3tlUBAunfkmdrwi6cd7ljKw3qlB33",
     "access_level": 0,
     "email": "cakir.atatuerk@gmail.com",
     "first_name": "Cakir",
@@ -110,7 +110,7 @@ const dummyAPIResponse = [
     ]
   },
   {
-    "uid": "tlUBAunfkm2rwi6cd7ljKw3qlB33",
+    "uid": "4tlUBAunfkm2rwi6cd7ljKw3qlB33",
     "access_level": 0,
     "email": "th.good@gmail.com",
     "first_name": "Thomas",
@@ -146,7 +146,7 @@ const dummyAPIResponse = [
     ]
   },
   {
-    "uid": "tlUBAunfkm2rwi6ca1ljMw3qlB33",
+    "uid": "5tlUBAunfkm2rwi6ca1ljMw3qlB33",
     "access_level": 0,
     "email": "luca.geyer@gmail.com",
     "first_name": "Luca",
@@ -182,7 +182,7 @@ const dummyAPIResponse = [
     ]
   },
   {
-    "uid": "tlUBAunfad2rlP6ca1ljMw3qlB33",
+    "uid": "6tlUBAunfad2rlP6ca1ljMw3qlB33",
     "access_level": 0,
     "email": "dummy.user@gmail.com",
     "first_name": "Dummy",
@@ -217,7 +217,7 @@ const dummyAPIResponse = [
     ]
   },
   {
-    "uid": "tlUBAunfad2PMP6ca1l4Mw3qlB33",
+    "uid": "7tlUBAunfad2PMP6ca1l4Mw3qlB33",
     "access_level": 0,
     "email": "max.muster@gmail.com",
     "first_name": "Max",
@@ -251,7 +251,7 @@ const dummyAPIResponse = [
     ]
   }
   ,{
-    "uid": "1AfiAunfad2PMP6ca1l4Mw3qlB33",
+    "uid": "81AfiAunfad2PMP6ca1l4Mw3qlB33",
     "access_level": 0,
     "email": "cedric.muster@gmail.com",
     "first_name": "Cedric",
@@ -311,7 +311,7 @@ const CardLoader:FC = () => {
     <>
       <ul role="list" data-testid="card-loader" className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {users.map((user) => (
-          <Card key={user.uid} user={user}/>
+          <Card key={user.email} user={user}/>
           ))}
       </ul>
     </>

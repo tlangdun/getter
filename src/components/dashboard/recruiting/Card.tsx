@@ -63,13 +63,13 @@ const Card:FC<Props> = ({ user }) => {
         <div className='pt-2'>
         {user.skills.map((element) => {
             return (
-            <span className="ml-1 flex-shrink-0 inline-block px-2 py-0.5 text-white text-xs font-medium bg-violet-500 rounded-full">
+            <span key={element} className="ml-1 flex-shrink-0 inline-block px-2 py-0.5 text-white text-xs font-medium bg-violet-500 rounded-full">
             {element}
             </span>)
         })}
         {user.programming_languages.map((element) => {
             return (
-            <span className="ml-1 flex-shrink-0 inline-block px-2 py-0.5 text-white text-xs font-medium bg-green-700 rounded-full">
+            <span key={element} className="ml-1 flex-shrink-0 inline-block px-2 py-0.5 text-white text-xs font-medium bg-green-700 rounded-full">
             {element}
             </span>)
         })}

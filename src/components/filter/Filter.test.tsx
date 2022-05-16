@@ -51,7 +51,6 @@ describe('Filter tests',() => {
       act(()=>{
         userEvent.click(screen.getByTestId("country-0"))
       })
-      screen.debug()
       expect(loadRegionTest).toBeCalled()
       expect(await screen.findByText("1 Filters")).toBeInTheDocument()
     })
@@ -67,7 +66,6 @@ describe('Filter tests',() => {
         fireEvent.click(screen.getByTestId("salary-max-range"), { target: { value: 10000 } });
         fireEvent.click(screen.getByTestId("option-1-3"), { target: { value: 2 } });
       })
-      screen.debug()
       expect(await screen.findByText("5 Filters")).toBeInTheDocument()
       act(()=>{
         userEvent.click(screen.getByTestId("clear-all"))
