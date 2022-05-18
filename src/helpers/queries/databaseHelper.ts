@@ -65,6 +65,14 @@ export const getTalentByUserId = async (database:any, userId: string): Promise<G
     }
 }
 
+export const updateRecruiterByUserId = async (recruiterForm: GetterUser): Promise<boolean> => {
+    if (!recruiterForm) return false;
+
+    const docRef = doc(db, `Users/${recruiterForm?.uid}`);
+    const docSnap = await setDoc(docRef, recruiterForm);
+    return true;
+}
+
 export const getDocumentsByFilter = async (database:any, recruiterFilter: QueryFilter): Promise<GetterUser[]> => {
     let skillsIds:string[] = []
     let spokenLanguagesIds:string[] = []

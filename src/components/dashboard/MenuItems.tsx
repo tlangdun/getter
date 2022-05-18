@@ -19,6 +19,9 @@ function setCurrentPath(navigation:List,pathname:string) {
     navigation.forEach(element => {
         element.current = (pathname.includes(element.href))
     });
+    if(pathname.split('/').length > 2) {
+        navigation[0].current = false
+    }
 }
 
 const MenuItems:FC<Props> = (props) => {

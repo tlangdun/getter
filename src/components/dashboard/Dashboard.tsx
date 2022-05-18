@@ -1,24 +1,33 @@
-import { Fragment, useState } from 'react'
+import { FC, Fragment, useEffect, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import Recruiting from './Recruiting'
+
 import MenuDesktop from './MenuDesktop'
-import { Routes,Route } from 'react-router-dom'
-import DashboardContent from './DashboardContent'
-import Profile from '../user/Profile'
-import Message from './Message'
-import UserSettings from '../user/UserSettings'
-import Support from '../user/Support'
+import RouteDashboardRecruiter from '../../routes/dashboard/RouteDashboardRecruiter';
+
 import {
   MenuIcon,
   XIcon,
 } from '@heroicons/react/outline'
+import { useAppSelector } from '../../store/hooks';
+import { useNavigate } from 'react-router-dom';
 
-import CandidateList from './CandidateList';
-import RouteDashboardRecruiter from '../../routes/dashboard/RouteDashboardRecruiter';
+interface Props{
+  content:JSX.Element;
+}
 
-export default function Dashboard() {
+
+const Dashboard:FC<Props> = (props) => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
+  const user = useAppSelector((state) => state.user.user);
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/auth/login');
+    }
+  }, [user, navigate]);
+  
   return (
     <>
       <div className="h-screen flex">
@@ -66,7 +75,7 @@ export default function Dashboard() {
                   </div>
                 </Transition.Child>
                 <div className="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
-                  <MenuDesktop navigation={RouteDashboardRecruiter}/>
+                  <MenuDesktop user={user} navigation={RouteDashboardRecruiter}/>
                 </div>
               </div>
             </Transition.Child>
@@ -81,7 +90,7 @@ export default function Dashboard() {
           <div className="flex flex-col w-64">
 
             {/* Sidebar component, swap this element with another sidebar if you like */}
-            <MenuDesktop navigation={RouteDashboardRecruiter}/>
+            <MenuDesktop user={user} navigation={RouteDashboardRecruiter}/>
 
           </div>
         </div>
@@ -91,8 +100,8 @@ export default function Dashboard() {
               <div>
                 <img
                   className="h-8 w-auto"
-                  src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-                  alt="Workflow"
+                  src="https://firebasestorage.googleapis.com/v0/b/getter-38760.appspot.com/o/getter%2FLogo_Full.png?alt=media&token=1e2bcc9d-c2da-4170-9e7b-4b6f186a8e61"
+                  alt="Getter"
                 />
               </div>
               <div>
@@ -111,16 +120,7 @@ export default function Dashboard() {
             <main className="flex-1 relative z-0 overflow-y-auto focus:outline-none xl:order-last">
               {/* Start main area*/}
               <div className="absolute inset-0 py-6 px-4 sm:px-6 lg:px-8">
-                <Routes>
-                  <Route path={"/"} element={<DashboardContent />} /> 
-                  <Route path={RouteDashboardRecruiter[0].href} element={<DashboardContent />} /> 
-                  <Route path={RouteDashboardRecruiter[1].href} element={<Recruiting />} />
-                  <Route path={RouteDashboardRecruiter[2].href} element={<CandidateList />} />
-                  <Route path={RouteDashboardRecruiter[3].href} element={<Message />} />
-                  <Route path='/profile' element={<Profile />} />
-                  <Route path='/settings' element={<UserSettings />} />
-                  <Route path='/support' element={<Support />} />
-                </Routes>  
+                {props.content}
               </div>
               {/* End main area */}
             </main>
@@ -130,3 +130,4 @@ export default function Dashboard() {
     </>
   )
 }
+export default Dashboard
