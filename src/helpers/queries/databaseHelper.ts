@@ -52,6 +52,7 @@ export const getTalentByUserId = async (database:any, userId: string): Promise<G
             city_of_residence: u.city_of_residence,
             job_role: u.job_role,
             skills: u.skills,
+            spoken_languages: u.spoken_languages,
             programming_languages: u.programming_languages,
             salary_range: {
                 start: u.salary_range.start,
