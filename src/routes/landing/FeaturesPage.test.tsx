@@ -4,7 +4,7 @@ import FeaturesPage from '../../routes/landing/FeaturesPage';
 
 describe('FeaturesPage', () => {
 
-  test('should render the features page without crashing', () => {
+  test('Should render the features page without crashing', () => {
     renderWithRouter(<FeaturesPage />);
   });
 
