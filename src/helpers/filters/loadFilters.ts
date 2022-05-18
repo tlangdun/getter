@@ -7,7 +7,7 @@ import { EmptyFilters } from "../../store/models/filterModels";
 let filters = {...EmptyFilters}
 
 function fillFilterMap(array:List) {
-    let filter = new Array();
+    let filter:any = [];
     array.forEach(function (elem){
         let map = {value:elem.toLowerCase(), label:elem, checked:false}
         filter.push(map)

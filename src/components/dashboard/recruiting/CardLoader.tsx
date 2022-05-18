@@ -287,8 +287,8 @@ const dummyAPIResponse = [
 ]
 
 const CardLoader:FC = () => {
-  const activeFilters = useAppSelector((state) => state.activeFilters);
-  const [users, updateUsers] = useState(new Array())
+  const activeFilters = useAppSelector((state:any) => state.activeFilters);
+  const [users, updateUsers] = useState([])
   useEffect(()=>{
     let temp = Object.assign({}, activeFilters);
     let filters = temp.activeFilter//Object.assign({},activeFilters.activeFilter)
@@ -304,13 +304,13 @@ const CardLoader:FC = () => {
     } catch {
       alert("error loading cards")
     }**/
-    let apiResponse = dummyAPIResponse;
+    let apiResponse:any = dummyAPIResponse;
     updateUsers(apiResponse)
   },[activeFilters])
   return(
     <>
-      <ul role="list" data-testid="card-loader" className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {users.map((user) => (
+      <ul data-testid="card-loader" className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          {users.map((user:any) => (
           <Card key={user.email} user={user}/>
           ))}
       </ul>

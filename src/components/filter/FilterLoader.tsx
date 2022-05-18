@@ -15,7 +15,7 @@ const sortOptions = [
 ]  
 
 function fillFilterMap(array:List) {
-    let filter = new Array();
+    let filter:any = [];
     array.forEach(function (elem){
         let map = {value:elem.toLowerCase(), label:elem, checked:false}
         filter.push(map)
@@ -60,7 +60,7 @@ const FilterLoader:FC = () => {
       .catch(()=>{
         alert("filter couldnt be loaded")
       })
-  },[])
+  },[user])
 
   return(
     <>
