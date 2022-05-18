@@ -45,7 +45,7 @@ let testUser =
 describe('Dashboard Card', () => {
     test('Check if card gets rendered correctly', async () => {
         render(
-            wrapper(<Card key={testUser.uid} user={testUser}/>)
+            wrapper(<Card event={jest.fn()} key={testUser.uid} user={testUser}/>)
         )
         expect( screen.getByTestId("0sadghbcat0A")).toBeInTheDocument()
     })
