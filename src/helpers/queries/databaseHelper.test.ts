@@ -54,7 +54,7 @@ let testEnv:any;
 //     expect(actual).toStrictEqual(testTalent)
 // })
 
-test("Talent got by getDocumentsByFilter", async()=> {
+test("TalentDoc got by getDocumentsByFilter", async()=> {
     const recruiterUserId = "KtDtaldROMaQ93TBPCTjqTNs1rK2"
     let testRecruiter = createRecruiter(recruiterUserId);
     let dbAuth = testEnv.authenticatedContext(recruiterUserId).firestore();
@@ -74,15 +74,15 @@ test("Talent got by getDocumentsByFilter", async()=> {
 
     let filter:QueryFilter = {
         availability: null, // 60 für 60%
-        canton: 'Zurich',
-        country: 'Switzerland',
-        job_role: 'Student',
+        canton: ['Zurich'],
+        country: ['Switzerland'],
+        job_role: ['Student'],
         skills: ['Git'],
         programming_languages: ['Java'],
         spoken_languages: ['German'],
         work_experience: null, //0, 1-3, 4-6, 7-10+
-        min_salary: null,
-        max_salary: null
+        salary_min: null,
+        salary_max: null
     }
 
     const actual = await assertSucceeds(getDocumentsByFilter(dbAuth,filter))

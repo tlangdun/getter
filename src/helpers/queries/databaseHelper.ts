@@ -120,18 +120,39 @@ export const getDocumentsByFilter = async (database:any, recruiterFilter: QueryF
     // Job_role Filter
     if (recruiterFilter.job_role!= null && recruiterFilter.job_role?.length !== 0){
         //Skills/Git/Users[ID]
-        const docRef = collection(database, `Job_role/${recruiterFilter.job_role}/Users`);
-        jobRolesIds = (await getDocs(docRef)).docs.map((d) => d.id);
+        let filterCollection:string[][] = []
+
+        for(let i = 0; i < recruiterFilter.job_role.length; i++){
+            const docRef = collection(database, `Job_role/${recruiterFilter.job_role[i]}/Users`);
+            const docSnap = (await getDocs(docRef)).docs.map((d) => d.id);
+            filterCollection.push(docSnap)
+        }
+
+        jobRolesIds = filterCollection.reduce((a, b) => a.filter(c => b.includes(c)));
     }
     // Countries Filter
     if (recruiterFilter.country!= null && recruiterFilter.country?.length !== 0){
-        const docRef = collection(database, `Countries/${recruiterFilter.country}/Users`);
-        countriesIds = (await getDocs(docRef)).docs.map((d) => d.id);
+        let filterCollection:string[][] = []
+
+        for(let i = 0; i < recruiterFilter.country.length; i++){
+            const docRef = collection(database, `Countries/${recruiterFilter.country[i]}/Users`);
+            const docSnap = (await getDocs(docRef)).docs.map((d) => d.id);
+            filterCollection.push(docSnap)
+        }
+
+        countriesIds = filterCollection.reduce((a, b) => a.filter(c => b.includes(c)));
     }
     // Canton Filter
     if (recruiterFilter.canton!= null && recruiterFilter.canton?.length !== 0){
-        const docRef = collection(database, `Countries/${recruiterFilter.country}/Region/${recruiterFilter.canton}/Users`);
-        cantonsIds = (await getDocs(docRef)).docs.map((d) => d.id);
+        let filterCollection:string[][] = []
+
+        for(let i = 0; i < recruiterFilter.canton.length; i++){
+            const docRef = collection(database, `Countries/${recruiterFilter.country}/Region/${recruiterFilter.canton}/Users`);
+            const docSnap = (await getDocs(docRef)).docs.map((d) => d.id);
+            filterCollection.push(docSnap)
+        }
+
+        cantonsIds = filterCollection.reduce((a, b) => a.filter(c => b.includes(c)));
     }
 
     // get intersection from all ID's
