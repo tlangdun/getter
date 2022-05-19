@@ -10,7 +10,7 @@ const LogoAndTitle: FC<Props> = (props) => {
       <div className='sm:mx-auto sm:w-full sm:max-w-md'>
         <img
           className='mx-auto h-12 w-auto'
-          src='https://firebasestorage.googleapis.com/v0/b/getter-38760.appspot.com/o/getter%2FLogo%20Transparency2.png?alt=media&token=76aea186-61e4-4e07-bb17-56ca3a705516'
+          src='https://firebasestorage.googleapis.com/v0/b/getter-38760.appspot.com/o/getter%2FLogo%20Transparency.png?alt=media&token=36133b90-884e-4bc9-bcdf-5ad6a5e334ae'
           alt='Workflow'
         />
         <h2 className='mt-6 text-center text-3xl font-extrabold text-gray-900'>
