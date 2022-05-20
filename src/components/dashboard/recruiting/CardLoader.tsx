@@ -1,6 +1,9 @@
 import { FC, useEffect, useState } from 'react';
 import Card from './Card';
 import { useAppSelector } from '../../../store/hooks'
+import { getDocumentsByFilter } from '../../../helpers/queries/databaseHelper';
+import { db } from '../../../services/firebaseconfig';
+import { GetterUser } from '../../../store/models/userModel';
 
 const dummyAPIResponse = [
   {
@@ -288,24 +291,25 @@ const dummyAPIResponse = [
 
 const CardLoader:FC = () => {
   const activeFilters = useAppSelector((state:any) => state.activeFilters);
-  const [users, updateUsers] = useState([])
+  const [users, updateUsers] = useState(new Array())
   useEffect(()=>{
     let temp = Object.assign({}, activeFilters);
     let filters = temp.activeFilter//Object.assign({},activeFilters.activeFilter)
     console.log(filters)
 
-    /**
+    
     try {
       //future api call when backend is ready
-      getDocumentsByFilter(query).then((resultValue) => {
+      getDocumentsByFilter(db,filters).then((resultValue) => {
         let candidates = resultValue
         console.log("candidates " + candidates)
+        updateUsers(candidates)
       })
     } catch {
       alert("error loading cards")
-    }**/
-    let apiResponse:any = dummyAPIResponse;
-    updateUsers(apiResponse)
+    }
+    /*let apiResponse:any = dummyAPIResponse;
+    updateUsers(apiResponse)*/
   },[activeFilters])
   return(
     <>
