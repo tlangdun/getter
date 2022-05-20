@@ -93,6 +93,7 @@ export const getDocumentsByFilter = async (database:any, recruiterFilter: QueryF
             skillsIdsCollection.push(docSnap)
         }
         skillsIds = skillsIdsCollection.reduce((a, b) => a.filter(c => b.includes(c)));
+        if(skillsIds.length==0)return [];
     }
     // Spoken_languages Filter
     if (recruiterFilter.spoken_languages!= null && recruiterFilter.spoken_languages?.length !== 0){
@@ -105,6 +106,7 @@ export const getDocumentsByFilter = async (database:any, recruiterFilter: QueryF
             filterCollection.push(docSnap)
         }
         spokenLanguagesIds = filterCollection.reduce((a, b) => a.filter(c => b.includes(c)));
+        if(spokenLanguagesIds.length==0)return [];
     }
     // Programming_languages Filter
     if (recruiterFilter.programming_languages!= null && recruiterFilter.programming_languages?.length !== 0){
@@ -117,6 +119,7 @@ export const getDocumentsByFilter = async (database:any, recruiterFilter: QueryF
             filterCollection.push(docSnap)
         }
         programmingLanguagesIds = filterCollection.reduce((a, b) => a.filter(c => b.includes(c)));
+        if(programmingLanguagesIds.length==0)return [];
     }
     // Job_role Filter
     if (recruiterFilter.job_role!= null && recruiterFilter.job_role?.length !== 0){
@@ -130,6 +133,7 @@ export const getDocumentsByFilter = async (database:any, recruiterFilter: QueryF
         }
 
         jobRolesIds = filterCollection.reduce((a, b) => a.filter(c => b.includes(c)));
+        if(jobRolesIds.length==0)return [];
     }
     // Countries Filter
     if (recruiterFilter.country!= null && recruiterFilter.country?.length !== 0){
@@ -142,18 +146,21 @@ export const getDocumentsByFilter = async (database:any, recruiterFilter: QueryF
         }
 
         countriesIds = filterCollection.reduce((a, b) => a.filter(c => b.includes(c)));
+        if(countriesIds.length==0)return [];
     }
     // Canton Filter
-    if (recruiterFilter.canton!= null && recruiterFilter.canton?.length !== 0){
+    if (recruiterFilter.country!= null && recruiterFilter.country?.length !== 0 &&
+        recruiterFilter.canton!= null && recruiterFilter.canton?.length !== 0){
         let filterCollection:string[][] = []
 
         for(let i = 0; i < recruiterFilter.canton.length; i++){
-            const docRef = collection(database, `Countries/${recruiterFilter.country}/Region/${recruiterFilter.canton}/Users`);
+            const docRef = collection(database, `Countries/${recruiterFilter.country[i]}/Region/${recruiterFilter.canton[i]}/Users`);
             const docSnap = (await getDocs(docRef)).docs.map((d) => d.id);
             filterCollection.push(docSnap)
         }
 
         cantonsIds = filterCollection.reduce((a, b) => a.filter(c => b.includes(c)));
+        if(cantonsIds.length==0)return [];
     }
 
     // get intersection from all ID's
@@ -164,7 +171,6 @@ export const getDocumentsByFilter = async (database:any, recruiterFilter: QueryF
     if(jobRolesIds.length > 0)arrayOfIDArrays.push(jobRolesIds);
     if(countriesIds.length > 0)arrayOfIDArrays.push(countriesIds);
     if(cantonsIds.length > 0)arrayOfIDArrays.push(cantonsIds);
-
     let intersectionIDs = arrayOfIDArrays.reduce((a, b) => a.filter(c => b.includes(c)));
 
     // Get all Documents from ID List

@@ -16,43 +16,43 @@ const fs = require('fs');
 const projectID = "getter-38760";
 let testEnv:any;
 
-test("Recruiter file created", async()=> {
-    const userId = "KtDtaldROMaQ93TBPCTjqTNs1rK2"
-    let testRecruiter = createRecruiter(userId);
-    let dbAuth = testEnv.authenticatedContext(userId).firestore();
-
-    await assertSucceeds(addRecruiterToDB(testRecruiter, userId, dbAuth));
-})
-
-
-test("Recruiter file retrieved", async()=> {
-    const userId = "KtDtaldROMaQ93TBPCTjqTNs1rK2"
-    let testRecruiter = createRecruiter(userId);
-    let dbAuth = testEnv.authenticatedContext(userId).firestore();
-    addRecruiterToDB(testRecruiter, userId, dbAuth)
-
-    const actual = await assertSucceeds(getRecruiterByUserId(dbAuth,userId))
-
-    expect(actual).toStrictEqual(testRecruiter)
-})
-
-test("Talent file retrieved", async()=> {
-    const recruiterUserId = "KtDtaldROMaQ93TBPCTjqTNs1rK2"
-    let testRecruiter = createRecruiter(recruiterUserId);
-    let dbAuth = testEnv.authenticatedContext(recruiterUserId).firestore();
-    addRecruiterToDB(testRecruiter, recruiterUserId, dbAuth);
-
-    const talentUserId = "KtDtaldROMaQ93TBPCTjqTNs1rK3";
-    let testTalent = createTalent(talentUserId);
-
-    addSkillGitToDB(dbAuth, talentUserId);
-    addSpoken_lanGermanToDB(dbAuth, talentUserId);
-    addProg_lanJavaToDB(dbAuth, talentUserId);
-    addTalentUsrToDB(testTalent, talentUserId, dbAuth);
-
-    const actual = await assertSucceeds(getTalentByUserId(dbAuth,talentUserId));
-    expect(actual).toStrictEqual(testTalent);
-})
+// test("Recruiter file created", async()=> {
+//     const userId = "KtDtaldROMaQ93TBPCTjqTNs1rK2"
+//     let testRecruiter = createRecruiter(userId);
+//     let dbAuth = testEnv.authenticatedContext(userId).firestore();
+//
+//     await assertSucceeds(addRecruiterToDB(testRecruiter, userId, dbAuth));
+// })
+//
+//
+// test("Recruiter file retrieved", async()=> {
+//     const userId = "KtDtaldROMaQ93TBPCTjqTNs1rK2"
+//     let testRecruiter = createRecruiter(userId);
+//     let dbAuth = testEnv.authenticatedContext(userId).firestore();
+//     addRecruiterToDB(testRecruiter, userId, dbAuth)
+//
+//     const actual = await assertSucceeds(getRecruiterByUserId(dbAuth,userId))
+//
+//     expect(actual).toStrictEqual(testRecruiter)
+// })
+//
+// test("Talent file retrieved", async()=> {
+//     const recruiterUserId = "KtDtaldROMaQ93TBPCTjqTNs1rK2"
+//     let testRecruiter = createRecruiter(recruiterUserId);
+//     let dbAuth = testEnv.authenticatedContext(recruiterUserId).firestore();
+//     addRecruiterToDB(testRecruiter, recruiterUserId, dbAuth);
+//
+//     const talentUserId = "KtDtaldROMaQ93TBPCTjqTNs1rK3";
+//     let testTalent = createTalent(talentUserId);
+//
+//     addSkillGitToDB(dbAuth, talentUserId);
+//     addSpoken_lanGermanToDB(dbAuth, talentUserId);
+//     addProg_lanJavaToDB(dbAuth, talentUserId);
+//     addTalentUsrToDB(testTalent, talentUserId, dbAuth);
+//
+//     const actual = await assertSucceeds(getTalentByUserId(dbAuth,talentUserId));
+//     expect(actual).toStrictEqual(testTalent);
+// })
 
 test("TalentDoc got by getDocumentsByFilter", async()=> {
     const recruiterUserId = "KtDtaldROMaQ93TBPCTjqTNs1rK2"
@@ -76,10 +76,10 @@ test("TalentDoc got by getDocumentsByFilter", async()=> {
         availability: null, // 60 für 60%
         canton: ['Zurich'],
         country: ['Switzerland'],
-        job_role: ['Student'],
-        skills: ['Git'],
-        programming_languages: ['Java'],
-        spoken_languages: ['German'],
+        job_role: [],
+        skills: [],
+        programming_languages: [],
+        spoken_languages: [],
         work_experience: null, //0, 1-3, 4-6, 7-10+
         salary_min: null,
         salary_max: null
@@ -137,7 +137,7 @@ function createTalent(userId: string) {
         address_postcode: 'Babostrasse 2',
         availability: '80',
         birth_date: '01.01.1970',
-        canton: 'ZH',
+        canton: 'Zurich',
         city_of_residence: 'Zürich',
         job_role: 'Student',
         skills: ['Git'],
