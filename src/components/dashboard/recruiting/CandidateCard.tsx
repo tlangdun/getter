@@ -42,6 +42,7 @@ const CandidateCard:FC<Props> = ({person, deleteEvent}) => {
         </td>
         <td className="relative whitespace-nowrap py-4 text-right text-sm font-medium sm:pr-6">
         <button
+            data-testid={"button-"+person.uid}
             type="button"
             onClick={deleteEvent}
             value={person.uid}
