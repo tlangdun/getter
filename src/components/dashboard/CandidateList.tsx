@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import { useAppSelector } from '../../store/hooks';
-import { getAllCandidates } from '../../queries/candidateListQuery';
+import { getAllCandidates, removeCandidate } from '../../queries/candidateListQuery';
 import CandidateCard from './recruiting/CandidateCard';
 import { User } from '../../store/models/userModel';
 
@@ -9,17 +9,22 @@ const CandidateList:FC = () => {
   const loggedInUser = useAppSelector((state) => state.user.user);
   const emptyList:Array<User> = []
   const [users, updateUsers] = useState(emptyList)
+
   useEffect(()=>{
   const fetchData = async () => {
     const candidates = await getAllCandidates(loggedInUser)
-    if(candidates.length > 0) {
-      updateUsers(candidates)
-    }
+    updateUsers(candidates)
+    
   }
   fetchData()
     .catch(console.error);
 
-  },[loggedInUser])
+  },[loggedInUser,deleteEvent])
+
+  function deleteEvent(event:any) {
+    const uid:string = event.target.value;
+    removeCandidate(loggedInUser, uid)
+  }
 
   return(
     <div data-testid="candidates-list" className="px-4 sm:px-6 lg:px-8">
@@ -44,13 +49,16 @@ const CandidateList:FC = () => {
                     <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                       Skills
                     </th>
-                    <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                    <th scope="col" className="relative py-3.5 pl-3 sm:pr-6">
                       <span className="sr-only">Edit</span>
+                    </th>
+                    <th scope="col" className="px-3 py-3.5 text-sm font-semibold text-gray-900">
+                    <span className="sr-only">Delete</span>
                     </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 bg-white">
-                  {users.map((person) => <CandidateCard key={person.uid} person={person} />)}
+                  {users.map((person) => <CandidateCard key={person.uid} person={person} deleteEvent={deleteEvent}/>)}
                 </tbody>
               </table>
             </div>
