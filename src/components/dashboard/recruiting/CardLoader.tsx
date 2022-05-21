@@ -302,7 +302,8 @@ const CardLoader:FC = () => {
       //future api call when backend is ready
       getDocumentsByFilter(db,filters).then((resultValue) => {
         let candidates = resultValue
-        console.log("candidates " + candidates)
+        console.log("candidates ")
+        console.log(candidates)
         updateUsers(candidates)
       })
     } catch {

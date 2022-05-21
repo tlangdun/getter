@@ -191,7 +191,7 @@ const Filter:FC<Props> = (props) => {
     if(typeof newList !== 'undefined') {
       activeFilters.country = newList
       updateActiveFilters()
-      let country = event.target.labels[0].textContent
+      let country = event.target.value
       let prevChecked = event.target.checked
       if(prevChecked) {
         props.loadRegion(country).then((element:[])=>{

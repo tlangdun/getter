@@ -19,7 +19,7 @@ const CheckboxFilter:FC<Props> = (props) => {
                 id={`${id}-${optionIdx}`}
                 data-testid={`${id}-${optionIdx}`}
                 name={id +"[]"}
-                defaultValue={option.value}
+                defaultValue={option.label}
                 type="checkbox"
                 className="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-violet-600 focus:ring-violet-700"
                 defaultChecked={option.checked}

@@ -60,19 +60,24 @@ const Card:FC<Props> = ({ user }) => {
             <div className="bg-violet-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"  style={{width: user.availability + "%", }}>{user.availability  + "%"}</div>
             </dd>
         </dl>
-        <div className='pt-2'>
-        {user.skills.map((element) => {
-            return (
-            <span key={element} className="ml-1 flex-shrink-0 inline-block px-2 py-0.5 text-white text-xs font-medium bg-violet-500 rounded-full">
-            {element}
-            </span>)
-        })}
-        {user.programming_languages.map((element) => {
-            return (
-            <span key={element} className="ml-1 flex-shrink-0 inline-block px-2 py-0.5 text-white text-xs font-medium bg-green-700 rounded-full">
-            {element}
-            </span>)
-        })}
+        <div className='pt-2'>    
+        {user.skills !== undefined?
+            user.skills.map((element) => {
+                return (
+                <span key={element} className="ml-1 flex-shrink-0 inline-block px-2 py-0.5 text-white text-xs font-medium bg-violet-500 rounded-full">
+                {element}
+                </span>)
+            })
+            :<span></span>
+        }
+        {user.skills !== undefined?
+            user.programming_languages.map((element) => {
+                return (
+                <span key={element} className="ml-1 flex-shrink-0 inline-block px-2 py-0.5 text-white text-xs font-medium bg-green-700 rounded-full">
+                {element}
+                </span>)
+            })
+            :<span></span>}
         </div>
         
         </div>
