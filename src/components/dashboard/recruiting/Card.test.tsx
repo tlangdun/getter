@@ -1,8 +1,9 @@
-import {render, screen} from '@testing-library/react'
+import {fireEvent, render, screen} from '@testing-library/react'
 import { Provider } from "react-redux"
 import { BrowserRouter } from "react-router-dom"
 import store from '../../../store/store'
 import Card from './Card'
+
 
 let testUser =
 {
@@ -44,10 +45,14 @@ let testUser =
 
 describe('Dashboard Card', () => {
     test('Check if card gets rendered correctly', async () => {
-        render(
-            wrapper(<Card event={jest.fn()} key={testUser.uid} user={testUser}/>)
-        )
-        expect( screen.getByTestId("0sadghbcat0A")).toBeInTheDocument()
+      const mockEvent = jest.fn()
+
+      render(
+          wrapper(<Card event={mockEvent} key={testUser.uid} user={testUser}/>)
+      )
+      expect( screen.getByTestId("0sadghbcat0A")).toBeInTheDocument()
+      fireEvent.click(screen.getByTestId("cbutton-"+testUser.uid))
+      expect(mockEvent).toBeCalled()
     })
 })
 

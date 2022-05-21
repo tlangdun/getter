@@ -34,6 +34,7 @@ const Card:FC<Props> = ({ user,event }) => {
     >
         <button
         type="button"
+        data-testid={"cbutton-"+user.uid}
         className="inline-flex absolute right-0 p-1 border border-transparent shadow-sm text-white bg-violet-500 hover:bg-violet-700 focus:outline-none"
         onClick={() => event(user.uid)}
         >
