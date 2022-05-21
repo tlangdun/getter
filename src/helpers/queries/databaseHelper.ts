@@ -1,4 +1,4 @@
-import {collection, doc, getDoc, getDocs, setDoc, where, query} from 'firebase/firestore';
+import {collection, doc, getDoc, getDocs, setDoc, where, query, orderBy, limit} from 'firebase/firestore';
 import {db, storage} from '../../services/firebaseconfig';
 import {access_level, GetterUser} from '../../store/models/userModel';
 import {QueryFilter} from "../../store/models/queryModel";
@@ -81,10 +81,11 @@ export const getDocumentsByFilter = async (database:any, recruiterFilter: QueryF
     let jobRolesIds:string[] = []
     let countriesIds:string[] = []
     let cantonsIds:string[] = []
+    let filtersSet:boolean = false;
 
     // Skills Filter
     if (recruiterFilter.skills!= null && recruiterFilter.skills?.length !== 0){
-        //Skills/Git/Users[ID]
+        filtersSet = true;
         let skillsIdsCollection:string[][] = []
 
         for(let i = 0; i < recruiterFilter.skills.length; i++){
@@ -97,7 +98,7 @@ export const getDocumentsByFilter = async (database:any, recruiterFilter: QueryF
     }
     // Spoken_languages Filter
     if (recruiterFilter.spoken_languages!= null && recruiterFilter.spoken_languages?.length !== 0){
-        //Skills/Git/Users[ID]
+        filtersSet = true;
         let filterCollection:string[][] = []
 
         for(let i = 0; i < recruiterFilter.spoken_languages.length; i++){
@@ -110,7 +111,7 @@ export const getDocumentsByFilter = async (database:any, recruiterFilter: QueryF
     }
     // Programming_languages Filter
     if (recruiterFilter.programming_languages!= null && recruiterFilter.programming_languages?.length !== 0){
-        //Skills/Git/Users[ID]
+        filtersSet = true;
         let filterCollection:string[][] = []
 
         for(let i = 0; i < recruiterFilter.programming_languages.length; i++){
@@ -123,7 +124,7 @@ export const getDocumentsByFilter = async (database:any, recruiterFilter: QueryF
     }
     // Job_role Filter
     if (recruiterFilter.job_role!= null && recruiterFilter.job_role?.length !== 0){
-        //Skills/Git/Users[ID]
+        filtersSet = true;
         let filterCollection:string[][] = []
 
         for(let i = 0; i < recruiterFilter.job_role.length; i++){
@@ -137,6 +138,7 @@ export const getDocumentsByFilter = async (database:any, recruiterFilter: QueryF
     }
     // Countries Filter
     if (recruiterFilter.country!= null && recruiterFilter.country?.length !== 0){
+        filtersSet = true;
         let filterCollection:string[][] = []
 
         for(let i = 0; i < recruiterFilter.country.length; i++){
@@ -151,6 +153,7 @@ export const getDocumentsByFilter = async (database:any, recruiterFilter: QueryF
     // Canton Filter
     if (recruiterFilter.country!= null && recruiterFilter.country?.length !== 0 &&
         recruiterFilter.canton!= null && recruiterFilter.canton?.length !== 0){
+        filtersSet = true;
         let filterCollection:string[][] = []
 
         for(let i = 0; i < recruiterFilter.canton.length; i++){
@@ -171,20 +174,55 @@ export const getDocumentsByFilter = async (database:any, recruiterFilter: QueryF
     if(jobRolesIds.length > 0)arrayOfIDArrays.push(jobRolesIds);
     if(countriesIds.length > 0)arrayOfIDArrays.push(countriesIds);
     if(cantonsIds.length > 0)arrayOfIDArrays.push(cantonsIds);
-    let intersectionIDs = arrayOfIDArrays.reduce((a, b) => a.filter(c => b.includes(c)));
+
+    if(arrayOfIDArrays.length == 0 && filtersSet) return [];
 
     // Get all Documents from ID List
     let listDocs:DocumentSnapshot[] = [];
-    for(let i = 0; i < intersectionIDs.length; i++){
-        let document:DocumentSnapshot = await getDoc(doc(database, `Users/${intersectionIDs[i]}`));
+    if(filtersSet){
+        let intersectionIDs = arrayOfIDArrays.reduce((a, b) => a.filter(c => b.includes(c)));
 
-        // @ts-ignore
-        if (recruiterFilter.availability != null && document.data().availability < recruiterFilter.availability) continue;
+        for(let i = 0; i < intersectionIDs.length; i++){
+            let document:DocumentSnapshot = await getDoc(doc(database, `Users/${intersectionIDs[i]}`));
 
-        // @ts-ignore
-        if (recruiterFilter.work_experience != null && document.data().work_experience < recruiterFilter.work_experience) continue;
-        listDocs.push(document);
+            // @ts-ignore
+            if (recruiterFilter.availability != null && Number(recruiterFilter.availability) > 0 && document.data().availability < recruiterFilter.availability) continue;
+
+            // @ts-ignore
+            if (recruiterFilter.work_experience != null) continue;
+            listDocs.push(document);
+        }
+    }else{
+        console.log("filtersSet false else case");
+        const ref = collection(db, 'Users');
+        const queryFilters = []
+
+        if (recruiterFilter.availability != null && Number(recruiterFilter.availability)  > 0){
+            console.log("availability set");
+            filtersSet = true;
+            queryFilters.push(where('availability', '>=', recruiterFilter.availability),)
+        }
+        if (recruiterFilter.work_experience != null){
+            console.log("work_experience set");
+            filtersSet = true;
+            queryFilters.push(where('work_experience', '>=', recruiterFilter.work_experience),)
+        }
+
+
+        const qResult = query(ref, ...queryFilters);
+        getDocs(qResult).then(res => {res.forEach(r => listDocs.push(r))});
     }
+
+    if (!filtersSet){
+        console.log("NO FILTER SET");
+        const ref = collection(db, 'Users');
+
+        const qResult = query(ref, orderBy("first_name", "desc"), limit(8));
+        getDocs(qResult).then(res => {res.forEach(r => listDocs.push(r))});
+    }
+    // console.log("listDocs value final:");
+    // console.log(listDocs);
+
 
     // intersectionIDs
     const returnList: Array<GetterUser> = [];
@@ -218,6 +256,8 @@ export const getDocumentsByFilter = async (database:any, recruiterFilter: QueryF
         }
 
     })
+    console.log("returnList value:");
+    console.log(returnList);
     return returnList;
 
 }
