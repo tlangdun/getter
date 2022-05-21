@@ -9,23 +9,18 @@ const CandidateList:FC = () => {
   const loggedInUser = useAppSelector((state) => state.user.user);
   const emptyList:Array<User> = []
   const [users, updateUsers] = useState(emptyList)
-  const [set, updateSet] = useState("default")
   useEffect(()=>{
-    // declare the async data fetching function
   const fetchData = async () => {
-    // get the data from the api
-    const localUsers = await getAllCandidates(loggedInUser)
-    updateUsers(localUsers)
-    updateSet("updated")
+    const candidates = await getAllCandidates(loggedInUser)
+    if(candidates.length > 0) {
+      updateUsers(candidates)
+    }
   }
-
-  // call the function
   fetchData()
-    // make sure to catch any error
     .catch(console.error);
 
   },[loggedInUser])
-  console.log(users)
+
   return(
     <div data-testid="candidates-list" className="px-4 sm:px-6 lg:px-8">
       <div className="sm:flex sm:items-center">
@@ -54,7 +49,6 @@ const CandidateList:FC = () => {
                     </th>
                   </tr>
                 </thead>
-                {set}
                 <tbody className="divide-y divide-gray-200 bg-white">
                   {users.map((person) => <CandidateCard key={person.uid} person={person} />)}
                 </tbody>

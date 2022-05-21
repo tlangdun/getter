@@ -1,6 +1,6 @@
 import { collection, deleteDoc, doc, getDocs, setDoc } from "firebase/firestore";
 import { db } from "../services/firebaseconfig";
-import { GetterUser } from "../store/models/userModel";
+import { GetterUser, User } from "../store/models/userModel";
 import getUser from "./getUser";
 
 export async function addCandidate(user:GetterUser, newCandidate:string){
@@ -17,19 +17,19 @@ export async function removeCandidate(user:GetterUser, newCandidate:string){
     } 
 }
 
-export async function getAllCandidates(user:GetterUser) {
-    const users = new Array()
+export async function getAllCandidates(user:GetterUser): Promise<User[]> {
+    const users:Array<any> = []
     if(user!=null) {
         const candidateRef = collection(db,`Recruiters/${user.uid}/CandidateList`)
         const candidates = (await getDocs(candidateRef)).docs.map((d) => d.id);
 
-        candidates.forEach(function (elem){
-            getUser(elem).then((result) =>{
+        for(const elem of candidates){
+            await getUser(elem).then((result) =>{
                 if(result!==null) {
                     users.push(result)
                 }
             })
-        })
+        }
     }
-    return(users)   
+    return users;   
 }
