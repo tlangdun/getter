@@ -27,10 +27,12 @@ export type GetterUser = null | BasicUser | BasicUser & {
     availability: string;
     birth_date: string;
     canton: string;
+    country:string;
     city_of_residence: string;
     job_role: string;
     skills: string[];
     programming_languages: string[];
+    spoken_languages: string[];
     salary_range: {
       start: number;
       end: number;
