@@ -2,7 +2,7 @@ import { FC, Fragment, useEffect, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 
 import MenuDesktop from './MenuDesktop'
-import RouteDashboardRecruiter from '../../routes/dashboard/RouteDashboardRecruiter';
+import {routesDashboard, routesDashboardTalent} from '../../routes/dashboard/RouteDashboardRecruiter';
 
 import {
   MenuIcon,
@@ -10,11 +10,13 @@ import {
 } from '@heroicons/react/outline'
 import { useAppSelector } from '../../store/hooks';
 import { useNavigate } from 'react-router-dom';
+import { access_level } from '../../store/models/userModel';
 
 interface Props{
   content:JSX.Element;
 }
 
+let RouteDashboardRecruiter = routesDashboard
 
 const Dashboard:FC<Props> = (props) => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -27,6 +29,10 @@ const Dashboard:FC<Props> = (props) => {
       navigate('/auth/login');
     }
   }, [user, navigate]);
+  
+  if(user?.access_level === access_level.TALENT) {
+    RouteDashboardRecruiter = routesDashboardTalent
+  }
   
   return (
     <>
