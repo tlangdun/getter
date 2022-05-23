@@ -24,7 +24,7 @@ const NavBar: FC = () => {
             <span className='sr-only'>Getter</span>
             <img
               className='h-8 w-auto sm:h-10'
-              src='https://firebasestorage.googleapis.com/v0/b/getter-38760.appspot.com/o/getter%2FLogo%20Transparency2.png?alt=media&token=76aea186-61e4-4e07-bb17-56ca3a705516'
+              src='https://firebasestorage.googleapis.com/v0/b/getter-38760.appspot.com/o/getter%2FLogo%20Transparency.png?alt=media&token=36133b90-884e-4bc9-bcdf-5ad6a5e334ae'
               alt=''
             />
           </Link>

@@ -14,9 +14,9 @@ const AuthRoute: FC = () => {
   const user = useAppSelector((state) => state.user.user);
 
   onAuthStateChanged(auth, (currentUser) => {
-      getUser(currentUser!.uid).then((us) => {
-        console.log(us)
-        dispatch(UserActions.setFirebaseUser(us));
+    getUser(currentUser!.uid).then((us) => {
+      console.log(us)
+      dispatch(UserActions.setFirebaseUser(us));
     });
   });
 

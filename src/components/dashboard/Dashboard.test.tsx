@@ -4,7 +4,7 @@ import {Route,Routes, BrowserRouter} from 'react-router-dom'
 import Dashboard from './Dashboard'
 import MenuDesktop from './MenuDesktop'
 import {createMemoryHistory} from 'history'
-import RouteDashboardRecruiter from '../../routes/dashboard/RouteDashboardRecruiter';
+import {routesDashboard, routesDashboardTalent} from '../../routes/dashboard/RouteDashboardRecruiter';
 import Recruiting from './Recruiting'
 import DashboardContent from './DashboardContent'
 import CandidateList from './CandidateList'
@@ -12,7 +12,7 @@ import Message from './Message'
 import store from '../../store/store'
 import { Provider } from 'react-redux'
 import * as data from '../../queries/candidateListQuery'
-
+import * as dataHook from '../../store/hooks';
 
 let testUser = {
   "uid": "KtDtaldROMaQ93TBPCTjqTNs1rK2",
@@ -65,12 +65,10 @@ describe('Dashboard recruiter',() => {
       )
     )
     await waitFor(()=>{
-      RouteDashboardRecruiter.forEach(nav => {
+      routesDashboard.forEach(nav => {
           expect(screen.getByText(nav.name)).toBeInTheDocument()
       })
     })
-
-    
   })
 
   test('routing dashboard menu content', () => {
@@ -122,17 +120,38 @@ describe('Dashboard recruiter',() => {
   })
 })
 
+describe('Dashboard talent',() => {
+  
+  test('talent menu gets shown in dashboard', async () => {
+    const mock = jest.spyOn(dataHook, 'useAppSelector')
+    mock.mockReturnValue(testUser)
+    render(
+      wrapper(
+      <Routes>
+        <Route path="*" element={<Dashboard content={<Recruiting/>}/>} />
+      </Routes>
+      )
+    )
+    
+    routesDashboardTalent.forEach(nav => {
+        expect(screen.getByText(nav.name)).toBeInTheDocument()
+    })
+    
+  })
+})
+
+
 describe('User menu', () => {
   test('Should render user menu', () => {
     wrapper(
-       <MenuDesktop user={testUser} navigation={RouteDashboardRecruiter}/>
+       <MenuDesktop user={testUser} navigation={routesDashboard}/>
     )
   })
 
   test('can click on the user button', () => {
     const { getAllByTestId } = render(
       wrapper(
-        <MenuDesktop user={testUser} navigation={RouteDashboardRecruiter} />
+        <MenuDesktop user={testUser} navigation={routesDashboard} />
       )
     );
 
@@ -145,7 +164,7 @@ describe('User menu', () => {
   test('can click on menu items', () => {
       const { getAllByTestId } = render(
         wrapper(
-          <MenuDesktop user={testUser} navigation={RouteDashboardRecruiter} />
+          <MenuDesktop user={testUser} navigation={routesDashboard} />
         )
       );
       const [menuButton] = getAllByTestId("user-button");
@@ -163,7 +182,7 @@ describe('User menu', () => {
 
   test('check the number of items', () => {
     const { getByTestId } = render(
-      wrapper(<MenuDesktop user={testUser} navigation={RouteDashboardRecruiter} />)
+      wrapper(<MenuDesktop user={testUser} navigation={routesDashboard} />)
     );
     const menuButton = getByTestId("user-button");
     userEvent.click(menuButton);
@@ -175,7 +194,7 @@ describe('User menu', () => {
   test('navigates user contents when items are clicked', () => {
     const { getByTestId, getAllByTestId } = render(
       <BrowserRouter>
-        <MenuDesktop user={testUser} navigation={RouteDashboardRecruiter} />
+        <MenuDesktop user={testUser} navigation={routesDashboard} />
       </BrowserRouter>
     );
 
