@@ -11,8 +11,8 @@ import CandidateList from './CandidateList'
 import Message from './Message'
 import store from '../../store/store'
 import { Provider } from 'react-redux'
-import * as data from '../../store/hooks';
-
+import * as data from '../../queries/candidateListQuery'
+import * as dataHook from '../../store/hooks';
 
 let testUser = {
   "uid": "KtDtaldROMaQ93TBPCTjqTNs1rK2",
@@ -26,11 +26,15 @@ let testUser = {
   "availability": "20",
   "birth_date": "6.9.1969",
   "canton": "Zürich",
+  "country": "Switzerland",
   "city_of_residence": "Zürich",
   "job_role": "GTFO",
   "skills": [
     "brrr",
     "git"
+  ],
+  "spoken_languages": [
+    "German"
   ],
   "programming_languages": [
     "java"
@@ -92,6 +96,7 @@ describe('Dashboard recruiter',() => {
   })
 
   test('show candidates list page', async () => {
+    const mock = jest.spyOn(data, "getAllCandidates").mockResolvedValue([testUser]);
     render(
       wrapper(
         <Routes>
@@ -99,7 +104,8 @@ describe('Dashboard recruiter',() => {
         </Routes>
       )
     )
-    expect(screen.getByTestId("candidates-list")).toBeInTheDocument()
+    expect(await screen.findByTestId("candidates-list")).toBeInTheDocument()
+    mock.mockClear()
   })
 
   test('show message page', async () => {
@@ -117,7 +123,7 @@ describe('Dashboard recruiter',() => {
 describe('Dashboard talent',() => {
   
   test('talent menu gets shown in dashboard', async () => {
-    const mock = jest.spyOn(data, 'useAppSelector')
+    const mock = jest.spyOn(dataHook, 'useAppSelector')
     mock.mockReturnValue(testUser)
     render(
       wrapper(

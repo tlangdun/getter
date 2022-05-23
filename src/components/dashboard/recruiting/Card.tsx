@@ -25,19 +25,18 @@ interface User {
 }    
 interface Props {
     user:User;
+    event:Function;
 }
-function addToCandidatesList(id:string) {
-    alert("add " + id + "to candidate list")
-}
-const Card:FC<Props> = ({ user }) => {
+const Card:FC<Props> = ({ user,event }) => {
   return(
     <li
         data-testid={user.uid} className="col-span-1 relative selection:flex flex-col text-center bg-white rounded-lg shadow divide-y divide-gray-200"
     >
         <button
         type="button"
+        data-testid={"cbutton-"+user.uid}
         className="inline-flex absolute right-0 p-1 border border-transparent shadow-sm text-white bg-violet-500 hover:bg-violet-700 focus:outline-none"
-        onClick={() => addToCandidatesList(user.email)}
+        onClick={() => event(user.uid)}
         >
             <PlusSmIcon className="h-6 w-6" aria-hidden="true" />
         </button>

@@ -1,10 +1,11 @@
 import { FC, useEffect, useState } from 'react';
 import Card from './Card';
 import { useAppSelector } from '../../../store/hooks'
+import { addCandidate } from '../../../queries/candidateListQuery';
 
 const dummyAPIResponse = [
   {
-    "uid": "11DtaldROMaQ93TBPCTjqTNs1rK2",
+    "uid": "KtDtaldROMaQ93TBPCTjqTNs1rK2",
     "access_level": 0,
     "email": "martin.oswald@gmail.com",
     "first_name": "Martin",
@@ -39,7 +40,7 @@ const dummyAPIResponse = [
     ]
   },
   {
-    "uid": "2lUBAunfkmdrwi5cd7ljKw3qlB33",
+    "uid": "UvLf8Mm2oGR2qFO7bHBjQFhuImD2",
     "access_level": 0,
     "email": "tenzin.longdong@gmail.com",
     "first_name": "Tenzin",
@@ -288,7 +289,13 @@ const dummyAPIResponse = [
 
 const CardLoader:FC = () => {
   const activeFilters = useAppSelector((state:any) => state.activeFilters);
+  const loggedInUser = useAppSelector((state) => state.user.user);
+
   const [users, updateUsers] = useState([])
+  function addToCandidatesList(uid:string){
+    console.log("add " + uid + "to candidate list")
+    addCandidate(loggedInUser,uid)
+  }
   useEffect(()=>{
     let temp = Object.assign({}, activeFilters);
     let filters = temp.activeFilter//Object.assign({},activeFilters.activeFilter)
@@ -311,7 +318,7 @@ const CardLoader:FC = () => {
     <>
       <ul data-testid="card-loader" className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {users.map((user:any) => (
-          <Card key={user.email} user={user}/>
+          <Card event={addToCandidatesList} key={user.email} user={user}/>
           ))}
       </ul>
     </>
