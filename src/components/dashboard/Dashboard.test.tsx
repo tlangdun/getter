@@ -1,113 +1,175 @@
-import {render, screen, act} from '@testing-library/react'
+import {render, screen, act, waitFor} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import {Route,Routes, BrowserRouter} from 'react-router-dom'
 import Dashboard from './Dashboard'
 import MenuDesktop from './MenuDesktop'
 import {createMemoryHistory} from 'history'
-import RouteDashboardRecruiter from '../../routes/dashboard/RouteDashboardRecruiter';
+import {routesDashboard, routesDashboardTalent} from '../../routes/dashboard/RouteDashboardRecruiter';
 import Recruiting from './Recruiting'
-import DashboardRoute from '../../routes/dashboard/DashboardRoute'
 import DashboardContent from './DashboardContent'
 import CandidateList from './CandidateList'
-import MessagePage from './MessagePage'
 import MessageLoader from './MessageLoader'
+import store from '../../store/store'
+import { Provider } from 'react-redux'
+import * as data from '../../queries/candidateListQuery'
+import * as dataHook from '../../store/hooks';
 
-describe('Dashboard recruiter', () => {
-  test('Should render dashboard without crash', () => {
-     render(
-      <BrowserRouter>
-        <Dashboard content={<Recruiting/>}/>
-      </BrowserRouter>
-     )
-  })
-
-  test('recruiter menu gets shown in dashboard', () => {
+let testUser = {
+  "uid": "KtDtaldROMaQ93TBPCTjqTNs1rK2",
+  "access_level": 0,
+  "email": "test@gmail.com",
+  "first_name": "Martin",
+  "last_name": "Boss",
+  "pic_url": "https://firebasestorage.googleapis.com/v0/b/getter-38760.appspot.com/o/profile-pictures%2F20201231_200219.jpg?alt=media&token=b78aea1a-2d0b-4ad0-a75c-626f3f59fa3f",
+  "short_bio": "hello, my name is martin",
+  "address_postcode": "8090",
+  "availability": "20",
+  "birth_date": "6.9.1969",
+  "canton": "Zürich",
+  "country": "Switzerland",
+  "city_of_residence": "Zürich",
+  "job_role": "GTFO",
+  "skills": [
+    "brrr",
+    "git"
+  ],
+  "spoken_languages": [
+    "German"
+  ],
+  "programming_languages": [
+    "java"
+  ],
+  "salary_range": {
+    "start": 100000,
+    "end": 300000
+  },
+  "work_experience": [
+    {
+      "start_date": "12.12.2012",
+      "employer": "Siemens",
+      "end_date": "10.10.2010",
+      "description": "this is a job description",
+      "job_role": "Software Engineer"
+    }
+  ]
+}
+describe('Dashboard recruiter',() => {
+  
+  test('recruiter menu gets shown in dashboard', async () => {
+    
     render(
-      <BrowserRouter>
-        <Routes>
-          <Route path="*" element={<Dashboard content={<Recruiting/>}/>} />
-        </Routes>
-      </BrowserRouter>
+      wrapper(
+      <Routes>
+        <Route path="*" element={<Dashboard content={<Recruiting/>}/>} />
+      </Routes>
+      )
     )
-    RouteDashboardRecruiter.forEach(nav => {
-        expect(screen.getByText(nav.name)).toBeInTheDocument()
+    await waitFor(()=>{
+      routesDashboard.forEach(nav => {
+          expect(screen.getByText(nav.name)).toBeInTheDocument()
+      })
     })
   })
 
   test('routing dashboard menu content', () => {
     render(
-      <BrowserRouter>
+      wrapper(
         <Routes>
           <Route path='*' element={<Dashboard content={<DashboardContent/>}/>} />
         </Routes>
-      </BrowserRouter>
+      )  
     )
     expect(screen.getByTestId("dashboard")).toBeInTheDocument()
   })
 
   test('show recruiting page', async () => {
     render(
-      <BrowserRouter>
+      wrapper(
         <Routes>
           <Route path='*' element={<Dashboard content={<Recruiting/>}/>} />
         </Routes>
-      </BrowserRouter>
+      )
     )
-    expect(screen.getByTestId("recruiting")).toBeInTheDocument()
+    await waitFor(()=>{
+      expect(screen.getByTestId("recruiting")).toBeInTheDocument()
+    })
   })
 
   test('show candidates list page', async () => {
+    const mock = jest.spyOn(data, "getAllCandidates").mockResolvedValue([testUser]);
     render(
-      <BrowserRouter>
+      wrapper(
         <Routes>
           <Route path='*' element={<Dashboard content={<CandidateList/>}/>} />
         </Routes>
-      </BrowserRouter>
+      )
     )
-    expect(screen.getByTestId("candidates-list")).toBeInTheDocument()
+    expect(await screen.findByTestId("candidates-list")).toBeInTheDocument()
+    mock.mockClear()
   })
 
   test('show message page', async () => {
     render(
-      <BrowserRouter>
+      wrapper(
         <Routes>
           <Route path='*' element={<Dashboard content={<MessageLoader/>}/>} />
         </Routes>
-      </BrowserRouter>
+      )
     )
     expect(screen.getByTestId("messages")).toBeInTheDocument()
   })
 })
 
+describe('Dashboard talent',() => {
+  
+  test('talent menu gets shown in dashboard', async () => {
+    const mock = jest.spyOn(dataHook, 'useAppSelector')
+    mock.mockReturnValue(testUser)
+    render(
+      wrapper(
+      <Routes>
+        <Route path="*" element={<Dashboard content={<Recruiting/>}/>} />
+      </Routes>
+      )
+    )
+    
+    routesDashboardTalent.forEach(nav => {
+        expect(screen.getByText(nav.name)).toBeInTheDocument()
+    })
+    
+  })
+})
+
+
 describe('User menu', () => {
   test('Should render user menu', () => {
-    render(
-     <BrowserRouter>
-       <MenuDesktop navigation={RouteDashboardRecruiter}/>
-     </BrowserRouter>
+    wrapper(
+       <MenuDesktop user={testUser} navigation={routesDashboard}/>
     )
   })
 
   test('can click on the user button', () => {
     const { getAllByTestId } = render(
-      <BrowserRouter>
-        <MenuDesktop navigation={RouteDashboardRecruiter} />
-      </BrowserRouter>
+      wrapper(
+        <MenuDesktop user={testUser} navigation={routesDashboard} />
+      )
     );
 
     const [menuButton] = getAllByTestId("user-button");
-    userEvent.click(menuButton);
+    act(()=>{
+      userEvent.click(menuButton);
+    })
   })
 
   test('can click on menu items', () => {
       const { getAllByTestId } = render(
-        <BrowserRouter>
-          <MenuDesktop navigation={RouteDashboardRecruiter} />
-        </BrowserRouter>
+        wrapper(
+          <MenuDesktop user={testUser} navigation={routesDashboard} />
+        )
       );
       const [menuButton] = getAllByTestId("user-button");
       userEvent.click(menuButton);
-
+      
       const [profileItem] = getAllByTestId("profile");
       userEvent.click(profileItem);
 
@@ -120,13 +182,11 @@ describe('User menu', () => {
 
   test('check the number of items', () => {
     const { getByTestId } = render(
-      <BrowserRouter>
-        <MenuDesktop navigation={RouteDashboardRecruiter} />
-      </BrowserRouter>
+      wrapper(<MenuDesktop user={testUser} navigation={routesDashboard} />)
     );
     const menuButton = getByTestId("user-button");
     userEvent.click(menuButton);
-
+    
     const items = screen.queryAllByLabelText("user-item")
     expect(items.length).toBe(4)
   })
@@ -134,7 +194,7 @@ describe('User menu', () => {
   test('navigates user contents when items are clicked', () => {
     const { getByTestId, getAllByTestId } = render(
       <BrowserRouter>
-        <MenuDesktop navigation={RouteDashboardRecruiter} />
+        <MenuDesktop user={testUser} navigation={routesDashboard} />
       </BrowserRouter>
     );
 
@@ -163,3 +223,14 @@ describe('User menu', () => {
     })
   })
 })
+const wrapper =  (element:any) =>{
+  return(
+    <BrowserRouter>
+      <Provider store={store}>
+        {element}
+      </Provider>
+    </BrowserRouter>
+  )
+}
+
+

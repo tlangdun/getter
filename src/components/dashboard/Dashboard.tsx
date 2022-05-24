@@ -1,22 +1,39 @@
-import { FC, Fragment, useState } from 'react'
+import { FC, Fragment, useEffect, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 
 import MenuDesktop from './MenuDesktop'
-import RouteDashboardRecruiter from '../../routes/dashboard/RouteDashboardRecruiter';
+import {routesDashboard, routesDashboardTalent} from '../../routes/dashboard/RouteDashboardRecruiter';
 
 import {
   MenuIcon,
   XIcon,
 } from '@heroicons/react/outline'
+import { useAppSelector } from '../../store/hooks';
+import { useNavigate } from 'react-router-dom';
+import { access_level } from '../../store/models/userModel';
 
 interface Props{
   content:JSX.Element;
 }
 
+let RouteDashboardRecruiter = routesDashboard
 
 const Dashboard:FC<Props> = (props) => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
+  const user = useAppSelector((state) => state.user.user);
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/auth/login');
+    }
+  }, [user, navigate]);
+  
+  if(user?.access_level === access_level.TALENT) {
+    RouteDashboardRecruiter = routesDashboardTalent
+  }
+  
   return (
     <>
       <div className="h-screen flex">
@@ -64,7 +81,7 @@ const Dashboard:FC<Props> = (props) => {
                   </div>
                 </Transition.Child>
                 <div className="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
-                  <MenuDesktop navigation={RouteDashboardRecruiter}/>
+                  <MenuDesktop user={user} navigation={RouteDashboardRecruiter}/>
                 </div>
               </div>
             </Transition.Child>
@@ -79,7 +96,7 @@ const Dashboard:FC<Props> = (props) => {
           <div className="flex flex-col w-64">
 
             {/* Sidebar component, swap this element with another sidebar if you like */}
-            <MenuDesktop navigation={RouteDashboardRecruiter}/>
+            <MenuDesktop user={user} navigation={RouteDashboardRecruiter}/>
 
           </div>
         </div>
@@ -89,8 +106,8 @@ const Dashboard:FC<Props> = (props) => {
               <div>
                 <img
                   className="h-8 w-auto"
-                  src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-                  alt="Workflow"
+                  src="https://firebasestorage.googleapis.com/v0/b/getter-38760.appspot.com/o/getter%2FLogo_Full.png?alt=media&token=1e2bcc9d-c2da-4170-9e7b-4b6f186a8e61"
+                  alt="Getter"
                 />
               </div>
               <div>

@@ -1,52 +1,209 @@
-import { FC } from 'react';
-import { Fragment } from 'react'
+import { FC, Fragment, useState } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon, FilterIcon } from '@heroicons/react/solid'
 import { List } from 'reselect/es/types';
-const filters = {
-    price: [
-      { value: '0', label: '$0 - $25', checked: false },
-      { value: '25', label: '$25 - $50', checked: false },
-      { value: '50', label: '$50 - $75', checked: false },
-      { value: '75', label: '$75+', checked: false },
-    ],
-    color: [
-      { value: 'white', label: 'White', checked: false },
-      { value: 'beige', label: 'Beige', checked: false },
-      { value: 'blue', label: 'Blue', checked: true },
-      { value: 'brown', label: 'Brown', checked: false },
-      { value: 'green', label: 'Green', checked: false },
-      { value: 'purple', label: 'Purple', checked: false },
-    ],
-    size: [
-      { value: 'xs', label: 'XS', checked: false },
-      { value: 's', label: 'S', checked: true },
-      { value: 'm', label: 'M', checked: false },
-      { value: 'l', label: 'L', checked: false },
-      { value: 'xl', label: 'XL', checked: false },
-      { value: '2xl', label: '2XL', checked: false },
-    ],
-    category: [
-      { value: 'all-new-arrivals', label: 'All New Arrivals', checked: false },
-      { value: 'tees', label: 'Tees', checked: false },
-      { value: 'objects', label: 'Objects', checked: false },
-      { value: 'sweatshirts', label: 'Sweatshirts', checked: false },
-      { value: 'pants-and-shorts', label: 'Pants & Shorts', checked: false },
-    ],
+import { ActiveFiltersActions } from '../../store/slices/ActiveFiltersSlice';
+import { useAppDispatch } from '../../store/hooks';
+import CheckboxFilter from './CheckboxFilter';
+import RangeSlider from './RangeSlider';
+import { EmptyQueryFilter,QueryFilter } from '../../store/models/queryModel';
+import DropDownFilter from './DropDownFilter';
+
+
+let activeFilters:QueryFilter = {...EmptyQueryFilter};
+interface Props {
+  skills:List;
+  programmingLanguages:List;
+  jobRoles:List;
+  countries:List;
+  spokenLanguages:List;
+  workExperience:List;
+  sortOptions:List;
+  loadRegion:Function;
 }
-const sortOptions = [
-    { name: 'Most Popular', href: '#', current: true },
-    { name: 'Best Rating', href: '#', current: false },
-    { name: 'Newest', href: '#', current: false },
-]
-  
+
 function classNames(...classes:List) {
-    return classes.filter(Boolean).join(' ')
+  return classes.filter(Boolean).join(' ')
 }
+
+function countFilter() {
+  let count = 0;
+  if(activeFilters.availability != null && activeFilters.availability!=='') {
+    count++
+  }
+  if(activeFilters.work_experience != null && activeFilters.work_experience!=='') {
+    count++
+  }
+  if(activeFilters.canton != null) {
+    count += activeFilters.canton.length
+  }
+  if(activeFilters.country != null) {
+    count += activeFilters.country.length
+  }
+  if(activeFilters.job_role != null) {
+    count += activeFilters.job_role.length
+  }
+  if(activeFilters.programming_languages != null) {
+    count += activeFilters.programming_languages.length
+  }
+  if(activeFilters.skills != null) {
+    count += activeFilters.skills.length
+  }
+  if(activeFilters.spoken_languages != null) {
+    count += activeFilters.spoken_languages.length
+  }
+  if(activeFilters.salary_min !=null) {
+    count +=1
+  }
+  if(activeFilters.salary_max != null) {
+    count +=1
+  }
+  return count;
+}
+
+function setSlidersToZero(){
+  let range = document.getElementById("availability-range") as HTMLInputElement
+  range.value = "0"
+  let salaryMin = document.getElementById("salary-min-range") as HTMLInputElement
+  salaryMin.value = "0"
+  let salaryMax = document.getElementById("salary-max-range") as HTMLInputElement
+  salaryMax.value = "0"
+}
+
+function setDropdownsToDefault() {
+  let work_experience = document.getElementById("work_experience") as HTMLInputElement
+  work_experience.value = work_experience.defaultValue
+}
+const Filter:FC<Props> = (props) => {
+  const dispatch = useAppDispatch();
+  const [count,updateCount] = useState(0)
+  const [rangeValue,updateRangeValue] = useState("0")
+  const [salaryMin,updateSalaryMin] = useState("0")
+  const [salaryMax,updateSalaryMax] = useState("0")
+
+  const [region,updateRegion] = useState([])
+
+  function updateActiveFilters() {
+    updateCount(countFilter())
+    let temp = Object.assign({}, activeFilters);
+    dispatch(ActiveFiltersActions.setActiveFilter(temp))
+  }
+
+  function removeActiveFilters() {
+    var checkboxes = document.getElementsByTagName("input");
+    for(let checkbox of checkboxes) {
+      if(checkbox.type === "checkbox") {
+        checkbox.checked = false; 
+      }
+    }
+    updateCount(0)
+    updateRangeValue("0")
+    updateSalaryMax("0")
+    updateSalaryMin("0")
+    setSlidersToZero()
+    setDropdownsToDefault()
+    activeFilters = {...EmptyQueryFilter}
+    dispatch(ActiveFiltersActions.setActiveFilter(EmptyQueryFilter))
+  }
+  function handleRangeSlider(){
+    let range = document.getElementById("availability-range") as HTMLInputElement;
+    updateRangeValue(range.value)
+    activeFilters.availability = range.value
+    updateActiveFilters()
+  }
   
-const Filter:FC = () => {
+  function handleSalaryMinSlider(){
+    let range = document.getElementById("salary-min-range") as HTMLInputElement;
+    updateSalaryMin(range.value)
+    activeFilters.salary_min = range.value
+    updateActiveFilters()
+  }
+  function handleSalaryMaxSlider(){
+    let range = document.getElementById("salary-max-range") as HTMLInputElement;
+    updateSalaryMax(range.value)
+    activeFilters.salary_max = range.value
+    updateActiveFilters()
+  }
+  function updateCheckboxFilter(newValue:string, filter:Array<string> | null) {
+    if(filter === null) {
+      filter = []
+    }
+    let tempList:Array<string> = Object.assign([],filter)
+    let doAdd = true
+    if(tempList !== null) {
+      for (var i = 0; i < tempList.length; i++) {
+        if(tempList[i] === newValue) {
+          tempList.splice(i,1)
+          doAdd = false
+        }
+      }
+      if(doAdd){
+        tempList.push(newValue)
+      }    
+      return tempList
+    }  
+  }
+  function handleSkillsFilter(event:any) {
+    let newList = updateCheckboxFilter(event.target.value, activeFilters.skills)
+    if(typeof newList !== 'undefined') {
+      activeFilters.skills = newList
+      updateActiveFilters()
+    }  
+  }
+  function handleWorkExperienceFilter(event:any) {
+    if(event.target.value === "All") {
+      activeFilters.work_experience = null
+    } else {
+      activeFilters.work_experience = event.target.value
+    }
+    updateActiveFilters()
+  }  
+  function handleProgrammingLanguagesFilter(event:any) {
+    let newList = updateCheckboxFilter(event.target.value, activeFilters.programming_languages)
+    if(typeof newList !== 'undefined') {
+      activeFilters.programming_languages = newList
+      updateActiveFilters()
+    }  
+  }
+  function handleJobRolesFilter(event:any) {
+    let newList = updateCheckboxFilter(event.target.value, activeFilters.job_role)
+    if(typeof newList !== 'undefined') {
+      activeFilters.job_role = newList
+      updateActiveFilters()
+    } 
+  }
+  function handleRegionFilter(event:any) {
+    let newList = updateCheckboxFilter(event.target.value, activeFilters.canton)
+    if(typeof newList !== 'undefined') {
+      activeFilters.canton = newList
+      updateActiveFilters()
+    } 
+  }
+  function handleSpokenLanguagesFilter(event:any) {
+    let newList = updateCheckboxFilter(event.target.value, activeFilters.spoken_languages)
+    if(typeof newList !== 'undefined') {
+      activeFilters.spoken_languages = newList
+      updateActiveFilters()
+    } 
+  }
+  function handleCountriesFilter(event:any) {
+    let newList = updateCheckboxFilter(event.target.value, activeFilters.country)
+    if(typeof newList !== 'undefined') {
+      activeFilters.country = newList
+      updateActiveFilters()
+      let country = event.target.labels[0].textContent
+      let prevChecked = event.target.checked
+      if(prevChecked) {
+        props.loadRegion(country).then((element:[])=>{
+          updateRegion(element)
+          activeFilters.canton = []
+          updateActiveFilters()
+        })
+      }
+    }
+  }
   return(
-    <div className="bg-white py-2">
+    <div className="bg-white mb-2">
 
       {/* Filters */}
       <Disclosure
@@ -60,16 +217,17 @@ const Filter:FC = () => {
         <div className="relative col-start-1 row-start-1 py-4">
           <div className="max-w-7xl mx-auto flex space-x-6 divide-x divide-gray-200 text-sm px-4 sm:px-6 lg:px-8">
             <div>
-              <Disclosure.Button className="group text-gray-700 font-medium flex items-center">
+              <Disclosure.Button data-testid="filter-counter" className="group text-gray-700 font-medium flex items-center">
                 <FilterIcon
                   className="flex-none w-5 h-5 mr-2 text-gray-400 group-hover:text-gray-500"
                   aria-hidden="true"
                 />
-                2 Filters
+                
+                {count} Filters
               </Disclosure.Button>
             </div>
             <div className="pl-6">
-              <button type="button" className="text-gray-500">
+              <button type="button" data-testid="clear-all" onClick={removeActiveFilters} className="text-gray-500">
                 Clear all
               </button>
             </div>
@@ -78,88 +236,18 @@ const Filter:FC = () => {
         <Disclosure.Panel className="border-t border-gray-200 py-10">
           <div className="max-w-7xl mx-auto grid grid-cols-2 gap-x-4 px-4 text-sm sm:px-6 md:gap-x-6 lg:px-8">
             <div className="grid grid-cols-1 gap-y-10 auto-rows-min md:grid-cols-2 md:gap-x-6">
-              <fieldset>
-                <legend className="block font-medium">Price</legend>
-                <div className="pt-6 space-y-6 sm:pt-4 sm:space-y-4">
-                  {filters.price.map((option, optionIdx) => (
-                    <div key={option.value} className="flex items-center text-base sm:text-sm">
-                      <input
-                        id={`price-${optionIdx}`}
-                        name="price[]"
-                        defaultValue={option.value}
-                        type="checkbox"
-                        className="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500"
-                        defaultChecked={option.checked}
-                      />
-                      <label htmlFor={`price-${optionIdx}`} className="ml-3 min-w-0 flex-1 text-gray-600">
-                        {option.label}
-                      </label>
-                    </div>
-                  ))}
-                </div>
-              </fieldset>
-              <fieldset>
-                <legend className="block font-medium">Color</legend>
-                <div className="pt-6 space-y-6 sm:pt-4 sm:space-y-4">
-                  {filters.color.map((option, optionIdx) => (
-                    <div key={option.value} className="flex items-center text-base sm:text-sm">
-                      <input
-                        id={`color-${optionIdx}`}
-                        name="color[]"
-                        defaultValue={option.value}
-                        type="checkbox"
-                        className="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500"
-                        defaultChecked={option.checked}
-                      />
-                      <label htmlFor={`color-${optionIdx}`} className="ml-3 min-w-0 flex-1 text-gray-600">
-                        {option.label}
-                      </label>
-                    </div>
-                  ))}
-                </div>
-              </fieldset>
+              <CheckboxFilter name="Skills" event={handleSkillsFilter} list={props.skills}/>
+              <CheckboxFilter name="Programming Languages" event={handleProgrammingLanguagesFilter} list={props.programmingLanguages}/>
+              <RangeSlider name='Min Salary' id="salary-min-range" value={salaryMin} event={handleSalaryMinSlider} min="0" step="5000" max="300000"/>
+              <RangeSlider name='Availability' id="availability-range" value={rangeValue + "%"} event={handleRangeSlider} min="0" step="5" max="100"/>
+              <RangeSlider name='Max Salary' id="salary-max-range" value={salaryMax} event={handleSalaryMaxSlider} min="0" step="5000" max="300000"/>
+              <DropDownFilter title="Work Experience" onChangeEvent={handleWorkExperienceFilter} id="work_experience"  options={props.workExperience} defaultValue={props.workExperience[0]}/>
             </div>
             <div className="grid grid-cols-1 gap-y-10 auto-rows-min md:grid-cols-2 md:gap-x-6">
-              <fieldset>
-                <legend className="block font-medium">Size</legend>
-                <div className="pt-6 space-y-6 sm:pt-4 sm:space-y-4">
-                  {filters.size.map((option, optionIdx) => (
-                    <div key={option.value} className="flex items-center text-base sm:text-sm">
-                      <input
-                        id={`size-${optionIdx}`}
-                        name="size[]"
-                        defaultValue={option.value}
-                        type="checkbox"
-                        className="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500"
-                        defaultChecked={option.checked}
-                      />
-                      <label htmlFor={`size-${optionIdx}`} className="ml-3 min-w-0 flex-1 text-gray-600">
-                        {option.label}
-                      </label>
-                    </div>
-                  ))}
-                </div>
-              </fieldset>
-              <fieldset>
-                <legend className="block font-medium">Category</legend>
-                <div className="pt-6 space-y-6 sm:pt-4 sm:space-y-4">
-                  {filters.category.map((option, optionIdx) => (
-                    <div key={option.value} className="flex items-center text-base sm:text-sm">
-                      <input
-                        id={`category-${optionIdx}`}
-                        name="category[]"
-                        defaultValue={option.value}
-                        type="checkbox"
-                        className="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500"
-                        defaultChecked={option.checked}
-                      />
-                      <label htmlFor={`category-${optionIdx}`} className="ml-3 min-w-0 flex-1 text-gray-600">
-                        {option.label}
-                      </label>
-                    </div>
-                  ))}
-                </div>
-              </fieldset>
+              <CheckboxFilter name="Country" event={handleCountriesFilter} list={props.countries}/>
+              <CheckboxFilter name="Region" event={handleRegionFilter} list={region}/>
+              <CheckboxFilter name="Job Role" event={handleJobRolesFilter} list={props.jobRoles}/>
+              <CheckboxFilter name="Spoken Languages" event={handleSpokenLanguagesFilter} list={props.spokenLanguages}/>
             </div>
           </div>
         </Disclosure.Panel>
@@ -187,7 +275,7 @@ const Filter:FC = () => {
               >
                 <Menu.Items className="origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-2xl bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                   <div className="py-1">
-                    {sortOptions.map((option) => (
+                    {props.sortOptions.map((option) => (
                       <Menu.Item key={option.name}>
                         {({ active }) => (
                           <a

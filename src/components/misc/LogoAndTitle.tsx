@@ -10,8 +10,7 @@ const LogoAndTitle: FC<Props> = (props) => {
       <div className='sm:mx-auto sm:w-full sm:max-w-md'>
         <img
           className='mx-auto h-12 w-auto'
-          // todo ändern
-          src='https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg'
+          src='https://firebasestorage.googleapis.com/v0/b/getter-38760.appspot.com/o/getter%2FLogo%20Transparency.png?alt=media&token=36133b90-884e-4bc9-bcdf-5ad6a5e334ae'
           alt='Workflow'
         />
         <h2 className='mt-6 text-center text-3xl font-extrabold text-gray-900'>
