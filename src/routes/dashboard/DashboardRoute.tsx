@@ -19,7 +19,8 @@ const DashboardRoute:FC = () => {
         <Route path={routesDashboard[1].routing + "/*" } element={<Dashboard content={<Queries.Queries/>}/>} />
         <Route path={routesDashboard[2].routing + "/*" } element={<Dashboard content={<Recruiting/>}/>} />
         <Route path={routesDashboard[3].routing + "/*" } element={<Dashboard content={<CandidateList/>}/>} />
-        <Route path={routesDashboard[4].routing + "/*" } element={<Dashboard content={<MessageLoader/>}/>} />
+        <Route path={routesDashboard[4].routing + "/" } element={<Dashboard content={<MessageLoader/>}/>} />
+        <Route path={routesDashboard[4].routing + "/:uid" } element={<Dashboard content={<MessageLoader/>}/>} />
         <Route path='/profile/*' element={<Dashboard content={<Profile/>}/>} />
         <Route path='/settings/*' element={<Dashboard content={<UserSettings/>}/>} />
         <Route path='/support/*' element={<Dashboard content={<Support/>}/>} />

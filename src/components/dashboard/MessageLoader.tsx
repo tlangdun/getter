@@ -9,6 +9,7 @@ import {
 } from "../../helpers/chatFunctions/chatComFunctions";
 import {List} from "reselect/es/types";
 import {getAuth} from "firebase/auth";
+import { useParams } from "react-router-dom";
 
 
 const f = ["JeanJack", "Tenjean", "JeanLuc", "ok"]
@@ -20,7 +21,14 @@ const MessageLoader: FC = () => {
     const[messages, setMessages] = useState<any>([])
     const[realRec, setRealRec] = useState<any>('')
     //let user:any = getAuth().currentUser?.uid
-
+    const { uid } = useParams();
+    
+    useEffect(()=>{
+        //add user to chat here
+        if(uid !== undefined) {
+            alert("add " + uid + " to db")
+        }
+    },[uid])
     useEffect(() => {
         const fetchRec = async () => {
             //let r: any = await getReceiversUID("KtDtaldROMaQ93TBPCTjqTNs1rK2")

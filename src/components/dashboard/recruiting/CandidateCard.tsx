@@ -1,5 +1,6 @@
-import { MailIcon, XIcon } from '@heroicons/react/solid';
+import { ChatIcon, XIcon } from '@heroicons/react/solid';
 import { FC } from 'react';
+import { Link } from 'react-router-dom';
 import { User } from '../../../store/models/userModel';
 
 interface Props{
@@ -32,13 +33,15 @@ const CandidateCard:FC<Props> = ({person, deleteEvent}) => {
         })}
         </td>
         <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-        <button
-            type="button"
-            className="inline-flex items-center px-3 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-violet-600 hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-        >
-            Send a message
-            <MailIcon className="ml-2 -mr-0.5 h-4 w-4" aria-hidden="true" />
-        </button>
+        <Link to={`/dashboard/messages/${person.uid}`}>    
+            <button
+                type="button"
+                className="inline-flex items-center px-3 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-violet-600 hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+                Send a message
+                <ChatIcon className="ml-2 -mr-0.5 h-4 w-4" aria-hidden="true" />
+            </button>
+        </Link>
         </td>
         <td className="relative whitespace-nowrap py-4 text-right text-sm font-medium sm:pr-6">
         <button
