@@ -10,6 +10,7 @@ import DashboardRoute from '../../routes/dashboard/DashboardRoute'
 import DashboardContent from './DashboardContent'
 import CandidateList from './CandidateList'
 import MessagePage from './MessagePage'
+import MessageLoader from './MessageLoader'
 
 describe('Dashboard recruiter', () => {
   test('Should render dashboard without crash', () => {
@@ -70,7 +71,7 @@ describe('Dashboard recruiter', () => {
     render(
       <BrowserRouter>
         <Routes>
-          <Route path='*' element={<Dashboard content={<MessagePage messagesReceiver={['ok']} messagesSender={['ok']} receivers={['ok']} sender={['ok']}/>}/>} />
+          <Route path='*' element={<Dashboard content={<MessageLoader/>}/>} />
         </Routes>
       </BrowserRouter>
     )
