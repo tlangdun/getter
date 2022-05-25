@@ -1,8 +1,9 @@
 import {getAuth} from 'firebase/auth';
-import {collection, doc, getDoc, getDocs, addDoc, Timestamp} from 'firebase/firestore';
+import {collection, doc, getDoc, getDocs, addDoc, Timestamp, setDoc} from 'firebase/firestore';
 import {db} from '../../services/firebaseconfig';
 import {firestore} from "firebase-admin";
 import firebase from "firebase/compat";
+import {data} from "autoprefixer";
 
 
 export async function readSingleDoc(d: any) {
@@ -98,14 +99,14 @@ const tt = async () => {
 }
 
 const superTest = async (sender: string, rec: string, setLoad: Function, load: string) => {
-    console.log("this is sender : ", sender)
-    console.log("this is rec : ", rec)
+    //console.log("this is sender : ", sender)
+    //console.log("this is rec : ", rec)
     const huso = await recMes(sender, rec)
     const y = (sortByTimestamp(await idToMessageMapper(huso, sender, rec)))
-    console.log("lezzz seee whattaa happens:", y)
+    //console.log("lezzz seee whattaa happens:", y)
     //setShow(!show)
-    setLoad("Okey")
-    setLoad("")
+    //setLoad("Okey")
+    //setLoad("")
     //setRec(rec)
     return y
 }
@@ -138,6 +139,10 @@ const idToMessageMapper = async (l: any, uidSender: string, uidRec: string) => {
 
 const recMes = async (uidSender: string, uidRec: string) => {
     const messagesRef = collection(db, `Chat_log/${uidSender}_${uidRec}/Messages`)
+    const mrefu = collection(db, `Chat_log/${uidRec}_${uidSender}/Messages`)
+    console.log("WHAT IS THIS ??? : ", await getDocs(messagesRef).then((s) => {
+        return s.docs.length === 0
+    }))
     console.log("cant finde : ", `Chat_log/${uidSender}_${uidRec}/Messages`)
     console.log("this are messasge : ", messagesRef)
     if (messagesRef !== null) {
@@ -185,11 +190,49 @@ const receiveMessages = async (uid: string) => {
         })
 }
 
-const startMessaging = async () => {
+/*const checkIfConvoExists = async (uidSender: any, uidRec: any) => {
+    const messagesRef = collection(db, `Chat_log`)
+    const docRef = doc(messagesRef, `${uidSender}_${uidRec}`)
+    const secondDocRef = doc(messagesRef, `${uidRec}_${uidSender}`)
+    const docSnap = await getDoc(docRef)
+    const secondDocSnap = await getDoc(secondDocRef)
+
+    if (docSnap.exists()) {
+        return true
+    } else if (secondDocSnap.exists()) {
+        return true
+    } else{
+        return false
+    }
+
+}*/
+
+const startMessaging = async (uidSender: any, uidRec: any) => {
+    uidSender = await getAuth().currentUser?.uid
+    const messagesRef = collection(db, `Chat_log`)
+    const docRef = doc(messagesRef, `${uidSender}_${uidRec}`)
+    const secondDocRef = doc(messagesRef, `${uidRec}_${uidSender}`)
+    const docSnap = await getDoc(docRef)
+    const secondDocSnap = await getDoc(secondDocRef)
+
+    if (docSnap.exists()) {
+        return true
+    } else if (secondDocSnap.exists()) {
+        return true
+    } else {
+        /*const d = await addDoc(collection(db, `Chat_log/${uidSender}_${uidRec}/Messages`), {
+            content: `Hello ${uidRec}!`,
+            sentBy: uidSender,
+            timestamp: Timestamp.now()
+        })*/
+        const ok = await setDoc(doc(db, 'Chat_log', `${uidSender}_${uidRec}`), {})
+        return ok
+    }
+
 
 }
 
-const sendMessage = async (e: React.FormEvent, setFormValue: Function, formValue: string | undefined, loader: string, setReloader: Function, getMessages: Function, uidSender:string, uidRec:string) => {
+const sendMessage = async (e: React.FormEvent, setFormValue: Function, formValue: string | undefined, loader: string, setReloader: Function, getMessages: Function, uidSender: string, uidRec: string) => {
     e.preventDefault();
     setFormValue('')
 
@@ -218,6 +261,7 @@ const sendMessage = async (e: React.FormEvent, setFormValue: Function, formValue
         sentBy: user,
         timestamp: Timestamp.now()
     })
+
     console.log("this is test : ", docRef.id)
     //const rname: any = await getReceiversUID('Userid2')
     //console.log(rname)
@@ -241,4 +285,4 @@ const sendMessage = async (e: React.FormEvent, setFormValue: Function, formValue
     setReloader(loader)
 }
 
-export {sendMessage, getReceiversUID, tt, recMes, sortByTimestamp, idToMessageMapper, getNameByUID, superTest}
+export {sendMessage, getReceiversUID, tt, recMes, sortByTimestamp, idToMessageMapper, getNameByUID, superTest, startMessaging}
