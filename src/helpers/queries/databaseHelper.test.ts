@@ -135,7 +135,7 @@ function createTalent(userId: string) {
         pic_url: 'https://firebasestorage.googleapis.com/v0/b/getter-38760.appspot.com/o/profile-pictures%2F20201231_200219.jpg?alt=media&token=b78aea1a-2d0b-4ad0-a75c-626f3f59fa3f',
         short_bio: 'hello, my name is martin',
         address_postcode: 'Babostrasse 2',
-        availability: '80',
+        availability: 80,
         birth_date: '01.01.1970',
         canton: 'Zurich',
         city_of_residence: 'Zürich',
@@ -164,7 +164,7 @@ function addRecruiterToDB(testRecruiter: { access_level: access_level; uid: stri
     });
 }
 
-function addTalentUsrToDB(testTalent: { job_role: string; short_bio: string; birth_date: string; last_name: string; address_postcode: string; availability: string; salary_range: { start: number; end: number }; access_level: access_level; skills: string[]; uid: string; spoken_languages: string[]; city_of_residence: string; canton: string; pic_url: string; first_name: string; email: string; programming_languages: string[]; work_experience: string[] }, talentUserId: string, dbAuth: any) {
+function addTalentUsrToDB(testTalent: { job_role: string; short_bio: string; birth_date: string; last_name: string; address_postcode: string; availability: number; salary_range: { start: number; end: number }; access_level: access_level; skills: string[]; uid: string; spoken_languages: string[]; city_of_residence: string; canton: string; pic_url: string; first_name: string; email: string; programming_languages: string[]; work_experience: string[] }, talentUserId: string, dbAuth: any) {
 
     return setDoc(doc(dbAuth, "Users", talentUserId), {
         uid: testTalent.uid,

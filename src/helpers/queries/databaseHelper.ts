@@ -1,8 +1,9 @@
 import {collection, doc, getDoc, getDocs, setDoc, where, query, orderBy, limit} from 'firebase/firestore';
 import {db, storage} from '../../services/firebaseconfig';
-import {access_level, GetterUser} from '../../store/models/userModel';
+import {access_level, GetterUser, WorkExperience} from '../../store/models/userModel';
 import {QueryFilter} from "../../store/models/queryModel";
 import {DocumentSnapshot} from "@firebase/firestore";
+import {DocumentData} from "@firebase/firestore";
 
 // ToDo:
 // Already Done by Martin:
@@ -82,6 +83,8 @@ export const getDocumentsByFilter = async (database:any, recruiterFilter: QueryF
     let countriesIds:string[] = []
     let cantonsIds:string[] = []
     let filtersSet:boolean = false;
+    const returnList: Array<GetterUser> = [];
+
 
     // Skills Filter
     if (recruiterFilter.skills!= null && recruiterFilter.skills?.length !== 0){
@@ -185,32 +188,43 @@ export const getDocumentsByFilter = async (database:any, recruiterFilter: QueryF
         for(let i = 0; i < intersectionIDs.length; i++){
             let document:DocumentSnapshot = await getDoc(doc(database, `Users/${intersectionIDs[i]}`));
 
-            // @ts-ignore
-            if (recruiterFilter.availability != null && Number(recruiterFilter.availability) > 0 && document.data().availability < recruiterFilter.availability) continue;
 
-            // @ts-ignore
+            const data = document.data();
+            if (!data) continue;
+
+            if (recruiterFilter.availability != null && data.availability !== undefined && data.availability < recruiterFilter.availability) continue;
+
+            // ToDo: not rly working right now!!! work_experience atm isch eifach öppis bruched iwie Jahre det drin
             if (recruiterFilter.work_experience != null) continue;
+
+            if(document.data())
             listDocs.push(document);
         }
-    }else{
-        console.log("filtersSet false else case");
+    }
+    else{
         const ref = collection(db, 'Users');
         const queryFilters = []
 
-        if (recruiterFilter.availability != null && Number(recruiterFilter.availability)  > 0){
+        if (recruiterFilter.availability != null && recruiterFilter.availability  > 0){
             console.log("availability set");
             filtersSet = true;
             queryFilters.push(where('availability', '>=', recruiterFilter.availability),)
+            console.log(recruiterFilter.availability)
         }
+        //ToDo: Work Experience atm eifach öppis. Funktioniert ned
         if (recruiterFilter.work_experience != null){
             console.log("work_experience set");
             filtersSet = true;
             queryFilters.push(where('work_experience', '>=', recruiterFilter.work_experience),)
         }
 
-
         const qResult = query(ref, ...queryFilters);
-        getDocs(qResult).then(res => {res.forEach(r => listDocs.push(r))});
+
+        await getDocs(qResult).then(res => res.docs
+            .map(documentSnapshot => documentSnapshot)
+            .forEach(r => returnList.push(mapDataToGetterUser(r.id, r.data())))
+        );
+        return returnList;
     }
 
     if (!filtersSet){
@@ -220,44 +234,45 @@ export const getDocumentsByFilter = async (database:any, recruiterFilter: QueryF
         const qResult = query(ref, orderBy("first_name", "desc"), limit(8));
         getDocs(qResult).then(res => {res.forEach(r => listDocs.push(r))});
     }
-    // console.log("listDocs value final:");
-    // console.log(listDocs);
-
 
     // intersectionIDs
-    const returnList: Array<GetterUser> = [];
+    for (const [key, value] of listDocs.entries()) {
+        console.log("Result:")
+        console.log(key + "" + value)
+    }
 
     listDocs.forEach(r => {
-        const u = r.data();
-        if(u){
-            returnList.push({
-                uid: u.uid,
-                access_level: access_level.TALENT,
-                email: u.email,
-                first_name: u.first_name,
-                last_name: u.last_name,
-                pic_url: u.pic_url,
-                short_bio: u.short_bio,
-                address_postcode: u.address_postcode,
-                availability: u.availability,
-                birth_date: u.birth_date,
-                canton: u.canton,
-                city_of_residence: u.city_of_residence,
-                job_role: u.job_role,
-                skills: u.skills,
-                programming_languages: u.programming_languages,
-                spoken_languages: u.spoken_languages,
-                salary_range: {
-                    start: u.salary_range.start,
-                    end: u.salary_range.end,
-                },
-                work_experience: u.work_experience,
-            })
-        }
-
+        const u = r.data()
+        if(u) returnList.push(mapDataToGetterUser(r.id, u));
     })
-    console.log("returnList value:");
-    console.log(returnList);
     return returnList;
 
+}
+
+function mapDataToGetterUser(uid: string, documentData: DocumentData):GetterUser{
+    let user:GetterUser;
+    user = {
+        uid: uid,
+        access_level: access_level.TALENT,
+        email: documentData.email,
+        first_name: documentData.first_name,
+        last_name: documentData.last_name,
+        pic_url: documentData.pic_url,
+        short_bio: documentData.short_bio,
+        address_postcode: documentData.address_postcode,
+        availability: documentData.availability,
+        birth_date: documentData.birth_date,
+        canton: documentData.canton,
+        city_of_residence: documentData.city_of_residence,
+        job_role: documentData.job_role,
+        skills: documentData.skills,
+        programming_languages: documentData.programming_languages,
+        spoken_languages: documentData.spoken_languages,
+        salary_range: {
+            start: documentData.salary_range.start,
+            end: documentData.salary_range.end,
+        },
+        work_experience: documentData.work_experience}
+
+    return user;
 }

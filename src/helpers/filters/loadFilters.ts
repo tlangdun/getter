@@ -9,7 +9,7 @@ let filters = {...EmptyFilters}
 function fillFilterMap(array:List) {
     let filter:any = [];
     array.forEach(function (elem){
-        let map = {value:elem.toLowerCase(), label:elem, checked:false}
+        let map = {value:elem, label:elem, checked:false}
         filter.push(map)
     })
     return filter;

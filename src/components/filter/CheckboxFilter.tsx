@@ -7,7 +7,7 @@ interface Props {
     name:string;
 }
 const CheckboxFilter:FC<Props> = (props) => {
-  let id = props.name.replace(/\s+/g, '').toLowerCase()
+  let id = props.name
   return(
     <fieldset className='max-h-44 overflow-y-auto p-2'>
         <legend className="block font-medium">{props.name}</legend>
