@@ -47,7 +47,7 @@ const QueriesModal:FC<Queries> = ({queryNames, setQueryNames}) => {
         if (value.length > 30) {
           return 'Name should consist of a maximum of 30 characters'
         }
-        if (!(/^\S+$/.test(value))) {
+        if (!(/^\S+/.test(value))) {
           return 'Invalid name'
         }
         return null
