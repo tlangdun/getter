@@ -7,6 +7,8 @@ import {
   UserCredential,
 } from 'firebase/auth';
 import { auth } from '../../services/firebaseconfig';
+import { UserActions } from '../../store/slices/UserSlice';
+import store from '../../store/store';
 
 const googleProvider = new GoogleAuthProvider();
 
@@ -31,6 +33,7 @@ const loginEmailPassword = async (
 
 
 const logout = async () => {
+  store.dispatch(UserActions.setFirebaseUser(null));
   await signOut(auth);
 };
 
