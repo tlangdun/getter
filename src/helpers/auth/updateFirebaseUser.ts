@@ -9,7 +9,7 @@ import {
   getDoc,
 } from 'firebase/firestore';
 import { db } from '../../services/firebaseconfig';
-import { access_level } from '../../store/models/getterUserModel';
+import { access_level } from '../../store/models/userModel';
 
 const updateFirebaseUser = async (usr: any): Promise<boolean> => {
   if (usr == null) {

@@ -1,6 +1,6 @@
 import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
 import { db } from '../../services/firebaseconfig';
-import { access_level, GetterUser } from '../../store/models/getterUserModel';
+import { access_level, GetterUser } from '../../store/models/userModel';
 
 const getUser = async (uid: string): Promise<GetterUser> => {
 

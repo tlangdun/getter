@@ -6,6 +6,19 @@ export type WorkExperience = {
   start_date: string;
 }
 
+export const availabilityMap = new Map<string, string>([
+  ['0 - 20', '20'],
+  ['20 - 40', '40'],
+  ['40 - 60', '60'],
+  ['60 - 80', '80'],
+  ['80 - 100', '100'],
+  ['20', '0 - 20'],
+  ['40', '20 - 40'],
+  ['60', '40 - 60'],
+  ['80', '60 - 80'],
+  ['100', '80 - 100'],
+]);
+
 export type firebaseRecruiter = {
   email: string,
   first_name: string,

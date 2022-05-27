@@ -6,6 +6,7 @@ import LogoAndTitle from '../../components/misc/LogoAndTitle';
 const LoginPage: FC = () => {
   return (
     <>
+      <div data-testid='login'></div>
       <LogoAndTitle title='Sign in to your account'>
         <p className='mt-2 text-center text-sm text-gray-600'>
           Or{' '}
