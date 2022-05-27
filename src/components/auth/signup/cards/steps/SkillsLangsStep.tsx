@@ -5,6 +5,8 @@ import getAllProgLangs from '../../../../../helpers/auth/getAllProgLangs';
 import getAllSkills from '../../../../../helpers/auth/getAllSkills';
 import getAllSpokenLangs from '../../../../../helpers/auth/getAllSpokenLangs';
 import updateFirebaseUser from '../../../../../helpers/auth/updateFirebaseUser';
+import { useAppDispatch } from '../../../../../store/hooks';
+import { UserActions } from '../../../../../store/slices/UserSlice';
 import ButtonGroup from '../../ButtonGroup';
 import ComboBoxCard from '../ComboBoxCard';
 
@@ -14,7 +16,7 @@ interface Props {
 }
 
 const SkillsLangsStep: FC<Props> = ({ user, setUsr }) => {
-  const steps = useSteps();
+  const dispatch = useAppDispatch();
 
   const usr = { ...user };
 
@@ -60,6 +62,7 @@ const SkillsLangsStep: FC<Props> = ({ user, setUsr }) => {
       //ToDo change when professionalexpirience
       usr.work_experience = [];
       await updateFirebaseUser(usr);
+      dispatch(UserActions.setFirebaseUser(usr));
     } catch (error) {
       console.log(error);
     }
