@@ -14,7 +14,7 @@ const features = [
 
 const FeaturesSection = () => {
     return ( <>
-        <div className="bg-white">
+        <div className="bg-gray-50">
             <div className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:py-24 lg:px-8 lg:grid lg:grid-cols-3 lg:gap-x-8">
                 <div>
                     <h2 className="text-base font-semibold text-indigo-600 uppercase tracking-wide">Everything you need</h2>
