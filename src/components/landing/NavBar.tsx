@@ -75,7 +75,7 @@ const NavBar: FC = () => {
                 <div>
                   <img
                     className='h-8 w-auto'
-                    src='https://images-ext-1.discordapp.net/external/q67LYk6pULViD8s5V8esEkmA2_KhqI5SPbsXoqKPtO0/%3Falt%3Dmedia%26token%3D76aea186-61e4-4e07-bb17-56ca3a705516/https/firebasestorage.googleapis.com/v0/b/getter-38760.appspot.com/o/getter%252FLogo%2520Transparency2.png?width=978&height=978'
+                    src='https://firebasestorage.googleapis.com/v0/b/getter-38760.appspot.com/o/getter%2FLogo%20Transparency2.png?alt=media&token=76aea186-61e4-4e07-bb17-56ca3a705516'
                     alt='Workflow'
                   />
                 </div>
