@@ -9,6 +9,7 @@ const features = [
   },
   { name: 'Skills', description: 'Include your skills to be seen by more employers.' },
   { name: 'Notifications', description: 'Get notified about the newest job offers and news in the IT world.' },
+  { name: 'Online Chat', description: 'Quick and easy to get in touch with potential employers and employees.' },
 ]
 
 const FeaturesPage: FC = () => {

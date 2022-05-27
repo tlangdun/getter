@@ -5,7 +5,11 @@ const features = [
     { name: 'Filtering'},
     { name: 'Networking'},
     { name: 'Skills'},
-    { name: 'Notifications'}
+    { name: 'Notifications'},
+    { name: 'Online Chat'},
+    { name: 'Big Database'},
+    { name: 'Shareability'},
+    { name: 'Reliability'},
 ]
 
 const FeaturesSection = () => {

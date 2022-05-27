@@ -45,13 +45,13 @@ const NewsletterSection = () => {
                         <div className="relative">
                             <div className="sm:text-center">
                                 <h2 className="text-3xl font-extrabold text-white tracking-tight sm:text-4xl">
-                                    Get notified when we&rsquo;re launching.
+                                    Launching soon.
                                 </h2>
                                 <p className="mt-6 mx-auto max-w-2xl text-lg text-indigo-200">
                                     Finalizing our last little tweaks.
                                 </p>
                             </div>
-                            <form action="#" className="mt-12 sm:mx-auto sm:max-w-lg sm:flex">
+                            {/* <form action="#" className="mt-12 sm:mx-auto sm:max-w-lg sm:flex">
                                 <div className="min-w-0 flex-1">
                                     <label htmlFor="cta-email" className="sr-only">
                                         Email address
@@ -71,7 +71,7 @@ const NewsletterSection = () => {
                                         Notify me
                                     </button>
                                 </div>
-                            </form>
+                            </form> */}
                         </div>
                     </div>
                 </div>

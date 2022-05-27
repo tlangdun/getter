@@ -8,7 +8,7 @@ const LandingPage: FC = () => {
     <><div data-testid="landing-page"></div>
     <HeroSection></HeroSection>
     <FeaturesSection></FeaturesSection>
-    <NewsletterSection></NewsletterSection>
+      <NewsletterSection></NewsletterSection>
     </>
   );
 };
