@@ -23,6 +23,7 @@ const FormInput: FC<Props> = (props) => {
       </label>
       <div className='mt-1'>
         <input
+          data-testid={props.id}
           value={props.value}
           onChange={props.handleChange}
           onBlur={props.handleBlur}
