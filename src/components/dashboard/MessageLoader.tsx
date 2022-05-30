@@ -1,6 +1,7 @@
 import {FC, useEffect, useState} from "react";
 import MessagePage from "./MessagePage";
 import {
+    another_tt,
     getReceiversUID,
     idToMessageMapper,
     recMes,
@@ -16,7 +17,7 @@ const f = ["JeanJack", "Tenjean", "JeanLuc", "ok"]
 
 const MessageLoader: FC = () => {
     const [allReceivers, setAllReceivers] = useState<any>([])
-    const [t, setT] = useState()
+    const [t, setT] = useState<any>()
     const [user, setUser] = useState<any>('')
     const [messages, setMessages] = useState<any>([])
     const [receiver, setReceiver] = useState<any>('')
@@ -27,18 +28,19 @@ const MessageLoader: FC = () => {
 
     useEffect(() => {
         const fetchRec = async () => {
+            setMessages([])
             //let r: any = await getReceiversUID("KtDtaldROMaQ93TBPCTjqTNs1rK2")
             //console.log("this is ", r)
             //let c: any = await tt()
             //(console.log("this is TT : ", c)
             let u: any = await getAuth().currentUser?.uid
             setUser(u)
-            setT(await tt())
             setAllReceivers(await getReceiversUID(u))
+            setT(await tt())
+            console.log("this should actually work????",await tt())
             setMessages(sortByTimestamp(await idToMessageMapper(await recMes(user, receiver), user, receiver)))
             //console.log("so you really only rend once?")
             //setRec(await tt())
-
         }
         fetchRec()
             .catch(console.error)

@@ -75,6 +75,7 @@ const getReceivers = async (receiverIds: Array<string>) => {
     for (let index = 0; index < receiverIds.length; index++) {
         //let receiver = {uid: receiverIds[index], ...(await getNameByUID(receiverIds[index]))}
         //receiverArr.push({uid: receiverIds[index], ...(await getNameByUID(receiverIds[index]))})
+        //console.log("THIS SHOULD BE NAMESSSSSSS : , ", await getNameByUID((receiverIds[index])))
         receiverArr[receiverIds[index]] = (await getNameByUID(receiverIds[index]))
     }
     return receiverArr
@@ -88,6 +89,18 @@ const tt = async () => {
     console.log("This user bro : ", user)
     const receiverIds: any = await getReceiversUID(user)
     console.log("all them ids : ", receiverIds)
+    const receiverArr: any = {}
+    for (let index = 0; index < receiverIds.length; index++) {
+        //let receiver = {uid: receiverIds[index], ...(await getNameByUID(receiverIds[index]))}
+        //receiverArr.push({uid: receiverIds[index], ...(await getNameByUID(receiverIds[index]))})
+        //console.log("THIS SHOULD BE NAMESSSSSSS : , ", await getNameByUID((receiverIds[index])))
+        receiverArr[receiverIds[index]] = (await getNameByUID(receiverIds[index]))
+    }
+    console.log("this empty?? : ", receiverArr)
+    return [receiverArr]
+}
+
+const another_tt = async (receiverIds: any) => {
     const receiverArr: any = {}
     for (let index = 0; index < receiverIds.length; index++) {
         //let receiver = {uid: receiverIds[index], ...(await getNameByUID(receiverIds[index]))}
@@ -114,9 +127,15 @@ const superTest = async (sender: string, rec: string, setLoad: Function, load: s
 const getNameByUID = async (uid: string) => {
     try {
         const collectionRef = collection(db, 'Users')
+        const collectionRefRec = collection(db, 'Recruiters')
         const docRef = doc(collectionRef, `${uid}`)
+        const docRefRec = doc(collectionRefRec, `${uid}`)
         const nameDoc: any = await readSingleDoc(docRef)
-        return {first_name: nameDoc.first_name, last_name: nameDoc.last_name}
+        const nameDocRef: any = await readSingleDoc(docRefRec)
+        if (nameDoc !== undefined) {
+            return [nameDoc.first_name, nameDoc.last_name]
+        }
+        return [nameDocRef.first_name, nameDocRef.last_name]
     } catch (err) {
         return ""
     }
@@ -125,9 +144,13 @@ const getNameByUID = async (uid: string) => {
 
 const idToMessageMapper = async (l: any, uidSender: string, uidRec: string) => {
     let m: any = []
-    const mRef = collection(db, `Chat_log/${uidSender}_${uidRec}/Messages`)
-    for (let i = 0; i < l.length; i++) {
-        m.push(await readSingleDoc(doc(mRef, l[i])))
+    //const mRef = collection(db, `Chat_log/${uidSender}_${uidRec}/Messages`)
+    console.log("WTHIHI WE TRTY THIS : ", l)
+    if (l !== undefined) {
+        const mRef = l[0]
+        for (let i = 1; i < l.length; i++) {
+            m.push(await readSingleDoc(doc(mRef, l[i])))
+        }
     }
     /*l.map(async (t:any) =>{
         console.log(t)
@@ -137,34 +160,45 @@ const idToMessageMapper = async (l: any, uidSender: string, uidRec: string) => {
     return m
 }
 
+const checkIfDocExists = async (messagesRef: any) => {
+    return getDocs(messagesRef).then((s) => {
+        return s.docs.length !== 0
+    })
+}
+
 const recMes = async (uidSender: string, uidRec: string) => {
-    const messagesRef = collection(db, `Chat_log/${uidSender}_${uidRec}/Messages`)
-    const mrefu = collection(db, `Chat_log/${uidRec}_${uidSender}/Messages`)
-    console.log("WHAT IS THIS ??? : ", await getDocs(messagesRef).then((s) => {
-        return s.docs.length === 0
-    }))
-    console.log("cant finde : ", `Chat_log/${uidSender}_${uidRec}/Messages`)
-    console.log("this are messasge : ", messagesRef)
-    if (messagesRef !== null) {
+    let messagesRef = collection(db, `Chat_log/${uidSender}_${uidRec}/Messages`)
+    let mrefu = collection(db, `Chat_log/${uidRec}_${uidSender}/Messages`)
+
+    /*const docExistence = await getDocs(messagesRef).then((s) => {
+        return s.docs.length !== 0
+    })*/
+
+    if (!await checkIfDocExists(messagesRef)) {
+        messagesRef = mrefu
+    }
+    if (messagesRef !== undefined) {
         return getDocs(messagesRef)
             .then((snapshot) => {
                 const r: any = []
-                snapshot.docs.forEach((docy: any) => {
-                    //const a: any = (await readSingleDoc(doc(messagesRef, docy.id)))
-                    //r.push(doc.id)
-                    /*readSingleDoc(doc(messagesRef, docy.id)).then((t) =>{
-                        r.push(t)
-                    })*/
-                    r.push(docy.id)
-                })
-                return r
+                if (snapshot.docs.length !== 0) {
+                    r.push(messagesRef)
+                    snapshot.docs.forEach((docy: any) => {
+                        //const a: any = (await readSingleDoc(doc(messagesRef, docy.id)))
+                        //r.push(doc.id)
+                        /*readSingleDoc(doc(messagesRef, docy.id)).then((t) =>{
+                            r.push(t)
+                        })*/
+                        r.push(docy.id)
+                    })
+                    return r
+                }
             })
             .catch(err => {
                 //replace with log entry
                 console.log(err.message)
             })
     }
-    return await getCollection(collection(db, `Chat_log/${uidRec}_${uidSender}/Messages`))
 }
 
 const receiveMessages = async (uid: string) => {
@@ -243,7 +277,10 @@ const sendMessage = async (e: React.FormEvent, setFormValue: Function, formValue
     //console.log("EYY OYOO ID shit : ", sortByTimestamp(await idToMessageMapper(huso)))
     ///console.log()
 
-    const mRef = collection(db, `Chat_log/${uidSender}_${uidRec}/Messages`)
+    let mRef = collection(db, `Chat_log/${uidSender}_${uidRec}/Messages`)
+    if (!await checkIfDocExists(mRef)) {
+        mRef = collection(db, `Chat_log/${uidRec}_${uidSender}/Messages`)
+    }
     const nameRef = collection(db, 'Users')
     const d = doc(mRef, `${uidSender}_${uidRec}?`)
     const name = doc(nameRef, `${user}`)
@@ -285,4 +322,15 @@ const sendMessage = async (e: React.FormEvent, setFormValue: Function, formValue
     setReloader(loader)
 }
 
-export {sendMessage, getReceiversUID, tt, recMes, sortByTimestamp, idToMessageMapper, getNameByUID, superTest, startMessaging}
+export {
+    sendMessage,
+    getReceiversUID,
+    tt,
+    recMes,
+    sortByTimestamp,
+    idToMessageMapper,
+    getNameByUID,
+    superTest,
+    startMessaging,
+    another_tt
+}
