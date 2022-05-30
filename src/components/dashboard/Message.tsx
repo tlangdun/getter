@@ -93,7 +93,7 @@ const Messages: FC<PropsMessages> = (props) => {
             {console.log("WHAT DO YOU DOOOOOOOOOO : ", supT)}
             <ul className="space-y-2" id={props.receiver.toString()} title={props.loader}>
                 {supT && orderByTime() && supT.map((m: any) => <SingleMessage message={m.content} sender={props.sender} sendBy={m.sentBy}/>)}
-                {t && t.map((m: any) => <SingleMessage message={m.content} sender={props.sender} sendBy={m.sentBy}/>)}
+                {t && orderByTime() && t.map((m: any) => <SingleMessage message={m.content} sender={props.sender} sendBy={m.sentBy}/>)}
             </ul>
         </>
     )
