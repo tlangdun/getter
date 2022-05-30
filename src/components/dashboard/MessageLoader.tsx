@@ -11,6 +11,8 @@ import {
 import {List} from "reselect/es/types";
 import {getAuth} from "firebase/auth";
 import {useParams} from "react-router-dom";
+import {useCollectionData} from "react-firebase-hooks/firestore";
+import {collection} from "firebase/firestore";
 
 
 const f = ["JeanJack", "Tenjean", "JeanLuc", "ok"]
@@ -21,6 +23,8 @@ const MessageLoader: FC = () => {
     const [user, setUser] = useState<any>('')
     const [messages, setMessages] = useState<any>([])
     const [receiver, setReceiver] = useState<any>('')
+
+    //const [mTry] = useCollectionData(collection(db, ))
 
     //getting rec uid from participant list
     const {uid} = useParams();

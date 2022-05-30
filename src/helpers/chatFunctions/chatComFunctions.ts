@@ -4,6 +4,7 @@ import {db} from '../../services/firebaseconfig';
 import {firestore} from "firebase-admin";
 import firebase from "firebase/compat";
 import {data} from "autoprefixer";
+import {useCollectionData} from "react-firebase-hooks/firestore";
 
 
 export async function readSingleDoc(d: any) {
@@ -17,7 +18,9 @@ export async function readSingleDoc(d: any) {
 }
 
 export async function getColl(col: any) {
-    return
+    const l = useCollectionData(collection(db, '/Chat_log/DiGPNLhkqoRQtZ5wnhDGmqxbwTn2_KtDtaldROMaQ93TBPCTjqTNs1rK2/Messages'))
+    console.log("DOES THIS WORK AHARD OR okkok")
+    return l
 }
 
 export async function getCollection(col: any) {
@@ -40,7 +43,7 @@ export async function getCollection(col: any) {
 }
 
 
-const sortByTimestamp = (l: Array<Object>) => {
+const sortByTimestamp = (l: any) => {
     return l.sort((a: any, b: any) => (a.timestamp > b.timestamp) ? 1 : -1)
 }
 
