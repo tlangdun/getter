@@ -108,32 +108,10 @@ const MessagePage: FC<Props> = (props) => {
             setShow(true)
         }
         setReceiver(rec)
-        setReloader("okey")
-        setReloader("reloader")
+        //setReloader("okey")
+        //setReloader("reloader")
         props.setCurrentRec(rec)
-        //setMessages(messages)
-        //setReloader("")
-        //setReloader(reloader)
-        //console.log("new rec: ", receiver)
-        //console.log("THESE ARE TRZKY : " , props.sender)
     }
-
-    useEffect(() => {
-        //console.log(" yoyoyoyoyoy : ", )
-        //setAnotherTry(tt().then())
-        /*tt().then((names) => {
-            console.log("TRYINF THIS RELLAY HARD , ", names)
-        })*/
-
-    }, [])
-    /*useEffect(() => {
-        const setMes = async () => {
-            setMessages(sortByTimestamp(await idToMessageMapper(await recMes(props.sender, receiver.toString()))))
-            console.log("THESE ARE TRZKY : " , messages)
-        }
-        setMes()
-            .catch(console.error)
-    },[receiver])*/
 
     useEffect(() =>{
         let o:any = {}
@@ -143,18 +121,18 @@ const MessagePage: FC<Props> = (props) => {
             })
         })
         setAnotherTry(o)
-        console.log("HOPE TGIS WORKSSS : ,", o)
         return o
     },[])
+
     const placeHolder = (r:any) => {
         if(props.try === undefined || r === '' || props.try[0][r] === undefined) {
             return ""
         }
-        //console.log("this is not ojohn doe : ", props.try)
+
         return props.try[0][r][0]
     }
 
-
+    //superTest(props.sender, r, setReloader, reloader).then(() => )
     return (
         <>
             <div data-testid="messages" className="min-w-full border rounded lg:grid lg:grid-cols-3">
@@ -163,8 +141,7 @@ const MessagePage: FC<Props> = (props) => {
                     <ul className="overflow-auto h-[32rem]">
                         <h2 className="my-2 mb-2 ml-2 text-lg text-gray-600">Chats</h2>
                         <li>
-                            {console.log("does this even workk??, ", props.try)}
-                            {props.receivers.map((r) => <Chats receiver={placeHolder(r)} showFunction={() => superTest(props.sender, r, setReloader, reloader).then(() => showMessages(r))}/>)}
+                            {props.receivers.map((r) => <Chats receiver={placeHolder(r)} showFunction={() => showMessages(r)}/>)}
                         </li>
                     </ul>
                 </div>

@@ -1,9 +1,7 @@
 import {getAuth} from 'firebase/auth';
-import {collection, doc, getDoc, getDocs, addDoc, Timestamp, setDoc} from 'firebase/firestore';
+import {addDoc, collection, doc, getDoc, getDocs, setDoc, Timestamp} from 'firebase/firestore';
 import {db} from '../../services/firebaseconfig';
 import {firestore} from "firebase-admin";
-import firebase from "firebase/compat";
-import {data} from "autoprefixer";
 import {useCollectionData} from "react-firebase-hooks/firestore";
 
 
@@ -86,20 +84,17 @@ const getReceivers = async (receiverIds: Array<string>) => {
 
 
 const tt = async () => {
-    //const receiverArr: {}[] = {}
     const user: any = await getAuth().currentUser?.uid
-    //await new Promise(r => setTimeout(r, 3000));
-    console.log("This user bro : ", user)
     const receiverIds: any = await getReceiversUID(user)
-    console.log("all them ids : ", receiverIds)
     const receiverArr: any = {}
+
     for (let index = 0; index < receiverIds.length; index++) {
         //let receiver = {uid: receiverIds[index], ...(await getNameByUID(receiverIds[index]))}
         //receiverArr.push({uid: receiverIds[index], ...(await getNameByUID(receiverIds[index]))})
         //console.log("THIS SHOULD BE NAMESSSSSSS : , ", await getNameByUID((receiverIds[index])))
         receiverArr[receiverIds[index]] = (await getNameByUID(receiverIds[index]))
     }
-    console.log("this empty?? : ", receiverArr)
+
     return [receiverArr]
 }
 
@@ -115,16 +110,8 @@ const another_tt = async (receiverIds: any) => {
 }
 
 const superTest = async (sender: string, rec: string, setLoad: Function, load: string) => {
-    //console.log("this is sender : ", sender)
-    //console.log("this is rec : ", rec)
     const huso = await recMes(sender, rec)
-    const y = (sortByTimestamp(await idToMessageMapper(huso, sender, rec)))
-    //console.log("lezzz seee whattaa happens:", y)
-    //setShow(!show)
-    //setLoad("Okey")
-    //setLoad("")
-    //setRec(rec)
-    return y
+    return (sortByTimestamp(await idToMessageMapper(huso, sender, rec)))
 }
 
 const getNameByUID = async (uid: string) => {
@@ -147,19 +134,14 @@ const getNameByUID = async (uid: string) => {
 
 const idToMessageMapper = async (l: any, uidSender: string, uidRec: string) => {
     let m: any = []
-    //const mRef = collection(db, `Chat_log/${uidSender}_${uidRec}/Messages`)
-    console.log("WTHIHI WE TRTY THIS : ", l)
+
     if (l !== undefined) {
         const mRef = l[0]
         for (let i = 1; i < l.length; i++) {
             m.push(await readSingleDoc(doc(mRef, l[i])))
         }
     }
-    /*l.map(async (t:any) =>{
-        console.log(t)
-        const ok = getDoc(doc(mRef, t))
-        m.push(ok)
-    })*/
+
     return m
 }
 
@@ -172,10 +154,6 @@ const checkIfDocExists = async (messagesRef: any) => {
 const recMes = async (uidSender: string, uidRec: string) => {
     let messagesRef = collection(db, `Chat_log/${uidSender}_${uidRec}/Messages`)
     let mrefu = collection(db, `Chat_log/${uidRec}_${uidSender}/Messages`)
-
-    /*const docExistence = await getDocs(messagesRef).then((s) => {
-        return s.docs.length !== 0
-    })*/
 
     if (!await checkIfDocExists(messagesRef)) {
         messagesRef = mrefu
@@ -227,22 +205,6 @@ const receiveMessages = async (uid: string) => {
         })
 }
 
-/*const checkIfConvoExists = async (uidSender: any, uidRec: any) => {
-    const messagesRef = collection(db, `Chat_log`)
-    const docRef = doc(messagesRef, `${uidSender}_${uidRec}`)
-    const secondDocRef = doc(messagesRef, `${uidRec}_${uidSender}`)
-    const docSnap = await getDoc(docRef)
-    const secondDocSnap = await getDoc(secondDocRef)
-
-    if (docSnap.exists()) {
-        return true
-    } else if (secondDocSnap.exists()) {
-        return true
-    } else{
-        return false
-    }
-
-}*/
 
 const startMessaging = async (uidSender: any, uidRec: any) => {
     uidSender = await getAuth().currentUser?.uid
@@ -262,8 +224,7 @@ const startMessaging = async (uidSender: any, uidRec: any) => {
             sentBy: uidSender,
             timestamp: Timestamp.now()
         })*/
-        const ok = await setDoc(doc(db, 'Chat_log', `${uidSender}_${uidRec}`), {})
-        return ok
+        return await setDoc(doc(db, 'Chat_log', `${uidSender}_${uidRec}`), {})
     }
 
 
@@ -275,54 +236,23 @@ const sendMessage = async (e: React.FormEvent, setFormValue: Function, formValue
 
     const user = getAuth().currentUser?.uid;
 
-
-    //console.log("TESTING REAL HARD : ", huso)
-    //console.log("EYY OYOO ID shit : ", sortByTimestamp(await idToMessageMapper(huso)))
-    ///console.log()
-
     let mRef = collection(db, `Chat_log/${uidSender}_${uidRec}/Messages`)
     if (!await checkIfDocExists(mRef)) {
         mRef = collection(db, `Chat_log/${uidRec}_${uidSender}/Messages`)
     }
-    const nameRef = collection(db, 'Users')
-    const d = doc(mRef, `${uidSender}_${uidRec}?`)
-    const name = doc(nameRef, `${user}`)
-    let firstName: any = await readSingleDoc(name)
+    //const nameRef = collection(db, 'Users')
+    //const d = doc(mRef, `${uidSender}_${uidRec}?`)
+    //const name = doc(nameRef, `${user}`)
+    //let firstName: any = await readSingleDoc(name)
 
-    /*await addDoc(doc(db, "Chat_log/Userid1_Userid2/Messages", "o"), {
-        content: "Los Angeles",
-        sentBy: "ok",
-        timestamp: Timestamp.now()
-    });*/
-
-    //console.log(formValue)
     const docRef = await addDoc(mRef, {
         content: formValue,
         sentBy: user,
         timestamp: Timestamp.now()
     })
 
-    console.log("this is test : ", docRef.id)
-    //const rname: any = await getReceiversUID('Userid2')
-    //console.log(rname)
-    //const tets = await getReceivers(['KtDtaldROMaQ93TBPCTjqTNs1rK2'])
-    //console.log(await getNameByUID('KtDtaldROMaQ93TBPCTjqTNs1rK2'))
-    //console.log("WE GUCCi? ", tets['KtDtaldROMaQ93TBPCTjqTNs1rK2'])
-    //console.log(await tt())
-    //readSingleDoc(d)
-    //getCollection(messageRef)
-    //let g: any = await readSingleDoc(d)
-    //let c: any = getColl(messageRef)
-
-
-    //const oker_doker = await getCollection(mRef)
-    //const kkk: any = await a
-    //console.log(kkk[0].id.split("_"))
-    //console.log("lets see cons oker doker :", oker_doker)
-    const huso = await recMes(uidSender, uidRec)
-    getMessages(sortByTimestamp(await idToMessageMapper(huso, uidSender, uidRec)))
-    setReloader('')
-    setReloader(loader)
+    //setReloader('')
+    //setReloader(loader)
 }
 
 export {

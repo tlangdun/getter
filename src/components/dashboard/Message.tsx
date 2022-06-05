@@ -63,34 +63,23 @@ const SingleMessage: FC<PropSingleMessage> = (props) => {
 }
 
 const Messages: FC<PropsMessages> = (props) => {
-
-    //let l = [1,1,1,1,1,1,1,1,1]
-    //console.log("ZEEEE MESSAGES :",props.messages)
-    //const [m, mset] = useState<any>(["not working at all"])
     let [t]:any = useCollectionData(collection(db, `/Chat_log/${props.sender}_${props.receiver}/Messages`)) //
     let [supT]:any = useCollectionData(collection(db, `/Chat_log/${props.receiver}_${props.sender}/Messages`))
 
     function orderByTime(){
         if(t !== undefined && supT !== undefined){
             t = (sortByTimestamp(t))
-
             supT = (sortByTimestamp(supT))
-            console.log(" OHHHHHHHHHHHHHHHHH LOAAAAAAAAAAAAAAAAARD : ", supT)
+
             return true
         }
     }
 
-    useEffect( () => {
-        //db -> load
-        /*getColl("pl").then((l) =>{
-            mset(l)
-            console.log("this is daa real LLLLL------------")
-        })*/
-    }, [])
+    /*useEffect( () => {
+    }, [])*/
 
     return (
         <>
-            {console.log("WHAT DO YOU DOOOOOOOOOO : ", supT)}
             <ul className="space-y-2" id={props.receiver.toString()} title={props.loader}>
                 {supT && orderByTime() && supT.map((m: any) => <SingleMessage message={m.content} sender={props.sender} sendBy={m.sentBy}/>)}
                 {t && orderByTime() && t.map((m: any) => <SingleMessage message={m.content} sender={props.sender} sendBy={m.sentBy}/>)}

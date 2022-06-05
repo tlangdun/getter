@@ -41,10 +41,7 @@ const MessageLoader: FC = () => {
             setUser(u)
             setAllReceivers(await getReceiversUID(u))
             setT(await tt())
-            console.log("this should actually work????",await tt())
-            setMessages(sortByTimestamp(await idToMessageMapper(await recMes(user, receiver), user, receiver)))
-            //console.log("so you really only rend once?")
-            //setRec(await tt())
+            //setMessages(sortByTimestamp(await idToMessageMapper(await recMes(user, receiver), user, receiver)))
         }
         fetchRec()
             .catch(console.error)
@@ -57,7 +54,6 @@ const MessageLoader: FC = () => {
         if (uid !== undefined && uid !== receiver) {
             startMessaging(user, uid).then((r) => {
                 setReceiver(uid)
-                console.log("test works fine ", r)
             })
             //alert("add " + uid + " to db")
         }
