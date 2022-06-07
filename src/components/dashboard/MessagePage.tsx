@@ -76,7 +76,7 @@ const MessagePage: FC<Props> = (props) => {
                     <ul className="overflow-auto h-[32rem]">
                         <h2 className="my-2 mb-2 ml-2 text-lg text-gray-600">Chats</h2>
                         <li>
-                            {props.receivers.map((r) => <Chats receiver={mapIdToName(r)}
+                            {props.receivers.map((r) => <Chats key={r} receiver={mapIdToName(r)}
                                                                showFunction={() => showMessages(r)}/>)}
                         </li>
                     </ul>

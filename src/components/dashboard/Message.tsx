@@ -74,15 +74,14 @@ const Messages: FC<PropsMessages> = (props) => {
         <>
             <ul className="space-y-2" id={props.receiver.toString()}>
                 {snapshotReceiverSender && orderByTime() && snapshotReceiverSender.map((m: any) => <SingleMessage
-                    message={m.content} sender={props.sender}
+                    key={m.timestamp} message={m.content} sender={props.sender}
                     sentBy={m.sentBy}/>)}
                 {snapshotSenderReceiver && orderByTime() && snapshotSenderReceiver.map((m: any) => <SingleMessage
-                    message={m.content} sender={props.sender}
+                    key={m.timestamp} message={m.content} sender={props.sender}
                     sentBy={m.sentBy}/>)}
             </ul>
         </>
     )
 }
-
 
 export {Chats, Messages}
