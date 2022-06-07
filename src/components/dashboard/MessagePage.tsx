@@ -1,15 +1,9 @@
-import {FC, FormEvent, useEffect, useState} from 'react';
+import {FC, useState} from 'react';
 import {List} from "reselect/es/types";
 import {Chats, Messages} from "./Message";
 import {
-    getNameByUID,
-    getReceiversUID,
-    idToMessageMapper, recMes,
-    sendMessage,
-    sortByTimestamp, superTest, tt,
+    sendMessage
 } from "../../helpers/chatFunctions/chatComFunctions";
-import {user} from "firebase-functions/lib/providers/auth";
-import {Simulate} from "react-dom/test-utils";
 
 
 interface Props {
@@ -17,39 +11,20 @@ interface Props {
     currentRec: string;
     setCurrentRec: Function;
     receivers: List;
-    try: any;
-    messages: List;
-    getMessages: Function;
+    idToNameMap: any;
 }
 
 interface MessageButtonProps {
     sender: string
     rec: string
-    reloader: any
-    setReloaderFunction: Function
-    setMessages: Function
 }
 
-/*const sendMessage = async (e:FormEvent) => {
-        e.preventDefault()
-        console.log("works so far")
-
-<svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-gray-500" fill="none"
-                         viewBox="0 0 24 24"
-                         stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
-                              d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"/>
-                    </svg>
-
-                    THIS IS ATTACH BUTTON!
-
-    }*/
 const MessageButton: FC<MessageButtonProps> = (props) => {
     const [formValue, setFormValue] = useState<string>()
 
     return (
         <form
-            onSubmit={(e) => sendMessage(e, setFormValue, formValue, props.reloader, props.setReloaderFunction, props.setMessages, props.sender, props.rec)}>
+            onSubmit={(e) => sendMessage(e, setFormValue, formValue, props.sender, props.rec)}>
             <div className="flex items-center justify-between w-full p-3 border-t border-gray-300">
                 <button>
 
@@ -72,67 +47,27 @@ const MessageButton: FC<MessageButtonProps> = (props) => {
     )
 }
 
-const ChatSearchBar: FC = () => {
-    return (
-        <div className="mx-3 my-3">
-            <div className="relative text-gray-600">
-              <span className="absolute inset-y-0 left-0 flex items-center pl-2">
-                <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
-                     viewBox="0 0 24 24" className="w-6 h-6 text-gray-300">
-                  <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                </svg>
-              </span>
-                <input type="search" className="block w-full py-2 pl-10 bg-gray-100 rounded outline-none"
-                       name="search"
-                       placeholder="Search" required/>
-            </div>
-        </div>
-    )
-}
-
 const MessagePage: FC<Props> = (props) => {
     const [show, setShow] = useState<boolean>(false)
     const [receiver, setReceiver] = useState<any>("")
-    const [formValue, setFormValue] = useState<any>()
-    const [reloader, setReloader] = useState<any>()
-    const [anotherTry, setAnotherTry] = useState<any>()
-
-    //const[messages, setMessages] = useState<any>([])
 
     function showMessages(rec: String) {
-        /*tt().then((o) =>{
-            setAnotherTry(o)
-        })*/
         setShow(!show)
         if (rec !== receiver) {
             setShow(true)
         }
         setReceiver(rec)
-        //setReloader("okey")
-        //setReloader("reloader")
         props.setCurrentRec(rec)
     }
 
-    useEffect(() =>{
-        let o:any = {}
-        props.receivers.map((r) => {
-            getNameByUID(r).then(c => {
-                o[r] = c
-            })
-        })
-        setAnotherTry(o)
-        return o
-    },[])
-
-    const placeHolder = (r:any) => {
-        if(props.try === undefined || r === '' || props.try[0][r] === undefined) {
+    const mapIdToName = (r: any) => {
+        if (props.idToNameMap === undefined || r === '' || props.idToNameMap[0][r] === undefined) {
             return ""
         }
 
-        return props.try[0][r][0]
+        return props.idToNameMap[0][r][0]
     }
 
-    //superTest(props.sender, r, setReloader, reloader).then(() => )
     return (
         <>
             <div data-testid="messages" className="min-w-full border rounded lg:grid lg:grid-cols-3">
@@ -141,7 +76,8 @@ const MessagePage: FC<Props> = (props) => {
                     <ul className="overflow-auto h-[32rem]">
                         <h2 className="my-2 mb-2 ml-2 text-lg text-gray-600">Chats</h2>
                         <li>
-                            {props.receivers.map((r) => <Chats receiver={placeHolder(r)} showFunction={() => showMessages(r)}/>)}
+                            {props.receivers.map((r) => <Chats receiver={mapIdToName(r)}
+                                                               showFunction={() => showMessages(r)}/>)}
                         </li>
                     </ul>
                 </div>
@@ -152,19 +88,15 @@ const MessagePage: FC<Props> = (props) => {
                                 <img className="object-cover w-10 h-10 rounded-full"
                                      src="https://firebasestorage.googleapis.com/v0/b/getter-38760.appspot.com/o/profile-pictures%2Ficon-user-default.png?alt=media&token=4bbe716a-fc83-4005-b35b-fc2935c072d7"
                                      alt="username"/>
-                                <span className="block ml-2 font-bold text-gray-600">{placeHolder(receiver)}</span>
-                                <span className="absolute w-3 h-3 bg-green-600 rounded-full left-10 top-3"></span>
+                                <span className="block ml-2 font-bold text-gray-600">{mapIdToName(receiver)}</span>
                             </div>) : null}
                         <div className="relative w-full p-6 overflow-y-auto h-[40rem]">
                             {show ? (
-                                <Messages messages={[props.messages]} receiver={receiver} loader={reloader}
-                                          sender={props.sender}/>
+                                <Messages receiver={receiver} sender={props.sender}/>
                             ) : null}
                         </div>
                         {show ? (
-                            <MessageButton reloader={reloader} setReloaderFunction={setReloader}
-                                           setMessages={props.getMessages} sender={props.sender}
-                                           rec={receiver.toString()}/>) : null}
+                            <MessageButton sender={props.sender} rec={receiver.toString()}/>) : null}
                     </div>
                 </div>
             </div>

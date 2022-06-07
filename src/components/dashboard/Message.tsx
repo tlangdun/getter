@@ -1,6 +1,5 @@
-import React, {FC, useEffect, useState} from "react";
-import {List} from "reselect/es/types";
-import {getColl, sortByTimestamp} from "../../helpers/chatFunctions/chatComFunctions";
+import React, {FC} from "react";
+import {sortByTimestamp} from "../../helpers/chatFunctions/chatComFunctions";
 import {useCollectionData} from "react-firebase-hooks/firestore";
 import {collection} from "firebase/firestore";
 import {db} from "../../services/firebaseconfig";
@@ -13,13 +12,11 @@ interface PropsChats {
 interface PropsMessages {
     receiver: any;
     sender: any;
-    messages: List;
-    loader: string;
 }
 
 interface PropSingleMessage {
     sender: string;
-    sendBy: string;
+    sentBy: string;
     message: string;
 }
 
@@ -34,9 +31,7 @@ const Chats: FC<PropsChats> = (props) => {
                 <div className="w-full pb-2">
                     <div className="flex justify-between">
                         <span className="block ml-2 font-semibold text-gray-600">{props.receiver}</span>
-                        <span className="block ml-2 text-sm text-gray-600"></span>
                     </div>
-                    <span className="block ml-2 text-sm text-gray-600"></span>
                 </div>
             </a>
         </>
@@ -46,7 +41,7 @@ const Chats: FC<PropsChats> = (props) => {
 const SingleMessage: FC<PropSingleMessage> = (props) => {
 
     function checkIfSender() {
-        if (props.sender === props.sendBy)
+        if (props.sender === props.sentBy)
             return "flex justify-start"
         return "flex justify-end"
     }
@@ -63,26 +58,27 @@ const SingleMessage: FC<PropSingleMessage> = (props) => {
 }
 
 const Messages: FC<PropsMessages> = (props) => {
-    let [t]:any = useCollectionData(collection(db, `/Chat_log/${props.sender}_${props.receiver}/Messages`)) //
-    let [supT]:any = useCollectionData(collection(db, `/Chat_log/${props.receiver}_${props.sender}/Messages`))
+    let [snapshotSenderReceiver]: any = useCollectionData(collection(db, `/Chat_log/${props.sender}_${props.receiver}/Messages`)) //
+    let [snapshotReceiverSender]: any = useCollectionData(collection(db, `/Chat_log/${props.receiver}_${props.sender}/Messages`))
 
-    function orderByTime(){
-        if(t !== undefined && supT !== undefined){
-            t = (sortByTimestamp(t))
-            supT = (sortByTimestamp(supT))
+    function orderByTime() {
+        if (snapshotSenderReceiver !== undefined && snapshotReceiverSender !== undefined) {
+            snapshotSenderReceiver = (sortByTimestamp(snapshotSenderReceiver))
+            snapshotReceiverSender = (sortByTimestamp(snapshotReceiverSender))
 
             return true
         }
     }
 
-    /*useEffect( () => {
-    }, [])*/
-
     return (
         <>
-            <ul className="space-y-2" id={props.receiver.toString()} title={props.loader}>
-                {supT && orderByTime() && supT.map((m: any) => <SingleMessage message={m.content} sender={props.sender} sendBy={m.sentBy}/>)}
-                {t && orderByTime() && t.map((m: any) => <SingleMessage message={m.content} sender={props.sender} sendBy={m.sentBy}/>)}
+            <ul className="space-y-2" id={props.receiver.toString()}>
+                {snapshotReceiverSender && orderByTime() && snapshotReceiverSender.map((m: any) => <SingleMessage
+                    message={m.content} sender={props.sender}
+                    sentBy={m.sentBy}/>)}
+                {snapshotSenderReceiver && orderByTime() && snapshotSenderReceiver.map((m: any) => <SingleMessage
+                    message={m.content} sender={props.sender}
+                    sentBy={m.sentBy}/>)}
             </ul>
         </>
     )
