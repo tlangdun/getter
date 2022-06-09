@@ -8,7 +8,7 @@ import {routesDashboard, routesDashboardTalent} from '../../routes/dashboard/Rou
 import Recruiting from './Recruiting'
 import DashboardContent from './DashboardContent'
 import CandidateList from './CandidateList'
-import Message from './Message'
+import MessageLoader from './MessageLoader'
 import store from '../../store/store'
 import { Provider } from 'react-redux'
 import * as data from '../../queries/candidateListQuery'
@@ -112,7 +112,7 @@ describe('Dashboard recruiter',() => {
     render(
       wrapper(
         <Routes>
-          <Route path='*' element={<Dashboard content={<Message/>}/>} />
+          <Route path='*' element={<Dashboard content={<MessageLoader/>}/>} />
         </Routes>
       )
     )
