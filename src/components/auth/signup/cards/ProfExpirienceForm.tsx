@@ -85,7 +85,7 @@ const ProfExpirienceForm: FC<Props> = (props) => {
               id='current'
               name='current'
               type='checkbox'
-              className='focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded'
+              className='focus:ring-purple-500 h-4 w-4 text-purple-600 border-gray-300 rounded'
               onClick={props.unSetCurrent}
               checked
             />
@@ -94,7 +94,7 @@ const ProfExpirienceForm: FC<Props> = (props) => {
               id='current'
               name='current'
               type='checkbox'
-              className='focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded'
+              className='focus:ring-purple-500 h-4 w-4 text-purple-600 border-gray-300 rounded'
               onClick={props.setCurrent}
             />
           )}

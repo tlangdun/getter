@@ -21,7 +21,7 @@ const QueriesItem:FC<QueryProps> = ({names, deleteQuery}) => {
             data-testid='forward-button'
             type="button"
             onClick={() => console.log("hello")}
-            className="relative ml-0 p-0 items-center w-full h-full px-6 py-3 border border-transparent text-base font-medium rounded-r-lg text-indigo-700 bg-violet-200 hover:bg-violet-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            className="relative ml-0 p-0 items-center w-full h-full px-6 py-3 border border-transparent text-base font-medium rounded-r-lg text-purple-700 bg-violet-200 hover:bg-violet-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
           >
             {query.name}
           </button>

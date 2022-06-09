@@ -30,7 +30,7 @@ const NavBar: FC = () => {
           </Link>
         </div>
         <div className='-mr-2 -my-2 md:hidden'>
-          <Popover.Button className='bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500'>
+          <Popover.Button className='bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-purple-500'>
             <span className='sr-only'>Open menu</span>
             <MenuIcon className='h-6 w-6' aria-hidden='true' />
           </Popover.Button>
@@ -52,7 +52,7 @@ const NavBar: FC = () => {
           <Link
             data-testid="signup"
             to='auth/signup'
-            className='ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700'>
+            className='ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-purple-600 hover:bg-purple-700'>
             Sign up
           </Link>
         </div>
@@ -80,7 +80,7 @@ const NavBar: FC = () => {
                   />
                 </div>
                 <div className='-mr-2'>
-                  <Popover.Button className='bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500'>
+                  <Popover.Button className='bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-purple-500'>
                     <span className='sr-only'>Close menu</span>
                     <XIcon className='h-6 w-6' aria-hidden='true' />
                   </Popover.Button>
@@ -101,14 +101,14 @@ const NavBar: FC = () => {
               <div className='mt-6'>
                 <Link
                   to='auth/signup'
-                  className='w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700'>
+                  className='w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-purple-600 hover:bg-purple-700'>
                   Sign up
                 </Link>
                 <p className='mt-6 text-center text-base font-medium text-gray-500'>
                   Existing customer?{' '}
                   <Link
                     to='auth/login'
-                    className='text-indigo-600 hover:text-indigo-500'>
+                    className='text-purple-600 hover:text-purple-500'>
                     Sign in
                   </Link>
                 </p>

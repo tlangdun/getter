@@ -12,7 +12,7 @@ const LoginPage: FC = () => {
           Or{' '}
           <Link
             to={'/auth/signup'}
-            className='font-medium text-indigo-600 hover:text-indigo-500'>
+            className='font-medium text-purple-600 hover:text-purple-500'>
             sign up for an account
           </Link>
         </p>
