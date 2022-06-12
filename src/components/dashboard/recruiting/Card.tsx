@@ -1,5 +1,6 @@
 import { FC } from 'react';
-import { MailIcon,PlusSmIcon } from '@heroicons/react/solid'
+import { ChatIcon, MailIcon,PlusSmIcon } from '@heroicons/react/solid'
+import { Link } from 'react-router-dom';
 
 interface User { 
     uid: string;
@@ -25,19 +26,18 @@ interface User {
 }    
 interface Props {
     user:User;
+    event:Function;
 }
-function addToCandidatesList(id:string) {
-    alert("add " + id + "to candidate list")
-}
-const Card:FC<Props> = ({ user }) => {
+const Card:FC<Props> = ({ user,event }) => {
   return(
     <li
         data-testid={user.uid} className="col-span-1 relative selection:flex flex-col text-center bg-white rounded-lg shadow divide-y divide-gray-200"
     >
         <button
         type="button"
+        data-testid={"cbutton-"+user.uid}
         className="inline-flex absolute right-0 p-1 border border-transparent shadow-sm text-white bg-violet-500 hover:bg-violet-700 focus:outline-none"
-        onClick={() => addToCandidatesList(user.email)}
+        onClick={() => event(user.uid)}
         >
             <PlusSmIcon className="h-6 w-6" aria-hidden="true" />
         </button>
@@ -90,13 +90,13 @@ const Card:FC<Props> = ({ user }) => {
         <div>
         <div className="-mt-px flex divide-x divide-gray-200">
             <div className="w-0 flex-1 flex">
-            <a
-                href={`mailto:${user.email}`}
+            <Link
+                to={`/dashboard/messages/${user.uid}`}
                 className="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500"
             >
-                <MailIcon className="w-5 h-5 text-gray-400" aria-hidden="true" />
-                <span className="ml-3">Email</span>
-            </a>
+                <ChatIcon className="w-5 h-5 text-gray-400" aria-hidden="true" />
+                <span className="ml-3">Chat</span>
+            </Link>
             </div>
         </div>
         </div>

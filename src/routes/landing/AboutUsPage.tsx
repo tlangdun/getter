@@ -107,7 +107,7 @@ const AboutUsPage: FC = () => {
                       />
                       <div className='font-medium text-lg leading-6 space-y-1'>
                         <h3>{person.name}</h3>
-                        <p className='text-indigo-600'>{person.role}</p>
+                        <p className='text-purple-600'>{person.role}</p>
                         {person.linkedinUrl && <li>
                           <a
                             href={person.linkedinUrl}

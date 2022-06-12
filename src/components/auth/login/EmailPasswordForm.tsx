@@ -9,6 +9,7 @@ import { FC, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
 import { loginEmailPassword } from '../../../helpers/auth/authFunctions';
+import updateReduxUser from '../../../helpers/auth/updateReduxUser';
 import { auth } from '../../../services/firebaseconfig';
 import ErrorCard from '../ErrorCard';
 import FormInput from './FormInput';
@@ -42,7 +43,9 @@ const EmailPasswordForm: FC = () => {
       } else {
         setPersistence(auth, browserSessionPersistence);
       }
-      loginEmailPassword(email, password).catch((e) => {
+      loginEmailPassword(email, password).then(usrCred => {
+        updateReduxUser(usrCred.user.uid);
+      }).catch((e) => {
         setFirebaseError(e);
       });
     },
@@ -70,7 +73,7 @@ const EmailPasswordForm: FC = () => {
         />
 
         <FormInput
-          label='Password'
+          label='password'
           id='password'
           name='password'
           type='password'
@@ -110,6 +113,8 @@ const EmailPasswordForm: FC = () => {
           <button
             disabled={!isValid}
             type='submit'
+            id='submit'
+            name='submit'
             className='w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-violet-600 hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500'>
             Sign in
           </button>

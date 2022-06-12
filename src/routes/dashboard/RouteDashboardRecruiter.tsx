@@ -5,6 +5,24 @@ import {
   ChatIcon,
 } from '@heroicons/react/outline'
 
+const routesDashboardTalent = [
+  {
+    name: 'Dashboard',
+    href: '/dashboard',
+    routing: '/',
+    icon: HomeIcon,
+    current: true,
+  },
+  {
+    name: 'Messages', 
+    href: '/dashboard/messages', 
+    routing: '/messages',
+    icon: ChatIcon, 
+    current: false,
+  }
+];
+
+
 const routesDashboard = [
   {
     name: 'Dashboard',
@@ -43,4 +61,4 @@ const routesDashboard = [
   }
 ];
 
-export default routesDashboard;
+export {routesDashboard,routesDashboardTalent};
