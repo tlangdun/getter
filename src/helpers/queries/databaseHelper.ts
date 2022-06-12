@@ -71,7 +71,7 @@ export const updateRecruiterByUserId = async (recruiterForm: GetterUser): Promis
     if (!recruiterForm) return false;
 
     const docRef = doc(db, `Users/${recruiterForm?.uid}`);
-    const docSnap = await setDoc(docRef, recruiterForm);
+    await setDoc(docRef, recruiterForm);
     return true;
 }
 
@@ -194,7 +194,7 @@ export const getDocumentsByFilter = async (database:any, recruiterFilter: QueryF
 
             if (recruiterFilter.availability != null && data.availability !== undefined && data.availability < recruiterFilter.availability) continue;
 
-            // ToDo: not rly working right now!!! work_experience atm isch eifach öppis bruched iwie Jahre det drin
+            // ToDo: work_experience has to be changed to be filtered
             if (recruiterFilter.work_experience != null) continue;
 
             if(document.data())
