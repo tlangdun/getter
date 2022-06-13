@@ -38,8 +38,8 @@ const getReceiverIds = (senderId: string) => {
     return getDocs(messageRef)
         .then((snapshot) => {
             const receiverIds: { id: string }[] = []
-            snapshot.docs.forEach((doc: any) => {
-                const idArr = doc.id.split("_")
+            snapshot.docs.forEach((document: any) => {
+                const idArr = document.id.split("_")
                 if (idArr.includes(senderId)) {
                     idArr.forEach((element: any) => {
                         if (element !== senderId) {
@@ -63,8 +63,8 @@ const getIdToNameMap = async () => {
     const receiverIds: any = await getReceiverIds(user)
     const receiverArr: any = {}
 
-    for (let index = 0; index < receiverIds.length; index++) {
-        receiverArr[receiverIds[index]] = (await getNameById(receiverIds[index]))
+    for (let id of receiverIds) {
+        receiverArr[id] = await getNameById(id)
     }
 
     return [receiverArr]
@@ -108,10 +108,10 @@ const checkIfDocExists = async (reference: any) => {
  * Starts a conversation between two users. Checks if a chat log already exists,
  * if not, adds a collection for the conversation and a starting message.
  *
- * @param idSender is the id of the sender
  * @param idReceiver is the id of the receiver
  */
-const startMessaging = async (idSender: any, idReceiver: any) => {
+const startMessaging = async (idReceiver: any) => { //idSender: any,
+    let idSender = await getAuth().currentUser?.uid
     const messagesRef = collection(db, `Chat_log`)
     const docRef = doc(messagesRef, `${idSender}_${idReceiver}`)
     const secondDocRef = doc(messagesRef, `${idReceiver}_${idSender}`)
@@ -125,7 +125,7 @@ const startMessaging = async (idSender: any, idReceiver: any) => {
     } else {
         await setDoc(doc(db, 'Chat_log', `${idSender}_${idReceiver}`), {})
         const mRef = collection(db, `Chat_log/${idSender}_${idReceiver}/Messages`)
-        return await addDoc(mRef, {
+        return addDoc(mRef, {
             content: "Hello!",
             sentBy: idSender,
             timestamp: Timestamp.now()
