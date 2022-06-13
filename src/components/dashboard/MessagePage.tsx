@@ -51,7 +51,7 @@ const MessagePage: FC<Props> = (props) => {
     const [show, setShow] = useState<boolean>(false)
     const [receiver, setReceiver] = useState<any>("")
 
-    function showMessages(rec: String) {
+    function showMessages(rec: string) {
         setShow(!show)
         if (rec !== receiver) {
             setShow(true)

@@ -58,25 +58,20 @@ const SingleMessage: FC<PropSingleMessage> = (props) => {
 }
 
 const Messages: FC<PropsMessages> = (props) => {
-    let [snapshotSenderReceiver]: any = useCollectionData(collection(db, `/Chat_log/${props.sender}_${props.receiver}/Messages`)) //
+    let [snapshotSenderReceiver]: any = useCollectionData(collection(db, `/Chat_log/${props.sender}_${props.receiver}/Messages`))
     let [snapshotReceiverSender]: any = useCollectionData(collection(db, `/Chat_log/${props.receiver}_${props.sender}/Messages`))
 
-    function orderByTime() {
-        if (snapshotSenderReceiver !== undefined && snapshotReceiverSender !== undefined) {
-            snapshotSenderReceiver = (sortByTimestamp(snapshotSenderReceiver))
-            snapshotReceiverSender = (sortByTimestamp(snapshotReceiverSender))
-
-            return true
-        }
+    function orderSnapshotByTime(snapshot: any) {
+        return snapshot ? sortByTimestamp(snapshot) : []
     }
 
     return (
         <>
             <ul className="space-y-2" id={props.receiver.toString()}>
-                {snapshotReceiverSender && orderByTime() && snapshotReceiverSender.map((m: any) => <SingleMessage
+                {orderSnapshotByTime(snapshotSenderReceiver).map((m: any) => <SingleMessage
                     key={m.timestamp} message={m.content} sender={props.sender}
                     sentBy={m.sentBy}/>)}
-                {snapshotSenderReceiver && orderByTime() && snapshotSenderReceiver.map((m: any) => <SingleMessage
+                {orderSnapshotByTime(snapshotReceiverSender).map((m: any) => <SingleMessage
                     key={m.timestamp} message={m.content} sender={props.sender}
                     sentBy={m.sentBy}/>)}
             </ul>
