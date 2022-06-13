@@ -33,7 +33,7 @@ const MessageLoader: FC = () => {
 
     useEffect(() => {
         if (uid !== undefined && uid !== receiver) {
-            startMessaging(user, uid).then(() => {
+            startMessaging(uid).then(() => {
                 setReceiver(uid)
             })
         }

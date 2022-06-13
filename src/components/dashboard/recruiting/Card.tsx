@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { ChatIcon, MailIcon,PlusSmIcon } from '@heroicons/react/solid'
+import { ChatIcon,PlusSmIcon } from '@heroicons/react/solid'
 import { Link } from 'react-router-dom';
 
 interface User { 
