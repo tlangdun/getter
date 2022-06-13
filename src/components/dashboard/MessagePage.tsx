@@ -65,7 +65,7 @@ const MessagePage: FC<Props> = (props) => {
             return ""
         }
 
-        return props.idToNameMap[0][r][0]
+        return `${props.idToNameMap[0][r][0]} ${props.idToNameMap[0][r][1]}`
     }
 
     return (
