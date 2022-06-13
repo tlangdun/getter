@@ -42,7 +42,7 @@ const MessageLoader: FC = () => {
     return (
         <>
             <MessagePage sender={user} receivers={allReceivers} idToNameMap={idToNameMap}
-                         currentRec={receiver} setCurrentRec={setReceiver}/>
+                         currentRec={receiver}/>
         </>
     );
 }

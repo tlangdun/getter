@@ -9,7 +9,6 @@ import {
 interface Props {
     sender: string;
     currentRec: string;
-    setCurrentRec: Function;
     receivers: List;
     idToNameMap: any;
 }
@@ -57,7 +56,6 @@ const MessagePage: FC<Props> = (props) => {
             setShow(true)
         }
         setReceiver(rec)
-        props.setCurrentRec(rec)
     }
 
     const mapIdToName = (r: any) => {
