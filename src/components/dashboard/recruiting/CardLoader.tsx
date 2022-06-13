@@ -4,12 +4,12 @@ import { useAppSelector } from '../../../store/hooks'
 import { getDocumentsByFilter } from '../../../helpers/queries/databaseHelper';
 import { db } from '../../../services/firebaseconfig';
 import { GetterUser } from '../../../store/models/userModel';
+import {addCandidate} from "../../../queries/candidateListQuery";
 
 const CardLoader:FC = () => {
   const activeFilters = useAppSelector((state:any) => state.activeFilters);
   const loggedInUser = useAppSelector((state) => state.user.user);
 
-  const [users, updateUsers] = useState([])
   function addToCandidatesList(uid:string){
     addCandidate(loggedInUser,uid)
   }
