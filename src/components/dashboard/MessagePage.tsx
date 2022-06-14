@@ -24,7 +24,7 @@ const MessageButton: FC<MessageButtonProps> = (props) => {
     return (
         <form
             onSubmit={(e) => sendMessage(e, setFormValue, formValue, props.sender, props.rec)}>
-            <div className="flex items-center justify-between w-full p-3 border-t border-gray-300">
+            <div data-testid="sendButton" className="flex items-center justify-between w-full p-3 border-t border-gray-300">
                 <button>
 
                 </button>
