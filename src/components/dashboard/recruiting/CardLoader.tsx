@@ -3,7 +3,6 @@ import Card from './Card';
 import { useAppSelector } from '../../../store/hooks'
 import { getDocumentsByFilter } from '../../../helpers/queries/databaseHelper';
 import { db } from '../../../services/firebaseconfig';
-import { GetterUser } from '../../../store/models/userModel';
 import {addCandidate} from "../../../queries/candidateListQuery";
 
 const CardLoader:FC = () => {
@@ -16,19 +15,14 @@ const CardLoader:FC = () => {
   const [users, updateUsers] = useState(new Array())
   useEffect(()=>{
     let temp = Object.assign({}, activeFilters);
-    let filters = temp.activeFilter//Object.assign({},activeFilters.activeFilter)
-    console.log(filters)
+    let filters = temp.activeFilter
 
-
-    try {
-      //future api call when backend is ready
-      getDocumentsByFilter(db,filters).then((resultValue) => {
-        let candidates = resultValue
-        updateUsers(candidates)
-      })
-    } catch {
+    getDocumentsByFilter(db,filters).then((resultValue) => {
+      let candidates = resultValue
+      updateUsers(candidates)
+    }).catch(()=>{
       alert("error loading cards")
-    }
+    })
   },[activeFilters])
   return(
     <>
