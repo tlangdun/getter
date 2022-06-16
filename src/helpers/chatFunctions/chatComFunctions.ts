@@ -125,7 +125,11 @@ const startMessaging = async (idReceiver: any) => { //idSender: any,
     } else {
         await setDoc(doc(db, 'Chat_log', `${idSender}_${idReceiver}`), {})
         const mRef = collection(db, `Chat_log/${idSender}_${idReceiver}/Messages`)
-        return addDoc(mRef, {})
+        return addDoc(mRef, {
+            content: "Hello!",
+            sentBy: idSender,
+            timestamp: Timestamp.now()
+        })
     }
 }
 /**
