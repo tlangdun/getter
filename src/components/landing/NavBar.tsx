@@ -1,5 +1,5 @@
-import { FC, Fragment } from 'react';
-import { Popover, Transition } from '@headlessui/react';
+import { FC } from 'react';
+import { Disclosure } from '@headlessui/react';
 import { MenuIcon, XIcon } from '@heroicons/react/outline';
 import { Link } from 'react-router-dom';
 
@@ -17,33 +17,41 @@ const navItems: NavItem[] = [
 
 const NavBar: FC = () => {
   return (
-    <Popover className='relative bg-white'>
-      <div className='flex justify-between items-center px-4 py-6 sm:px-6 md:justify-start md:space-x-10'>
-        <div className='flex justify-start lg:w-0 lg:flex-1'>
-          <Link to='/'>
-            <span className='sr-only'>Getter</span>
-            <img
+
+    <Disclosure as="nav" className="bg-white shadow">
+      {({ open }) => (
+        <>
+          <div className=" mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between h-16">
+              <div className="flex">
+                <div className="-ml-2 mr-2 flex items-center md:hidden">
+                  <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+                    <span className="sr-only">Open main menu</span>
+                    {open ? (
+                      <XIcon className="block h-6 w-6" aria-hidden="true" />
+                    ) : (
+                      <MenuIcon className="block h-6 w-6" aria-hidden="true" />
+                    )}
+                  </Disclosure.Button>
+                </div>
+                <div className="flex-shrink-0 flex items-center">
+                  <img
               className='h-8 w-auto sm:h-10'
               src='https://firebasestorage.googleapis.com/v0/b/getter-38760.appspot.com/o/getter%2FLogo%20Transparency.png?alt=media&token=36133b90-884e-4bc9-bcdf-5ad6a5e334ae'
               alt=''
             />
-          </Link>
-        </div>
-        <div className='-mr-2 -my-2 md:hidden'>
-          <Popover.Button className='bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500'>
-            <span className='sr-only'>Open menu</span>
-            <MenuIcon className='h-6 w-6' aria-hidden='true' />
-          </Popover.Button>
-        </div>
-        <Popover.Group as='nav' className='hidden md:flex space-x-10'>
-          {navItems.map((i) => (
-            <Link data-testid={i.testid} to={i.link} key={i.displayName}>
+                </div>
+                <div className="hidden md:ml-6 md:flex md:space-x-8">
+                  {navItems.map((i) => (
+            <Link className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 text-sm font-medium" data-testid={i.testid} to={i.link} key={i.displayName}>
               {i.displayName}
             </Link>
           ))}
-          <Link to=''></Link>
-        </Popover.Group>
-        <div className='hidden md:flex items-center justify-end md:flex-1 lg:w-0'>
+                </div>
+              </div>
+              <div className="flex items-center">
+                <div className="hidden md:ml-4 md:flex-shrink-0 md:flex md:items-center">
+
           <Link
             to='auth/login'
             className='whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900'>
@@ -55,69 +63,35 @@ const NavBar: FC = () => {
             className='ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700'>
             Sign up
           </Link>
-        </div>
-      </div>
 
-      <Transition
-        as={Fragment}
-        enter='duration-200 ease-out'
-        enterFrom='opacity-0 scale-95'
-        enterTo='opacity-100 scale-100'
-        leave='duration-100 ease-in'
-        leaveFrom='opacity-100 scale-100'
-        leaveTo='opacity-0 scale-95'>
-        <Popover.Panel
-          focus
-          className='absolute top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden'>
-          <div className='rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-white divide-y-2 divide-gray-50'>
-            <div className='pt-5 pb-6 px-5'>
-              <div className='flex items-center justify-between'>
-                <div>
-                  <img
-                    className='h-8 w-auto'
-                    src='https://firebasestorage.googleapis.com/v0/b/getter-38760.appspot.com/o/getter%2FLogo%20Transparency2.png?alt=media&token=76aea186-61e4-4e07-bb17-56ca3a705516'
-                    alt='Workflow'
-                  />
                 </div>
-                <div className='-mr-2'>
-                  <Popover.Button className='bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500'>
-                    <span className='sr-only'>Close menu</span>
-                    <XIcon className='h-6 w-6' aria-hidden='true' />
-                  </Popover.Button>
-                </div>
-              </div>
-              <div className='mt-6'>
-                <nav className='grid grid-cols-1 gap-7'></nav>
-              </div>
-            </div>
-            <div className='py-6 px-5'>
-              <div className='grid grid-cols-2 gap-4'>
-                {navItems.map((i) => (
-                  <Link data-testid={i.testid} to={i.link} key={i.displayName}>
-                    {i.displayName}
-                  </Link>
-                ))}
-              </div>
-              <div className='mt-6'>
-                <Link
-                  to='auth/signup'
-                  className='w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700'>
-                  Sign up
-                </Link>
-                <p className='mt-6 text-center text-base font-medium text-gray-500'>
-                  Existing customer?{' '}
-                  <Link
-                    to='auth/login'
-                    className='text-indigo-600 hover:text-indigo-500'>
-                    Sign in
-                  </Link>
-                </p>
               </div>
             </div>
           </div>
-        </Popover.Panel>
-      </Transition>
-    </Popover>
+
+          <Disclosure.Panel className="md:hidden">
+            <div className="pt-2 pb-3 space-y-1">
+              {navItems.map((i) => (
+            <Link className="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium sm:pl-5 sm:pr-6" data-testid={i.testid} to={i.link} key={i.displayName}>
+              {i.displayName}
+            </Link>
+          ))}
+            </div>
+            <div className="pt-3 pb-3 border-t border-gray-200">
+              <div className="space-y-1">
+              <Link className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100 sm:px-6"to="auth/signup">
+              Sign up
+            </Link>
+            <Link className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100 sm:px-6"to="auth/login">
+              Sign in
+            </Link>
+              </div>
+            </div>
+          </Disclosure.Panel>
+        </>
+      )}
+    </Disclosure>
+
   );
 };
 
