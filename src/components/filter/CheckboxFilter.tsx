@@ -7,7 +7,7 @@ interface Props {
     name:string;
 }
 const CheckboxFilter:FC<Props> = (props) => {
-  let id = props.name.replace(/\s+/g, '').toLowerCase()
+  let id = props.name
   return(
     <fieldset className='max-h-44 overflow-y-auto p-2'>
         <legend className="block font-medium">{props.name}</legend>
@@ -19,7 +19,7 @@ const CheckboxFilter:FC<Props> = (props) => {
                 id={`${id}-${optionIdx}`}
                 data-testid={`${id}-${optionIdx}`}
                 name={id +"[]"}
-                defaultValue={option.value}
+                defaultValue={option.label}
                 type="checkbox"
                 className="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-violet-600 focus:ring-violet-700"
                 defaultChecked={option.checked}

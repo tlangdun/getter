@@ -1,4 +1,4 @@
-import {render, screen, act, waitFor} from '@testing-library/react'
+import {render, screen, act} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import {Route,Routes, BrowserRouter} from 'react-router-dom'
 import Dashboard from './Dashboard'
@@ -13,6 +13,7 @@ import store from '../../store/store'
 import { Provider } from 'react-redux'
 import * as data from '../../queries/candidateListQuery'
 import * as dataHook from '../../store/hooks';
+import * as dataFilter from '../../helpers/queries/databaseHelper';
 
 let testUser = {
   "uid": "KtDtaldROMaQ93TBPCTjqTNs1rK2",
@@ -56,7 +57,7 @@ let testUser = {
 describe('Dashboard recruiter',() => {
   
   test('recruiter menu gets shown in dashboard', async () => {
-    
+    const mock = jest.spyOn(dataFilter, "getDocumentsByFilter").mockResolvedValue([testUser]);
     render(
       wrapper(
       <Routes>
@@ -64,11 +65,12 @@ describe('Dashboard recruiter',() => {
       </Routes>
       )
     )
-    await waitFor(()=>{
+    act(()=>{
       routesDashboard.forEach(nav => {
           expect(screen.getByText(nav.name)).toBeInTheDocument()
       })
     })
+    mock.mockClear()
   })
 
   test('routing dashboard menu content', () => {
@@ -83,6 +85,7 @@ describe('Dashboard recruiter',() => {
   })
 
   test('show recruiting page', async () => {
+    const mock = jest.spyOn(dataFilter, "getDocumentsByFilter").mockResolvedValue([testUser]);
     render(
       wrapper(
         <Routes>
@@ -90,9 +93,10 @@ describe('Dashboard recruiter',() => {
         </Routes>
       )
     )
-    await waitFor(()=>{
+    act(()=>{
       expect(screen.getByTestId("recruiting")).toBeInTheDocument()
     })
+    mock.mockClear()
   })
 
   test('show candidates list page', async () => {
@@ -104,7 +108,9 @@ describe('Dashboard recruiter',() => {
         </Routes>
       )
     )
-    expect(await screen.findByTestId("candidates-list")).toBeInTheDocument()
+    act(()=>{
+      expect(screen.getByTestId("candidates-list")).toBeInTheDocument()
+    })
     mock.mockClear()
   })
 
@@ -123,6 +129,7 @@ describe('Dashboard recruiter',() => {
 describe('Dashboard talent',() => {
   
   test('talent menu gets shown in dashboard', async () => {
+    const mockCardLoader = jest.spyOn(dataFilter, "getDocumentsByFilter").mockResolvedValue([testUser]);
     const mock = jest.spyOn(dataHook, 'useAppSelector')
     mock.mockReturnValue(testUser)
     render(
@@ -132,11 +139,12 @@ describe('Dashboard talent',() => {
       </Routes>
       )
     )
-    
-    routesDashboardTalent.forEach(nav => {
+    act(()=>{
+      routesDashboardTalent.forEach(nav => {
         expect(screen.getByText(nav.name)).toBeInTheDocument()
+      })
     })
-    
+    mockCardLoader.mockClear()
   })
 })
 

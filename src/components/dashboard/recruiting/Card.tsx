@@ -54,25 +54,36 @@ const Card:FC<Props> = ({ user,event }) => {
             <dd className="text-gray-500 text-sm pb-1">{user.short_bio}</dd>
             <dt className="sr-only">Salary Range</dt>
             <dd className="text-gray-500 text-sm pb-1">{user.salary_range.start} - {user.salary_range.end} $</dd>
-            <dt className="sr-only">Availability</dt>
-            <dd className="text-gray-500 text-sm pb-1">Availability:</dd>
-            <dd className="w-full bg-gray-200 rounded-full dark:bg-gray-700">
-            <div className="bg-violet-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"  style={{width: user.availability + "%", }}>{user.availability  + "%"}</div>
-            </dd>
+            {user.availability !== undefined?
+                <>
+                    <dt className="sr-only">Availability</dt>
+                    <dd className="text-gray-500 text-sm pb-1">Availability:</dd>
+                    <dd className="w-full bg-gray-200 rounded-full dark:bg-gray-700">
+                        <div className="bg-violet-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"  style={{width: user.availability + "%", }}>{user.availability  + "%"}</div>
+                    </dd>
+                </>
+
+                :<span></span>
+            }
         </dl>
-        <div className='pt-2'>
-        {user.skills.map((element) => {
-            return (
-            <span key={element} className="ml-1 flex-shrink-0 inline-block px-2 py-0.5 text-white text-xs font-medium bg-violet-500 rounded-full">
-            {element}
-            </span>)
-        })}
-        {user.programming_languages.map((element) => {
-            return (
-            <span key={element} className="ml-1 flex-shrink-0 inline-block px-2 py-0.5 text-white text-xs font-medium bg-green-700 rounded-full">
-            {element}
-            </span>)
-        })}
+        <div className='pt-2'>    
+        {user.skills !== undefined?
+            user.skills.map((element) => {
+                return (
+                <span key={element} className="ml-1 flex-shrink-0 inline-block px-2 py-0.5 text-white text-xs font-medium bg-violet-500 rounded-full">
+                {element}
+                </span>)
+            })
+            :<span></span>
+        }
+        {user.skills !== undefined?
+            user.programming_languages.map((element) => {
+                return (
+                <span key={element} className="ml-1 flex-shrink-0 inline-block px-2 py-0.5 text-white text-xs font-medium bg-green-700 rounded-full">
+                {element}
+                </span>)
+            })
+            :<span></span>}
         </div>
         
         </div>

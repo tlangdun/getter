@@ -1,5 +1,5 @@
 export type QueryFilter = {
-    availability: string | null; // 60 für 60%
+    availability: number | null; // 60 für 60%
     canton: string[] | null;
     country: string[] | null
     job_role: string[] | null;
