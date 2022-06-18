@@ -2,7 +2,7 @@ import {collection, doc, getDoc, getDocs, setDoc, where, query, orderBy, limit} 
 import {db} from '../../services/firebaseconfig';
 import {access_level, GetterUser} from '../../store/models/userModel';
 import {QueryFilter} from "../../store/models/queryModel";
-import {DocumentSnapshot, DocumentData} from "@firebase/firestore";
+import {DocumentSnapshot, DocumentData, QueryConstraint} from "@firebase/firestore";
 
 export const getRecruiterByUserId = async (database:any, userId: string): Promise<GetterUser> => {
     const docRef = doc(database, 'Recruiters', userId)
@@ -136,6 +136,47 @@ async function filterBySkills(recruiterFilter: QueryFilter, database: any) {
     return skillsIdsCollection.reduce((a, b) => a.filter(c => b.includes(c)));
 }
 
+function intersectionOfIds(skillsIds: string[], spokenLanguagesIds: string[], programmingLanguagesIds: string[], jobRolesIds: string[], countriesIds: string[], cantonsIds: string[]) {
+    let arrayOfIDArrays: string[][] = [];
+
+    if (skillsIds.length > 0) arrayOfIDArrays.push(skillsIds);
+    if (spokenLanguagesIds.length > 0) arrayOfIDArrays.push(spokenLanguagesIds);
+    if (programmingLanguagesIds.length > 0) arrayOfIDArrays.push(programmingLanguagesIds);
+    if (jobRolesIds.length > 0) arrayOfIDArrays.push(jobRolesIds);
+    if (countriesIds.length > 0) arrayOfIDArrays.push(countriesIds);
+    if (cantonsIds.length > 0) arrayOfIDArrays.push(cantonsIds);
+
+    return arrayOfIDArrays.reduce((a, b) => a.filter(c => b.includes(c)));
+}
+
+async function getDocumentsByIds(intersectionIDs: string[], database: any, recruiterFilter: QueryFilter, listDocs: DocumentSnapshot[]) {
+    for (let i = 0; i < intersectionIDs.length; i++) {
+        let document: DocumentSnapshot = await getDoc(doc(database, `Users/${intersectionIDs[i]}`));
+
+        const data = document.data();
+        if (!data) continue;
+
+        if (recruiterFilter.availability != null && data.availability !== undefined && data.availability < recruiterFilter.availability) continue;
+
+        if (recruiterFilter.work_experience != null) continue;
+
+        if (document.data())
+            listDocs.push(document);
+    }
+}
+
+function filterByAvailability(recruiterFilter: QueryFilter, filtersSet: boolean, queryFilters: any[]) {
+    if (recruiterFilter.availability != null && recruiterFilter.availability > 0) {
+        filtersSet = true;
+        queryFilters.push(where('availability', '>=', recruiterFilter.availability),)
+    }
+    if (recruiterFilter.work_experience != null) {
+        filtersSet = true;
+        queryFilters.push(where('work_experience', '>=', recruiterFilter.work_experience),)
+    }
+    return filtersSet;
+}
+
 export const getDocumentsByFilter = async (database:any, recruiterFilter: QueryFilter): Promise<GetterUser[]> => {
     let skillsIds:string[] = []
     let spokenLanguagesIds:string[] = []
@@ -143,6 +184,7 @@ export const getDocumentsByFilter = async (database:any, recruiterFilter: QueryF
     let jobRolesIds:string[] = []
     let countriesIds:string[] = []
     let cantonsIds:string[] = []
+
     let filtersSet:boolean = false;
     const returnList: Array<GetterUser> = [];
 
@@ -185,68 +227,33 @@ export const getDocumentsByFilter = async (database:any, recruiterFilter: QueryF
         if(cantonsIds.length==0)return [];
     }
 
-    // get intersection from all ID's
-    let arrayOfIDArrays:string[][] = [];
-    if(skillsIds.length > 0)arrayOfIDArrays.push(skillsIds);
-    if(spokenLanguagesIds.length > 0)arrayOfIDArrays.push(spokenLanguagesIds);
-    if(programmingLanguagesIds.length > 0)arrayOfIDArrays.push(programmingLanguagesIds);
-    if(jobRolesIds.length > 0)arrayOfIDArrays.push(jobRolesIds);
-    if(countriesIds.length > 0)arrayOfIDArrays.push(countriesIds);
-    if(cantonsIds.length > 0)arrayOfIDArrays.push(cantonsIds);
-
-    if(arrayOfIDArrays.length == 0 && filtersSet) return [];
-
     // Get all Documents from ID List
     let listDocs:DocumentSnapshot[] = [];
     if(filtersSet){
-        let intersectionIDs = arrayOfIDArrays.reduce((a, b) => a.filter(c => b.includes(c)));
-
-        for(let i = 0; i < intersectionIDs.length; i++){
-            let document:DocumentSnapshot = await getDoc(doc(database, `Users/${intersectionIDs[i]}`));
-
-
-            const data = document.data();
-            if (!data) continue;
-
-            if (recruiterFilter.availability != null && data.availability !== undefined && data.availability < recruiterFilter.availability) continue;
-
-            // ToDo: work_experience has to be changed to be filtered
-            if (recruiterFilter.work_experience != null) continue;
-
-            if(document.data())
-            listDocs.push(document);
-        }
+        let intersectionIDs = intersectionOfIds(skillsIds, spokenLanguagesIds, programmingLanguagesIds, jobRolesIds, countriesIds, cantonsIds);
+        if(intersectionIDs.length == 0) return [];
+        await getDocumentsByIds(intersectionIDs, database, recruiterFilter, listDocs);
     }
     else{
+        let queryFilters: QueryConstraint[] = []
+        filtersSet = filterByAvailability(recruiterFilter, filtersSet, queryFilters);
+
         const ref = collection(db, 'Users');
-        const queryFilters = []
+        let qResult = query(ref, ...queryFilters);
 
-        if (recruiterFilter.availability != null && recruiterFilter.availability  > 0){
-            console.log("availability set");
-            filtersSet = true;
-            queryFilters.push(where('availability', '>=', recruiterFilter.availability),)
-            console.log(recruiterFilter.availability)
+        if(filtersSet && queryFilters.length == 0){
+            return [];
         }
-        if (recruiterFilter.work_experience != null){
-            console.log("work_experience set");
-            filtersSet = true;
-            queryFilters.push(where('work_experience', '>=', recruiterFilter.work_experience),)
+        else if(!filtersSet) {
+            qResult = query(ref, orderBy("first_name", "desc"), limit(8));
         }
-
-        const qResult = query(ref, ...queryFilters);
 
         await getDocs(qResult).then(res => res.docs
             .map(documentSnapshot => documentSnapshot)
             .forEach(r => returnList.push(mapDataToGetterUser(r.id, r.data())))
         );
+
         return returnList;
-    }
-
-    if (!filtersSet){
-        const ref = collection(db, 'Users');
-
-        const qResult = query(ref, orderBy("first_name", "desc"), limit(8));
-        getDocs(qResult).then(res => {res.forEach(r => listDocs.push(r))});
     }
 
     listDocs.forEach(r => {
