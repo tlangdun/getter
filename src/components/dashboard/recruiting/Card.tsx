@@ -1,5 +1,6 @@
 import { FC } from 'react';
-import { MailIcon,PlusSmIcon } from '@heroicons/react/solid'
+import { ChatIcon,PlusSmIcon } from '@heroicons/react/solid'
+import { Link } from 'react-router-dom';
 
 interface User { 
     uid: string;
@@ -78,13 +79,13 @@ const Card:FC<Props> = ({ user,event }) => {
         <div>
         <div className="-mt-px flex divide-x divide-gray-200">
             <div className="w-0 flex-1 flex">
-            <a
-                href={`mailto:${user.email}`}
+            <Link
+                to={`/dashboard/messages/${user.uid}`}
                 className="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500"
             >
-                <MailIcon className="w-5 h-5 text-gray-400" aria-hidden="true" />
-                <span className="ml-3">Email</span>
-            </a>
+                <ChatIcon className="w-5 h-5 text-gray-400" aria-hidden="true" />
+                <span className="ml-3">Chat</span>
+            </Link>
             </div>
         </div>
         </div>

@@ -72,7 +72,7 @@ const SignupRecruiter = () => {
             Or{' '}
             <Link
               to={'/auth/login'}
-              className='font-medium text-indigo-600 hover:text-indigo-500'>
+              className='font-medium text-purple-600 hover:text-purple-500'>
               sign in to an existing account
             </Link>
           </p>

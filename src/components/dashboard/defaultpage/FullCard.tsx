@@ -23,7 +23,7 @@ const FullCard:FC<Props> = (props) => {
                 <h1 className="text-center text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
                 <span className="block text-white">{props.title}</span>
                 </h1>
-                <p className="mt-6 max-w-lg mx-auto text-center text-xl text-indigo-200 sm:max-w-3xl">
+                <p className="mt-6 max-w-lg mx-auto text-center text-xl text-purple-200 sm:max-w-3xl">
                 {props.text}
                 </p>
                 <div className="mt-10 max-w-sm mx-auto sm:max-w-none sm:flex sm:justify-center">
