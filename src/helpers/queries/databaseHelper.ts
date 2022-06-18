@@ -1,15 +1,8 @@
 import {collection, doc, getDoc, getDocs, setDoc, where, query, orderBy, limit} from 'firebase/firestore';
-import {db, storage} from '../../services/firebaseconfig';
-import {access_level, GetterUser, WorkExperience} from '../../store/models/userModel';
+import {db} from '../../services/firebaseconfig';
+import {access_level, GetterUser} from '../../store/models/userModel';
 import {QueryFilter} from "../../store/models/queryModel";
-import {DocumentSnapshot} from "@firebase/firestore";
-import {DocumentData} from "@firebase/firestore";
-
-// ToDo:
-// Already Done by Martin:
-// fileToStorage - For picture uploads z.B. in Storage
-// updateFirebaseUser
-// updateReduxUser -  nix mit DB zu tun
+import {DocumentSnapshot, DocumentData} from "@firebase/firestore";
 
 export const getRecruiterByUserId = async (database:any, userId: string): Promise<GetterUser> => {
     const docRef = doc(database, 'Recruiters', userId)
@@ -75,6 +68,74 @@ export const updateRecruiterByUserId = async (recruiterForm: GetterUser): Promis
     return true;
 }
 
+async function filterByCountry(recruiterFilter: QueryFilter, database: any) {
+    let filterCollection: string[][] = []
+
+    for (let i = 0; i < recruiterFilter.country!.length; i++) {
+        const docRef = collection(database, `Countries/${recruiterFilter.country![i]}/Users`);
+        const docSnap = (await getDocs(docRef)).docs.map((d) => d.id);
+        filterCollection.push(docSnap)
+    }
+
+    return filterCollection.reduce((a, b) => a.filter(c => b.includes(c)));
+}
+
+async function filterByCanton(recruiterFilter: QueryFilter, database: any) {
+    let filterCollection: string[][] = []
+
+    for (let i = 0; i < recruiterFilter.canton!.length; i++) {
+        const docRef = collection(database, `Countries/${recruiterFilter.country![i]}/Region/${recruiterFilter.canton![i]}/Users`);
+        const docSnap = (await getDocs(docRef)).docs.map((d) => d.id);
+        filterCollection.push(docSnap)
+    }
+
+    return filterCollection.reduce((a, b) => a.filter(c => b.includes(c)));
+}
+
+async function filterByJobRole(recruiterFilter: QueryFilter, database: any) {
+    let filterCollection: string[][] = []
+
+    for (let i = 0; i < recruiterFilter.job_role!.length; i++) {
+        const docRef = collection(database, `Job_role/${recruiterFilter.job_role![i]}/Users`);
+        const docSnap = (await getDocs(docRef)).docs.map((d) => d.id);
+        filterCollection.push(docSnap)
+    }
+
+    return filterCollection.reduce((a, b) => a.filter(c => b.includes(c)));
+}
+
+async function filterByProgrammingLanguages(recruiterFilter: QueryFilter, database: any) {
+    let filterCollection: string[][] = []
+
+    for (let i = 0; i < recruiterFilter.programming_languages!.length; i++) {
+        const docRef = collection(database, `Programming_languages/${recruiterFilter.programming_languages![i]}/Users`);
+        const docSnap = (await getDocs(docRef)).docs.map((d) => d.id);
+        filterCollection.push(docSnap)
+    }
+    return filterCollection.reduce((a, b) => a.filter(c => b.includes(c)));
+}
+
+async function filterBySpokenLanguages(recruiterFilter: QueryFilter, database: any) {
+    let filterCollection: string[][] = []
+    for (let i = 0; i < recruiterFilter.spoken_languages!.length; i++) {
+        const docRef = collection(database, `Spoken_languages/${recruiterFilter.spoken_languages![i]}/Users`);
+        const docSnap = (await getDocs(docRef)).docs.map((d) => d.id);
+        filterCollection.push(docSnap)
+    }
+    return filterCollection.reduce((a, b) => a.filter(c => b.includes(c)));
+}
+
+async function filterBySkills(recruiterFilter: QueryFilter, database: any) {
+    let skillsIdsCollection: string[][] = []
+
+    for (let i = 0; i < recruiterFilter.skills!.length; i++) {
+        const docRef = collection(database, `Skills/${recruiterFilter.skills![i]}/Users`);
+        const docSnap = (await getDocs(docRef)).docs.map((d) => d.id);
+        skillsIdsCollection.push(docSnap)
+    }
+    return skillsIdsCollection.reduce((a, b) => a.filter(c => b.includes(c)));
+}
+
 export const getDocumentsByFilter = async (database:any, recruiterFilter: QueryFilter): Promise<GetterUser[]> => {
     let skillsIds:string[] = []
     let spokenLanguagesIds:string[] = []
@@ -89,83 +150,38 @@ export const getDocumentsByFilter = async (database:any, recruiterFilter: QueryF
     // Skills Filter
     if (recruiterFilter.skills!= null && recruiterFilter.skills?.length !== 0){
         filtersSet = true;
-        let skillsIdsCollection:string[][] = []
-
-        for(let i = 0; i < recruiterFilter.skills.length; i++){
-            const docRef = collection(database, `Skills/${recruiterFilter.skills[i]}/Users`);
-            const docSnap = (await getDocs(docRef)).docs.map((d) => d.id);
-            skillsIdsCollection.push(docSnap)
-        }
-        skillsIds = skillsIdsCollection.reduce((a, b) => a.filter(c => b.includes(c)));
+        skillsIds = await filterBySkills(recruiterFilter, database);
         if(skillsIds.length==0)return [];
     }
     // Spoken_languages Filter
     if (recruiterFilter.spoken_languages!= null && recruiterFilter.spoken_languages?.length !== 0){
         filtersSet = true;
-        let filterCollection:string[][] = []
-
-        for(let i = 0; i < recruiterFilter.spoken_languages.length; i++){
-            const docRef = collection(database, `Spoken_languages/${recruiterFilter.spoken_languages[i]}/Users`);
-            const docSnap = (await getDocs(docRef)).docs.map((d) => d.id);
-            filterCollection.push(docSnap)
-        }
-        spokenLanguagesIds = filterCollection.reduce((a, b) => a.filter(c => b.includes(c)));
+        spokenLanguagesIds = await filterBySpokenLanguages(recruiterFilter, database);
         if(spokenLanguagesIds.length==0)return [];
     }
     // Programming_languages Filter
     if (recruiterFilter.programming_languages!= null && recruiterFilter.programming_languages?.length !== 0){
         filtersSet = true;
-        let filterCollection:string[][] = []
-
-        for(let i = 0; i < recruiterFilter.programming_languages.length; i++){
-            const docRef = collection(database, `Programming_languages/${recruiterFilter.programming_languages[i]}/Users`);
-            const docSnap = (await getDocs(docRef)).docs.map((d) => d.id);
-            filterCollection.push(docSnap)
-        }
-        programmingLanguagesIds = filterCollection.reduce((a, b) => a.filter(c => b.includes(c)));
+        programmingLanguagesIds = await filterByProgrammingLanguages(recruiterFilter, database);
         if(programmingLanguagesIds.length==0)return [];
     }
     // Job_role Filter
     if (recruiterFilter.job_role!= null && recruiterFilter.job_role?.length !== 0){
         filtersSet = true;
-        let filterCollection:string[][] = []
-
-        for(let i = 0; i < recruiterFilter.job_role.length; i++){
-            const docRef = collection(database, `Job_role/${recruiterFilter.job_role[i]}/Users`);
-            const docSnap = (await getDocs(docRef)).docs.map((d) => d.id);
-            filterCollection.push(docSnap)
-        }
-
-        jobRolesIds = filterCollection.reduce((a, b) => a.filter(c => b.includes(c)));
+        jobRolesIds = await filterByJobRole(recruiterFilter, database);
         if(jobRolesIds.length==0)return [];
     }
     // Countries Filter
     if (recruiterFilter.country!= null && recruiterFilter.country?.length !== 0){
         filtersSet = true;
-        let filterCollection:string[][] = []
-
-        for(let i = 0; i < recruiterFilter.country.length; i++){
-            const docRef = collection(database, `Countries/${recruiterFilter.country[i]}/Users`);
-            const docSnap = (await getDocs(docRef)).docs.map((d) => d.id);
-            filterCollection.push(docSnap)
-        }
-
-        countriesIds = filterCollection.reduce((a, b) => a.filter(c => b.includes(c)));
+        countriesIds = await filterByCountry(recruiterFilter, database);
         if(countriesIds.length==0)return [];
     }
     // Canton Filter
     if (recruiterFilter.country!= null && recruiterFilter.country?.length !== 0 &&
         recruiterFilter.canton!= null && recruiterFilter.canton?.length !== 0){
         filtersSet = true;
-        let filterCollection:string[][] = []
-
-        for(let i = 0; i < recruiterFilter.canton.length; i++){
-            const docRef = collection(database, `Countries/${recruiterFilter.country[i]}/Region/${recruiterFilter.canton[i]}/Users`);
-            const docSnap = (await getDocs(docRef)).docs.map((d) => d.id);
-            filterCollection.push(docSnap)
-        }
-
-        cantonsIds = filterCollection.reduce((a, b) => a.filter(c => b.includes(c)));
+        cantonsIds = await filterByCanton(recruiterFilter, database);
         if(cantonsIds.length==0)return [];
     }
 
@@ -211,7 +227,6 @@ export const getDocumentsByFilter = async (database:any, recruiterFilter: QueryF
             queryFilters.push(where('availability', '>=', recruiterFilter.availability),)
             console.log(recruiterFilter.availability)
         }
-        //ToDo: Work Experience atm eifach öppis. Funktioniert ned
         if (recruiterFilter.work_experience != null){
             console.log("work_experience set");
             filtersSet = true;
@@ -228,17 +243,10 @@ export const getDocumentsByFilter = async (database:any, recruiterFilter: QueryF
     }
 
     if (!filtersSet){
-        console.log("NO FILTER SET");
         const ref = collection(db, 'Users');
 
         const qResult = query(ref, orderBy("first_name", "desc"), limit(8));
         getDocs(qResult).then(res => {res.forEach(r => listDocs.push(r))});
-    }
-
-    // intersectionIDs
-    for (const [key, value] of listDocs.entries()) {
-        console.log("Result:")
-        console.log(key + "" + value)
     }
 
     listDocs.forEach(r => {
@@ -246,7 +254,6 @@ export const getDocumentsByFilter = async (database:any, recruiterFilter: QueryF
         if(u) returnList.push(mapDataToGetterUser(r.id, u));
     })
     return returnList;
-
 }
 
 function mapDataToGetterUser(uid: string, documentData: DocumentData):GetterUser{
