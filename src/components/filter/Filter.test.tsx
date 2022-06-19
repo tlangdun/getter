@@ -31,8 +31,6 @@ describe('Filter tests',() => {
       let loadRegionTest = jest.fn()
       renderFilter(loadRegionTest)
 
-      userEvent.click(await screen.findByText("0 Filters"))
-
       expect( screen.getByTestId("git")).toBeInTheDocument()
       expect( screen.getByTestId("java")).toBeInTheDocument()
       expect( screen.getByTestId("student")).toBeInTheDocument()
@@ -47,7 +45,7 @@ describe('Filter tests',() => {
     test('test click on filter items', async () => {
       let loadRegionTest = jest.fn().mockImplementation(() => Promise.resolve( [{value:"zuerich", label:"Zuerich", checked:false}]));
       renderFilter(loadRegionTest) 
-      userEvent.click(await screen.findByText("0 Filters"))
+
       act(()=>{
         userEvent.click(screen.getByTestId("Country-0"))
       })
@@ -58,7 +56,6 @@ describe('Filter tests',() => {
     test('test clear filter', async () => {
       let loadRegionTest = jest.fn().mockImplementation(() => Promise.resolve( [{value:"zuerich", label:"Zuerich", checked:false}]));
       renderFilter(loadRegionTest) 
-      userEvent.click(await screen.findByText("0 Filters"))
       act(()=>{
         userEvent.click(screen.getByTestId("Job Role-0"))
         fireEvent.click(screen.getByTestId("availability-range"), { target: { value: 25 } });

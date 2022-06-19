@@ -207,6 +207,7 @@ const Filter:FC<Props> = (props) => {
 
       {/* Filters */}
       <Disclosure
+        defaultOpen={true}
         as="section"
         aria-labelledby="filter-heading"
         className="relative z-10 border-t border-b border-gray-200 grid items-center"
@@ -251,7 +252,7 @@ const Filter:FC<Props> = (props) => {
             </div>
           </div>
         </Disclosure.Panel>
-        <div className="col-start-1 row-start-1 py-4">
+        {/*<div className="col-start-1 row-start-1 py-4">
           <div className="flex justify-end max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <Menu as="div" className="relative inline-block">
               <div className="flex">
@@ -296,7 +297,7 @@ const Filter:FC<Props> = (props) => {
               </Transition>
             </Menu>
           </div>
-        </div>
+        </div>*/}
       </Disclosure>
     </div>
   );
