@@ -31,13 +31,13 @@ const routesDashboard = [
     icon: HomeIcon,
     current: true,
   },
-  {
+  /*{
     name: 'Queries',
     href: '/dashboard/queries',
     routing: '/queries',
     icon: HomeIcon,
     current: true,
-  },
+  },*/
   {
     name: 'Recruiting',
     href: '/dashboard/recruiting',
