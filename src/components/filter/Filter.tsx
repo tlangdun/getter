@@ -1,6 +1,6 @@
-import { FC, Fragment, useState } from 'react';
-import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { ChevronDownIcon, FilterIcon } from '@heroicons/react/solid'
+import { FC, useState } from 'react';
+import { Disclosure} from '@headlessui/react'
+import { FilterIcon } from '@heroicons/react/solid'
 import { List } from 'reselect/es/types';
 import { ActiveFiltersActions } from '../../store/slices/ActiveFiltersSlice';
 import { useAppDispatch } from '../../store/hooks';
