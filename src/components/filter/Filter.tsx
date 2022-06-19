@@ -28,7 +28,7 @@ function classNames(...classes:List) {
 
 function countFilter() {
   let count = 0;
-  if(activeFilters.availability != null && activeFilters.availability!=='') {
+  if(activeFilters.availability != null) {
     count++
   }
   if(activeFilters.work_experience != null && activeFilters.work_experience!=='') {
@@ -108,7 +108,7 @@ const Filter:FC<Props> = (props) => {
   function handleRangeSlider(){
     let range = document.getElementById("availability-range") as HTMLInputElement;
     updateRangeValue(range.value)
-    activeFilters.availability = range.value
+    activeFilters.availability = Number(range.value)
     updateActiveFilters()
   }
   
@@ -191,7 +191,7 @@ const Filter:FC<Props> = (props) => {
     if(typeof newList !== 'undefined') {
       activeFilters.country = newList
       updateActiveFilters()
-      let country = event.target.labels[0].textContent
+      let country = event.target.value
       let prevChecked = event.target.checked
       if(prevChecked) {
         props.loadRegion(country).then((element:[])=>{
