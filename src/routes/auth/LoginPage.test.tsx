@@ -34,7 +34,7 @@ describe('LoginPage', () => {
 
     test('should show error when wrong password is entered', async () => {
         const {getByTestId} = renderWithRouter(<LoginPage/>)
-        await fireEvent.change(getByTestId('email'), {target: {value: 'test@gmail.com'}})
+        await fireEvent.change(getByTestId('email'), {target: {value: 'test@mail.com'}})
         await fireEvent.change(getByTestId('password'), {target: {value: 'asdf'}})
         await fireEvent(screen.getByText('Sign in'), new MouseEvent('click', {bubbles: true, cancelable: true,}),)
 
