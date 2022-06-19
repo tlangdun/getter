@@ -39,9 +39,9 @@ const routesDashboard = [
     current: true,
   },*/
   {
-    name: 'Recruiting',
-    href: '/dashboard/recruiting',
-    routing: '/recruiting',
+    name: 'Search',
+    href: '/dashboard/search',
+    routing: '/search',
     icon: ClipboardListIcon,
     current: false,
   },
