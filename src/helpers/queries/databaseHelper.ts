@@ -71,8 +71,8 @@ export const updateRecruiterByUserId = async (recruiterForm: GetterUser): Promis
 async function filterByCountry(recruiterFilter: QueryFilter, database: any) {
     let filterCollection: string[][] = []
 
-    for (let i = 0; i < recruiterFilter.country!.length; i++) {
-        const docRef = collection(database, `Countries/${recruiterFilter.country![i]}/Users`);
+    for (let country of recruiterFilter.country!) {
+        const docRef = collection(database, `Countries/${country}/Users`);
         const docSnap = (await getDocs(docRef)).docs.map((d) => d.id);
         filterCollection.push(docSnap)
     }
@@ -95,8 +95,8 @@ async function filterByCanton(recruiterFilter: QueryFilter, database: any) {
 async function filterByJobRole(recruiterFilter: QueryFilter, database: any) {
     let filterCollection: string[][] = []
 
-    for (let i = 0; i < recruiterFilter.job_role!.length; i++) {
-        const docRef = collection(database, `Job_role/${recruiterFilter.job_role![i]}/Users`);
+    for (let job_role of recruiterFilter.job_role!) {
+        const docRef = collection(database, `Job_role/${job_role}/Users`);
         const docSnap = (await getDocs(docRef)).docs.map((d) => d.id);
         filterCollection.push(docSnap)
     }
@@ -107,8 +107,8 @@ async function filterByJobRole(recruiterFilter: QueryFilter, database: any) {
 async function filterByProgrammingLanguages(recruiterFilter: QueryFilter, database: any) {
     let filterCollection: string[][] = []
 
-    for (let i = 0; i < recruiterFilter.programming_languages!.length; i++) {
-        const docRef = collection(database, `Programming_languages/${recruiterFilter.programming_languages![i]}/Users`);
+    for (let programming_language of recruiterFilter.programming_languages!) {
+        const docRef = collection(database, `Programming_languages/${programming_language}/Users`);
         const docSnap = (await getDocs(docRef)).docs.map((d) => d.id);
         filterCollection.push(docSnap)
     }
@@ -117,8 +117,8 @@ async function filterByProgrammingLanguages(recruiterFilter: QueryFilter, databa
 
 async function filterBySpokenLanguages(recruiterFilter: QueryFilter, database: any) {
     let filterCollection: string[][] = []
-    for (let i = 0; i < recruiterFilter.spoken_languages!.length; i++) {
-        const docRef = collection(database, `Spoken_languages/${recruiterFilter.spoken_languages![i]}/Users`);
+    for (let spoken_language of recruiterFilter.spoken_languages!) {
+        const docRef = collection(database, `Spoken_languages/${spoken_language}/Users`);
         const docSnap = (await getDocs(docRef)).docs.map((d) => d.id);
         filterCollection.push(docSnap)
     }
@@ -128,8 +128,8 @@ async function filterBySpokenLanguages(recruiterFilter: QueryFilter, database: a
 async function filterBySkills(recruiterFilter: QueryFilter, database: any) {
     let skillsIdsCollection: string[][] = []
 
-    for (let i = 0; i < recruiterFilter.skills!.length; i++) {
-        const docRef = collection(database, `Skills/${recruiterFilter.skills![i]}/Users`);
+    for (let skill of recruiterFilter.skills!) {
+        const docRef = collection(database, `Skills/${skill}/Users`);
         const docSnap = (await getDocs(docRef)).docs.map((d) => d.id);
         skillsIdsCollection.push(docSnap)
     }
