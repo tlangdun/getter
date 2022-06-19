@@ -96,7 +96,7 @@ async function filterByJobRole(recruiterFilter: QueryFilter, database: any) {
     let filterCollection: string[][] = []
 
     for (let job_role of recruiterFilter.job_role!) {
-        const docRef = collection(database, `Job_role/${job_role}/Users`);
+        const docRef = collection(database, `Job_roles/${job_role}/Users`);
         const docSnap = (await getDocs(docRef)).docs.map((d) => d.id);
         filterCollection.push(docSnap)
     }
