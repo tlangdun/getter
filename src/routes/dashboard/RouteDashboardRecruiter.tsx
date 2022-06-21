@@ -31,17 +31,17 @@ const routesDashboard = [
     icon: HomeIcon,
     current: true,
   },
-  {
+  /*{
     name: 'Queries',
     href: '/dashboard/queries',
     routing: '/queries',
     icon: HomeIcon,
     current: true,
-  },
+  },*/
   {
-    name: 'Recruiting',
-    href: '/dashboard/recruiting',
-    routing: '/recruiting',
+    name: 'Search',
+    href: '/dashboard/search',
+    routing: '/search',
     icon: ClipboardListIcon,
     current: false,
   },

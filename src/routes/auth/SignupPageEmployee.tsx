@@ -1,7 +1,5 @@
 import { useState } from 'react';
-import FooterSection from '../../components/landingpage/FooterSection';
 import LogoAndTitle from '../../components/misc/LogoAndTitle';
-import SignupCard from '../../components/auth/signup/cards/SignupCard';
 import { Steps, StepsProvider } from 'react-step-builder';
 import ProfileInformationStep from '../../components/auth/signup/cards/steps/ProfileInformationStep';
 import AccountSettingsLocationStep from '../../components/auth/signup/cards/steps/AccountSettingsLocationStep';

@@ -1,11 +1,11 @@
-import {render, screen, act} from '@testing-library/react'
+import {render, screen} from '@testing-library/react'
 import QueriesModul from './Queries'
 import QueriesItem from './QueriesItem'
 import {BrowserRouter} from 'react-router-dom'
 import Dashboard from '../Dashboard'
 import QueriesModal from './QueriesModal'
 import userEvent from '@testing-library/user-event'
-import Enzyme, { shallow } from 'enzyme';
+import Enzyme from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import { Provider } from 'react-redux'
 import store from '../../../store/store'

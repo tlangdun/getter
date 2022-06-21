@@ -1,6 +1,26 @@
 # Code Analysis:
 https://sonarcloud.io/project/overview?id=tlangdun_getter
 
+# Project description
+Getter is accessible on www.getter.ch. To search for talents, one needs to sign up as a recruiter. Getter as it stands now is not fully completed, however the main functionalities which are searching, filtering and messaging talents have been implemented.
+On the main branch, the frontend is tested and the backend functions have been mocked. To test the backend, we needed to use a different test environment as firebase was not compatible with Jest. Hence to see and execute the tests for the backend function, please check out to the branch "backend-tests" and run the following commands:
+- npm install
+- npm run build
+- firebase emulators:start
+- in new terminal: npm run test
+
+The following features have not been implemented yet due to time constraints:
+- Editing profile
+- Saving different user lists
+- Pictures in chat
+- Upload files in chat
+- Better usability for the filter options
+- More filter options
+- Preferences for talents
+- Newsletter and email notifications
+- Saving searches
+- Expanded Profile of talents
+
 
 # Definition of Done
 •	Der Code ist fertiggestellt und im Versionierungssystem eingespielt.

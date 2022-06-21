@@ -1,6 +1,6 @@
-import { FC, Fragment, useState } from 'react';
-import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { ChevronDownIcon, FilterIcon } from '@heroicons/react/solid'
+import { FC, useState } from 'react';
+import { Disclosure} from '@headlessui/react'
+import { FilterIcon } from '@heroicons/react/solid'
 import { List } from 'reselect/es/types';
 import { ActiveFiltersActions } from '../../store/slices/ActiveFiltersSlice';
 import { useAppDispatch } from '../../store/hooks';
@@ -90,7 +90,7 @@ const Filter:FC<Props> = (props) => {
   }
 
   function removeActiveFilters() {
-    var checkboxes = document.getElementsByTagName("input");
+    let checkboxes = document.getElementsByTagName("input");
     for(let checkbox of checkboxes) {
       if(checkbox.type === "checkbox") {
         checkbox.checked = false; 
@@ -131,7 +131,7 @@ const Filter:FC<Props> = (props) => {
     let tempList:Array<string> = Object.assign([],filter)
     let doAdd = true
     if(tempList !== null) {
-      for (var i = 0; i < tempList.length; i++) {
+      for (let i = 0; i < tempList.length; i++) {
         if(tempList[i] === newValue) {
           tempList.splice(i,1)
           doAdd = false
@@ -207,6 +207,7 @@ const Filter:FC<Props> = (props) => {
 
       {/* Filters */}
       <Disclosure
+        defaultOpen={true}
         as="section"
         aria-labelledby="filter-heading"
         className="relative z-10 border-t border-b border-gray-200 grid items-center"
@@ -251,7 +252,7 @@ const Filter:FC<Props> = (props) => {
             </div>
           </div>
         </Disclosure.Panel>
-        <div className="col-start-1 row-start-1 py-4">
+        {/*<div className="col-start-1 row-start-1 py-4">
           <div className="flex justify-end max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <Menu as="div" className="relative inline-block">
               <div className="flex">
@@ -296,7 +297,7 @@ const Filter:FC<Props> = (props) => {
               </Transition>
             </Menu>
           </div>
-        </div>
+        </div>*/}
       </Disclosure>
     </div>
   );
