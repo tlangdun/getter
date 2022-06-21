@@ -73,7 +73,7 @@ const EmailPasswordForm: FC = () => {
         />
 
         <FormInput
-          label='password'
+          label='Password'
           id='password'
           name='password'
           type='password'

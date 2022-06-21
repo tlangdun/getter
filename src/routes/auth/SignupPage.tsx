@@ -1,6 +1,5 @@
-import { useNavigate } from 'react-router-dom';
-import { FC, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import { FC } from 'react';
 import SignupCard from '../../components/auth/signup/cards/SignupCard';
 import LogoAndTitle from '../../components/misc/LogoAndTitle';
 
