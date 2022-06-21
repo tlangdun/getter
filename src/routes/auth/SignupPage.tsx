@@ -1,11 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { FC, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { StepsProvider } from 'react-step-builder';
 import SignupCard from '../../components/auth/signup/cards/SignupCard';
-import SignupEmployee from './SignupPageEmployee';
-import SignupRecruiter from './SignupPageRecruiter';
-import FooterSection from '../../components/landingpage/FooterSection';
 import LogoAndTitle from '../../components/misc/LogoAndTitle';
 
 const SignupPage: FC = () => {

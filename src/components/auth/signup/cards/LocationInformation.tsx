@@ -54,7 +54,6 @@ const LocationInformation = forwardRef<HTMLButtonElement | null, Props>(
       handleSubmit,
       handleChange,
       handleBlur,
-      setFieldValue,
       values,
       touched,
       errors,
