@@ -8,70 +8,70 @@ const people = [
     role: 'Co-Founder / CEO',
     linkedinUrl: 'https://ch.linkedin.com/in/tenzin-langdun',
     imageUrl:
-      'https://media-exp1.licdn.com/dms/image/C4D03AQFVfBzbTlk1Eg/profile-displayphoto-shrink_800_800/0/1594148488814?e=1656547200&v=beta&t=wZ9ctazfLHNENyKenQ6LIImMHujGf-apvTiSf6PVZgw',
+      'https://i.imgur.com/P6q35qW.png',
   },
   {
     name: 'Martin Oswald',
     role: 'Co-Founder / CEO',
     linkedinUrl: 'https://ch.linkedin.com/in/martin-oswald-b2b604226',
     imageUrl:
-      'https://media-exp1.licdn.com/dms/image/C4D03AQFnfHHTmajkQw/profile-displayphoto-shrink_200_200/0/1641507565447?e=1654732800&v=beta&t=EsfLl-Grwsa1RJboaYBUjPbaUFLLuRuA4J1hzLj2lhk',
+      'https://res.cloudinary.com/teepublic/image/private/s--J2pueZiw--/t_Preview/b_rgb:ffffff,c_limit,f_auto,h_630,q_90,w_630/v1590756532/production/designs/10745440_0.jpg',
   },
   {
-    name: 'Thomas Good',
+    name: 'Thomas Gucci',
     role: 'Developer',
     linkedinUrl: 'https://ch.linkedin.com/in/thomas-good-91b87b150',
     imageUrl:
-      'https://media-exp1.licdn.com/dms/image/C5603AQHtMfk_7drTLw/profile-displayphoto-shrink_200_200/0/1517887872775?e=1654732800&v=beta&t=5-RP54MLKEjESmshf47eHslmvFgahXU6S4Eoon9oIZE',
+      'https://i.kym-cdn.com/photos/images/newsfeed/002/122/112/891.png',
   },
   {
     name: 'Stella Damdin',
     role: 'Developer',
     linkedinUrl: 'https://ch.linkedin.com/in/stella-damdin-58b97b228',
     imageUrl:
-      'https://media-exp1.licdn.com/dms/image/C4E03AQG53RUm02Ln3A/profile-displayphoto-shrink_200_200/0/1640651540416?e=1654732800&v=beta&t=7maGdB7cPKaQ4qaG9GuM-6yb18M7IJVyv6bQ0bTmQdE',
+      'https://wojakparadise.net/wojak/212/img',
   },
   {
     name: 'Cakir Beyeler',
     role: 'Atatürk',
     linkedinUrl: 'https://ch.linkedin.com/in/cakirbeyeler',
     imageUrl:
-      'https://media-exp1.licdn.com/dms/image/C4D03AQH4keUix5SFZg/profile-displayphoto-shrink_200_200/0/1584093559001?e=2147483647&v=beta&t=O3GhUnpVVmOV4xAkUBjY-7EMvpeMWU6Z_N8A4bdB-7E',
+      'https://wojakparadise.net/wojak/7540/img',
   },
   {
     name: 'Renée Villiger',
     role: 'Developer',
     linkedinUrl: 'https://ch.linkedin.com/in/renee-villiger',
     imageUrl:
-      'https://media-exp1.licdn.com/dms/image/C4D03AQFJZBLrxwUHNw/profile-displayphoto-shrink_200_200/0/1568810162790?e=2147483647&v=beta&t=9MmdU7AiI4L5pEQfuv0BQV5KiLgqLpQhV1SJKKN53-w',
+      'https://ih1.redbubble.net/image.75722584.2724/flat,1000x1000,075,f.jpg',
   },
   {
     name: 'Luca Neyer',
     role: 'Developer',
-    linkedinUrl: 'https://ch.linkedin.com/in/lucaneyer',
+    linkedinUrl: '',
     imageUrl:
-      '',
+      'https://blog.cdn.own3d.tv/resize=fit:crop,height:400,width:600/1yUTadzQTDWnMKQunV2T',
   },
   {
     name: 'Valentin Kleisner',
     role: 'Developer',
     linkedinUrl: '',
     imageUrl:
-      '',
+      'https://preview.redd.it/dykbx17c8d2y.jpg?width=640&crop=smart&auto=webp&s=ab4030376ad757db62cfd8ff12a3d9ac86edc450',
   },
   {
     name: 'Joo Ho Park',
     role: 'Developer',
     linkedinUrl: 'https://ch.linkedin.com/in/joo-ho-park-a1b045230',
     imageUrl:
-      '',
+      'https://ih1.redbubble.net/image.398317233.0814/flat,750x,075,f-pad,750x1000,f8f8f8.u8.jpg',
   },
   {
     name: 'Halil Sino',
     role: 'Developer',
     linkedinUrl: '',
     imageUrl:
-      '',
+      'https://img-9gag-fun.9cache.com/photo/aZmnxNX_700bwp.webp',
   },
   // More people...
 ];
