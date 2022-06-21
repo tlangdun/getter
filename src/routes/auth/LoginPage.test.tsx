@@ -1,9 +1,7 @@
-import {render, screen, fireEvent, findByTestId} from '@testing-library/react';
+import {render, screen, fireEvent} from '@testing-library/react';
 import {MemoryRouter} from 'react-router-dom';
 import LoginPage from './LoginPage';
 import '@testing-library/jest-dom/extend-expect';
-import {abortControllerWithReason} from "@reduxjs/toolkit/dist/listenerMiddleware/utils";
-import {keyboard} from "@testing-library/user-event/dist/keyboard";
 
 describe('LoginPage', () => {
 

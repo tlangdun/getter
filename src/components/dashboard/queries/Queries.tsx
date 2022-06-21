@@ -1,5 +1,4 @@
-import { FC } from 'react';
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from 'react';
 import QueryModal from './QueriesModal'
 import { MantineProvider} from '@mantine/core';
 import { ModalsProvider } from '@mantine/modals';
@@ -17,7 +16,7 @@ const Queries:FC = () => {
   const [queryNames, setQueryNames] = useState<FilterQueries[]>([]);
 
   useEffect(() => {
-    filtersService   //TODO: Backend user login id 
+    filtersService 
       .getAllFilterQueries()
       .then(initialFilters => {
         setQueryNames(initialFilters)

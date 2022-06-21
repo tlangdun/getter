@@ -1,6 +1,5 @@
 import { FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSteps } from 'react-step-builder';
 import getAllProgLangs from '../../../../../helpers/auth/getAllProgLangs';
 import getAllSkills from '../../../../../helpers/auth/getAllSkills';
 import getAllSpokenLangs from '../../../../../helpers/auth/getAllSpokenLangs';

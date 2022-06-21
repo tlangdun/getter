@@ -90,7 +90,7 @@ const Filter:FC<Props> = (props) => {
   }
 
   function removeActiveFilters() {
-    var checkboxes = document.getElementsByTagName("input");
+    let checkboxes = document.getElementsByTagName("input");
     for(let checkbox of checkboxes) {
       if(checkbox.type === "checkbox") {
         checkbox.checked = false; 
@@ -131,7 +131,7 @@ const Filter:FC<Props> = (props) => {
     let tempList:Array<string> = Object.assign([],filter)
     let doAdd = true
     if(tempList !== null) {
-      for (var i = 0; i < tempList.length; i++) {
+      for (let i = 0; i < tempList.length; i++) {
         if(tempList[i] === newValue) {
           tempList.splice(i,1)
           doAdd = false
